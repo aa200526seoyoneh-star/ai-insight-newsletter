@@ -411,6 +411,7 @@
       .preview-frame-wrapper iframe { height: 450px; }
     }
   </style>
+  <script src="config.js"></script>
 </head>
 <body>
 
@@ -532,13 +533,13 @@
   <iframe name="hiddenFrame" id="hiddenFrame" style="display:none;"></iframe>
 
   <script>
-    // ─── 설정 (Google Form + Sheets 방식) ─────────────────
-    const FORM_ACTION = 'https://docs.google.com/forms/d/e/1GSfXbBWkE4f5eqqnW1LRfwj6V9snexJTSRbUR2NwOyo/formResponse';
+    // ─── 설정 (민감 정보는 config.js에서 로드) ─────────────
+    const FORM_ACTION = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.SUB_FORM_ACTION) || '';
     const ENTRY_EMAIL = 'entry.1443858870';
     const ENTRY_NAME  = 'entry.304391785';
     const ENTRY_SOURCE = 'entry.1573810244';
 
-    const SHEET_ID = '1XpalUZ3ap_97U4VPwCPD5603o107WAS9-B6ebxSPtFc';
+    const SHEET_ID = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.SHEET_ID) || '';
 
     // URL 파라미터에서 이메일 추출 (뉴스레터 내 구독취소 링크용)
     const urlParams = new URLSearchParams(window.location.search);

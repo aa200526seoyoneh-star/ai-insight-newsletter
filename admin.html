@@ -339,6 +339,8 @@
     .toast.error { background: var(--danger); }
     @keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
   </style>
+  <!-- 민감 설정 로드 (config.js는 GitHub에 올리지 않음) -->
+  <script src="config.js"></script>
 </head>
 <body>
 
@@ -560,12 +562,11 @@
   </footer>
 
   <script>
-    const SHEET_ID = '1XpalUZ3ap_97U4VPwCPD5603o107WAS9-B6ebxSPtFc';
-    const ADMIN_PWD = 'ax123';
-
-    // ─── 관리자 Google Form 설정 ─────────────────────────
-    const ADMIN_FORM_ID = '1a2KI-p3c55Oy9xMJ9seQn_FKQ8Alx3gGRvuBjtleZ9U';
-    const ADMIN_FORM_ACTION = 'https://docs.google.com/forms/d/' + ADMIN_FORM_ID + '/formResponse';
+    // ─── 민감 정보는 외부 config.js에서 로드 (GitHub에 올리지 않음) ───
+    // config.js가 없으면 로그인 화면에서 직접 입력하도록 안내
+    let SHEET_ID = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.SHEET_ID) || '';
+    let ADMIN_FORM_ID = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.FORM_ID) || '';
+    let ADMIN_FORM_ACTION = ADMIN_FORM_ID ? 'https://docs.google.com/forms/d/' + ADMIN_FORM_ID + '/formResponse' : '';
     const ENTRY = {
       PASSWORD:  'entry.1220354735',
       ACTION:    'entry.1172398797',
@@ -632,16 +633,25 @@
       { email: 'shin.taehyung@example.com', name: '신태형', subscribedAt: '2026-04-01T08:30:00', status: 'active', source: 'web' },
     ];
 
-    // ─── 인증 ────────────────────────────────────────────
+    // ─── 인증 (비밀번호는 서버에서만 검증) ─────────────────
     function handleAuth(e) {
       e.preventDefault();
-      const pwd = document.getElementById('authPassword').value;
-      if (pwd === ADMIN_PWD) {
-        adminPassword = pwd;
-        showDashboard();
-      } else {
+      var pwd = document.getElementById('authPassword').value.trim();
+      if (!pwd) {
         document.getElementById('authError').style.display = 'block';
+        return;
       }
+      adminPassword = pwd;
+
+      // config.js 미로드 시 — 설정값이 비어있으면 기본값 시도
+      if (!SHEET_ID || !ADMIN_FORM_ID) {
+        showToast('config.js가 로드되지 않았습니다. 관리자에게 문의하세요.', true);
+        document.getElementById('authError').textContent = 'config.js 파일이 필요합니다.';
+        document.getElementById('authError').style.display = 'block';
+        return;
+      }
+
+      showDashboard();
     }
 
     function showDashboard() {

@@ -141,6 +141,7 @@
       margin-left: 8px;
     }
   </style>
+  <script src="config.js"></script>
 </head>
 <body>
 
@@ -191,7 +192,7 @@
   </footer>
 
   <script>
-    const SHEET_ID = '1XpalUZ3ap_97U4VPwCPD5603o107WAS9-B6ebxSPtFc';
+    const SHEET_ID = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.SHEET_ID) || '';
     let allNewsletters = [];
 
     // ─── Google Sheets gviz API로 데이터 읽기 ─────────────
