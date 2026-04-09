@@ -440,9 +440,79 @@
             <label>HTML 내용</label>
             <textarea id="nlContent" placeholder="뉴스레터 HTML 내용을 입력하세요..."></textarea>
           </div>
-          <div style="display:flex;gap:12px;align-items:center;">
-            <button class="btn btn-primary" onclick="sendNewsletter()">발송하기</button>
+          <div class="form-group">
+            <label>테스트 수신 이메일 (선택)</label>
+            <input type="email" id="nlTestEmail" placeholder="test@example.com — 비워두면 전체 발송">
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="sendNewsletter()">전체 발송</button>
+            <button class="btn btn-outline" onclick="testSendNewsletter()" style="border:1.5px solid var(--primary);color:var(--primary);background:transparent;padding:10px 20px;border-radius:10px;font-weight:600;cursor:pointer;">테스트 발송</button>
             <span id="sendStatus" style="font-size:13px;color:var(--text-secondary);"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add Subscriber -->
+      <div class="send-panel" id="addSubPanel">
+        <div class="panel-header" onclick="toggleAddSubPanel()">
+          <h3>&#x2795; 구독자 추가</h3>
+          <span id="addSubToggle" style="font-size:13px;color:var(--text-secondary);">펼치기 &#x25BC;</span>
+        </div>
+        <div id="addSubBody" class="send-body">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="form-group" style="margin-bottom:0;">
+              <label>이메일 *</label>
+              <input type="email" id="addSubEmail" placeholder="user@example.com">
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label>이름 (선택)</label>
+              <input type="text" id="addSubName" placeholder="홍길동">
+            </div>
+          </div>
+          <div style="margin-top:12px;display:flex;gap:12px;align-items:center;">
+            <button class="btn btn-primary" onclick="addSubscriber()">구독자 추가</button>
+            <span id="addSubStatus" style="font-size:13px;color:var(--text-secondary);"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Schedule Settings -->
+      <div class="send-panel" id="schedulePanel">
+        <div class="panel-header" onclick="toggleSchedulePanel()">
+          <h3>&#x23F0; 발송 주기 설정</h3>
+          <span id="scheduleToggle" style="font-size:13px;color:var(--text-secondary);">펼치기 &#x25BC;</span>
+        </div>
+        <div id="scheduleBody" class="send-body">
+          <div class="form-group">
+            <label>발송 요일</label>
+            <div id="dayCheckboxes" style="display:flex;gap:8px;flex-wrap:wrap;">
+              <label style="display:flex;align-items:center;gap:4px;font-size:13px;font-weight:400;cursor:pointer;"><input type="checkbox" value="mon" checked> 월</label>
+              <label style="display:flex;align-items:center;gap:4px;font-size:13px;font-weight:400;cursor:pointer;"><input type="checkbox" value="tue" checked> 화</label>
+              <label style="display:flex;align-items:center;gap:4px;font-size:13px;font-weight:400;cursor:pointer;"><input type="checkbox" value="wed" checked> 수</label>
+              <label style="display:flex;align-items:center;gap:4px;font-size:13px;font-weight:400;cursor:pointer;"><input type="checkbox" value="thu" checked> 목</label>
+              <label style="display:flex;align-items:center;gap:4px;font-size:13px;font-weight:400;cursor:pointer;"><input type="checkbox" value="fri" checked> 금</label>
+              <label style="display:flex;align-items:center;gap:4px;font-size:13px;font-weight:400;cursor:pointer;"><input type="checkbox" value="sat"> 토</label>
+              <label style="display:flex;align-items:center;gap:4px;font-size:13px;font-weight:400;cursor:pointer;"><input type="checkbox" value="sun"> 일</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>발송 시간 (KST)</label>
+            <select id="sendHour" style="padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;outline:none;width:160px;">
+              <option value="6">오전 6시</option>
+              <option value="7" selected>오전 7시</option>
+              <option value="8">오전 8시</option>
+              <option value="9">오전 9시</option>
+              <option value="10">오전 10시</option>
+              <option value="12">오후 12시</option>
+            </select>
+          </div>
+          <div class="form-group" style="background:#f0fdf4;padding:12px 16px;border-radius:8px;font-size:13px;color:var(--primary-dark);margin-bottom:12px;">
+            현재 설정: <strong>월~금 오전 7시</strong> 자동 발송<br>
+            <span style="font-size:12px;color:var(--text-secondary);">* Apps Script 트리거와 함께 동작합니다</span>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;">
+            <button class="btn btn-primary" onclick="saveSchedule()">주기 저장</button>
+            <span id="scheduleStatus" style="font-size:13px;color:var(--text-secondary);"></span>
           </div>
         </div>
       </div>
@@ -839,6 +909,95 @@
         sendBtn.disabled = false;
         sendBtn.textContent = '발송하기';
       }
+    }
+
+    // ─── 테스트 발송 ──────────────────────────────────────
+    async function testSendNewsletter() {
+      var subject = document.getElementById('nlSubject').value.trim();
+      var content = document.getElementById('nlContent').value.trim();
+      var testEmail = document.getElementById('nlTestEmail').value.trim();
+
+      if (!subject) { showToast('제목을 입력해주세요.', true); return; }
+      if (!testEmail) { showToast('테스트 수신 이메일을 입력해주세요.', true); return; }
+      if (!confirm(testEmail + '로 테스트 발송하시겠습니까?')) return;
+
+      try {
+        var fields = {};
+        fields[ENTRY.ACTION] = '테스트 발송';
+        fields[ENTRY.SUBJECT] = subject;
+        fields[ENTRY.CONTENT] = content || '<p>' + subject + '</p>';
+        fields[ENTRY.EMAIL] = testEmail;
+        await submitAdminForm(fields);
+        showToast(testEmail + '로 테스트 발송 요청 완료!');
+        document.getElementById('sendStatus').textContent = '테스트 발송 → ' + testEmail + ' (' + new Date().toLocaleTimeString('ko-KR') + ')';
+      } catch (e) { showToast('테스트 발송 실패: ' + e.message, true); }
+    }
+
+    // ─── 구독자 추가 ────────────────────────────────────────
+    function toggleAddSubPanel() {
+      var body = document.getElementById('addSubBody');
+      var toggle = document.getElementById('addSubToggle');
+      body.classList.toggle('active');
+      toggle.innerHTML = body.classList.contains('active') ? '접기 &#x25B2;' : '펼치기 &#x25BC;';
+    }
+
+    async function addSubscriber() {
+      var email = document.getElementById('addSubEmail').value.trim();
+      var name = document.getElementById('addSubName').value.trim();
+
+      if (!email) { showToast('이메일을 입력해주세요.', true); return; }
+      if (!confirm(email + ' 구독자를 추가하시겠습니까?')) return;
+
+      try {
+        var fields = {};
+        fields[ENTRY.ACTION] = '구독자 추가';
+        fields[ENTRY.EMAIL] = email;
+        fields[ENTRY.STATUS] = name;  // name을 STATUS 필드로 전달 (백엔드에서 처리)
+        await submitAdminForm(fields);
+        showToast(email + ' 구독자 추가 요청 완료!');
+        document.getElementById('addSubStatus').textContent = '추가 완료 (' + new Date().toLocaleTimeString('ko-KR') + ')';
+        // 로컬 목록에 즉시 추가
+        allSubscribers.push({ email: email, name: name, subscribedAt: new Date().toISOString(), status: 'active', source: 'admin' });
+        filterTable(currentFilter, document.querySelector('.filter-btn.active'));
+        document.getElementById('addSubEmail').value = '';
+        document.getElementById('addSubName').value = '';
+      } catch (e) { showToast('구독자 추가 실패: ' + e.message, true); }
+    }
+
+    // ─── 발송 주기 설정 ──────────────────────────────────────
+    function toggleSchedulePanel() {
+      var body = document.getElementById('scheduleBody');
+      var toggle = document.getElementById('scheduleToggle');
+      body.classList.toggle('active');
+      toggle.innerHTML = body.classList.contains('active') ? '접기 &#x25B2;' : '펼치기 &#x25BC;';
+    }
+
+    async function saveSchedule() {
+      var checkboxes = document.querySelectorAll('#dayCheckboxes input[type="checkbox"]:checked');
+      var days = Array.from(checkboxes).map(function(cb) { return cb.value; }).join(',');
+      var hour = document.getElementById('sendHour').value;
+
+      if (!days) { showToast('최소 하나의 요일을 선택해주세요.', true); return; }
+      if (!confirm('발송 주기를 변경하시겠습니까?\n요일: ' + days + '\n시간: ' + hour + '시')) return;
+
+      try {
+        var scheduleJSON = JSON.stringify({ days: days, hour: hour });
+        var fields = {};
+        fields[ENTRY.ACTION] = '발송 주기 변경';
+        fields[ENTRY.SUBJECT] = scheduleJSON;  // JSON을 SUBJECT 필드로 전달
+        await submitAdminForm(fields);
+
+        var dayNames = { mon:'월', tue:'화', wed:'수', thu:'목', fri:'금', sat:'토', sun:'일' };
+        var dayLabel = days.split(',').map(function(d) { return dayNames[d] || d; }).join(',');
+        showToast('발송 주기 저장 완료! (' + dayLabel + ' ' + hour + '시)');
+        document.getElementById('scheduleStatus').textContent = '저장 완료 (' + new Date().toLocaleTimeString('ko-KR') + ')';
+
+        // 현재 설정 표시 업데이트
+        var infoBox = document.querySelector('#scheduleBody .form-group:nth-child(3)');
+        if (infoBox) {
+          infoBox.innerHTML = '현재 설정: <strong>' + dayLabel + ' 오전 ' + hour + '시</strong> 자동 발송<br><span style="font-size:12px;color:var(--text-secondary);">* Apps Script 트리거와 함께 동작합니다</span>';
+        }
+      } catch (e) { showToast('주기 저장 실패: ' + e.message, true); }
     }
 
     // ─── 유틸리티 (callAPI 제거 - Sheets gviz 사용) ─────
