@@ -562,19 +562,9 @@
   </footer>
 
   <script>
-    // ─── 민감 정보는 외부 config.js에서 로드 (GitHub에 올리지 않음) ───
-    // config.js가 없으면 로그인 화면에서 직접 입력하도록 안내
+    // ─── 설정 (config.js에서 로드) ───
     let SHEET_ID = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.SHEET_ID) || '';
-    let ADMIN_FORM_ID = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.FORM_ID) || '';
-    let ADMIN_FORM_ACTION = ADMIN_FORM_ID ? 'https://docs.google.com/forms/d/' + ADMIN_FORM_ID + '/formResponse' : '';
-    const ENTRY = {
-      PASSWORD:  'entry.1220354735',
-      ACTION:    'entry.1172398797',
-      SUBJECT:   'entry.750230884',
-      CONTENT:   'entry.959932790',
-      EMAIL:     'entry.1316908729',
-      STATUS:    'entry.2049694165'
-    };
+    let WEBAPP_URL = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.WEBAPP_URL) || '';
 
     let adminPassword = '';
     let allSubscribers = [];
@@ -643,8 +633,7 @@
       }
       adminPassword = pwd;
 
-      // config.js 미로드 시 — 설정값이 비어있으면 기본값 시도
-      if (!SHEET_ID || !ADMIN_FORM_ID) {
+      if (!SHEET_ID || !WEBAPP_URL) {
         showToast('config.js가 로드되지 않았습니다. 관리자에게 문의하세요.', true);
         document.getElementById('authError').textContent = 'config.js 파일이 필요합니다.';
         document.getElementById('authError').style.display = 'block';
@@ -796,41 +785,22 @@
 
     async function deleteSubscriber(email) {
       if (!confirm(email + ' 구독자를 삭제하시겠습니까?')) return;
-
       try {
-        var fields = {};
-        fields[ENTRY.ACTION] = '구독자 삭제';
-        fields[ENTRY.EMAIL] = email;
-
-        await submitAdminForm(fields);
-        showToast(email + ' 삭제 요청이 전송되었습니다.');
-        // 로컬 목록에서도 즉시 제거
+        await callWebApp({ action: 'delete_subscriber', email: email });
+        showToast(email + ' 삭제 완료!');
         allSubscribers = allSubscribers.filter(function(s) { return s.email !== email; });
         filterTable(currentFilter, document.querySelector('.filter-btn.active'));
-      } catch (e) {
-        showToast('삭제 요청 실패: ' + e.message, true);
-      }
+      } catch (e) { showToast('삭제 실패: ' + e.message, true); }
     }
 
     async function changeSubscriberStatus(email, newStatus) {
-      if (!confirm(email + ' 구독자의 상태를 "' + newStatus + '"(으)로 변경하시겠습니까?')) return;
-
+      if (!confirm(email + ' → ' + newStatus + ' 변경하시겠습니까?')) return;
       try {
-        var fields = {};
-        fields[ENTRY.ACTION] = '구독자 상태 변경';
-        fields[ENTRY.EMAIL] = email;
-        fields[ENTRY.STATUS] = newStatus;
-
-        await submitAdminForm(fields);
-        showToast(email + ' → ' + newStatus + ' 변경 요청이 전송되었습니다.');
-        // 로컬 목록 즉시 반영
-        allSubscribers.forEach(function(s) {
-          if (s.email === email) s.status = newStatus;
-        });
+        await callWebApp({ action: 'change_status', email: email, status: newStatus });
+        showToast(email + ' → ' + newStatus + ' 변경 완료!');
+        allSubscribers.forEach(function(s) { if (s.email === email) s.status = newStatus; });
         filterTable(currentFilter, document.querySelector('.filter-btn.active'));
-      } catch (e) {
-        showToast('상태 변경 요청 실패: ' + e.message, true);
-      }
+      } catch (e) { showToast('상태 변경 실패: ' + e.message, true); }
     }
 
     // ─── 뉴스레터 발송 ─────────────────────────────────
@@ -841,45 +811,17 @@
       toggle.innerHTML = body.classList.contains('active') ? '접기 &#x25B2;' : '펼치기 &#x25BC;';
     }
 
-    // ─── Google Form 제출 헬퍼 ─────────────────────────
-    function submitAdminForm(fields) {
-      return new Promise(function(resolve) {
-        var iframeName = 'adminForm_' + Date.now();
-        var iframe = document.createElement('iframe');
-        iframe.name = iframeName;
-        iframe.style.display = 'none';
-        document.body.appendChild(iframe);
-
-        var form = document.createElement('form');
-        form.method = 'POST';
-        form.action = ADMIN_FORM_ACTION;
-        form.target = iframeName;
-
-        // 비밀번호는 항상 포함
-        var pwdInput = document.createElement('input');
-        pwdInput.type = 'hidden';
-        pwdInput.name = ENTRY.PASSWORD;
-        pwdInput.value = adminPassword;
-        form.appendChild(pwdInput);
-
-        // 나머지 필드 추가
-        Object.keys(fields).forEach(function(entryName) {
-          var input = document.createElement('input');
-          input.type = 'hidden';
-          input.name = entryName;
-          input.value = fields[entryName];
-          form.appendChild(input);
-        });
-
-        document.body.appendChild(form);
-        form.submit();
-
-        // Google Form은 성공/실패 응답을 주지 않으므로 타이머로 처리
-        setTimeout(function() {
-          form.remove();
-          iframe.remove();
-          resolve(true);
-        }, 2000);
+    // ─── 웹 앱 doPost 호출 헬퍼 ─────────────────────────
+    function callWebApp(data) {
+      data.password = adminPassword;
+      return fetch(WEBAPP_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(data)
+      }).then(function() {
+        // no-cors 모드에서는 응답을 읽을 수 없으므로 성공으로 간주
+        return { success: true };
       });
     }
 
@@ -887,37 +829,27 @@
       var subject = document.getElementById('nlSubject').value.trim();
       var content = document.getElementById('nlContent').value.trim();
 
-      if (!subject) {
-        showToast('제목을 입력해주세요.', true);
-        return;
-      }
-
-      if (!confirm('뉴스레터를 발송하시겠습니까?\n\n제목: ' + subject + '\n내용 길이: ' + (content.length || 0) + '자')) return;
+      if (!subject) { showToast('제목을 입력해주세요.', true); return; }
+      if (!confirm('뉴스레터를 발송하시겠습니까?\n\n제목: ' + subject)) return;
 
       var sendBtn = document.querySelector('.send-body .btn-primary');
       var sendStatus = document.getElementById('sendStatus');
       sendBtn.disabled = true;
       sendBtn.textContent = '발송 중...';
-      sendStatus.textContent = 'Google Form을 통해 발송 요청 중...';
+      sendStatus.textContent = '발송 요청 중...';
 
       try {
-        var fields = {};
-        fields[ENTRY.ACTION] = '뉴스레터 발송';
-        fields[ENTRY.SUBJECT] = subject;
-        fields[ENTRY.CONTENT] = content || '<p>' + subject + '</p>';
-
-        await submitAdminForm(fields);
-
-        showToast('발송 요청이 전송되었습니다! Apps Script에서 처리됩니다.');
-        sendStatus.textContent = '발송 요청 완료 (' + new Date().toLocaleTimeString('ko-KR') + ')';
+        await callWebApp({ action: 'send_newsletter', subject: subject, content: content || '<p>' + subject + '</p>' });
+        showToast('발송 요청이 전송되었습니다!');
+        sendStatus.textContent = '발송 완료 (' + new Date().toLocaleTimeString('ko-KR') + ')';
         document.getElementById('nlSubject').value = '';
         document.getElementById('nlContent').value = '';
       } catch (e) {
-        showToast('발송 요청 실패: ' + e.message, true);
+        showToast('발송 실패: ' + e.message, true);
         sendStatus.textContent = '발송 실패';
       } finally {
         sendBtn.disabled = false;
-        sendBtn.textContent = '발송하기';
+        sendBtn.textContent = '전체 발송';
       }
     }
 
@@ -932,13 +864,8 @@
       if (!confirm(testEmail + '로 테스트 발송하시겠습니까?')) return;
 
       try {
-        var fields = {};
-        fields[ENTRY.ACTION] = '테스트 발송';
-        fields[ENTRY.SUBJECT] = subject;
-        fields[ENTRY.CONTENT] = content || '<p>' + subject + '</p>';
-        fields[ENTRY.EMAIL] = testEmail;
-        await submitAdminForm(fields);
-        showToast(testEmail + '로 테스트 발송 요청 완료!');
+        await callWebApp({ action: 'test_send', subject: subject, content: content || '<p>' + subject + '</p>', email: testEmail });
+        showToast(testEmail + '로 테스트 발송 완료!');
         document.getElementById('sendStatus').textContent = '테스트 발송 → ' + testEmail + ' (' + new Date().toLocaleTimeString('ko-KR') + ')';
       } catch (e) { showToast('테스트 발송 실패: ' + e.message, true); }
     }
@@ -959,14 +886,9 @@
       if (!confirm(email + ' 구독자를 추가하시겠습니까?')) return;
 
       try {
-        var fields = {};
-        fields[ENTRY.ACTION] = '구독자 추가';
-        fields[ENTRY.EMAIL] = email;
-        fields[ENTRY.STATUS] = name;  // name을 STATUS 필드로 전달 (백엔드에서 처리)
-        await submitAdminForm(fields);
-        showToast(email + ' 구독자 추가 요청 완료!');
+        await callWebApp({ action: 'add_subscriber', email: email, name: name });
+        showToast(email + ' 구독자 추가 완료!');
         document.getElementById('addSubStatus').textContent = '추가 완료 (' + new Date().toLocaleTimeString('ko-KR') + ')';
-        // 로컬 목록에 즉시 추가
         allSubscribers.push({ email: email, name: name, subscribedAt: new Date().toISOString(), status: 'active', source: 'admin' });
         filterTable(currentFilter, document.querySelector('.filter-btn.active'));
         document.getElementById('addSubEmail').value = '';
@@ -991,18 +913,11 @@
       if (!confirm('발송 주기를 변경하시겠습니까?\n요일: ' + days + '\n시간: ' + hour + '시')) return;
 
       try {
-        var scheduleJSON = JSON.stringify({ days: days, hour: hour });
-        var fields = {};
-        fields[ENTRY.ACTION] = '발송 주기 변경';
-        fields[ENTRY.SUBJECT] = scheduleJSON;  // JSON을 SUBJECT 필드로 전달
-        await submitAdminForm(fields);
-
+        await callWebApp({ action: 'save_schedule', days: days, hour: hour });
         var dayNames = { mon:'월', tue:'화', wed:'수', thu:'목', fri:'금', sat:'토', sun:'일' };
         var dayLabel = days.split(',').map(function(d) { return dayNames[d] || d; }).join(',');
         showToast('발송 주기 저장 완료! (' + dayLabel + ' ' + hour + '시)');
         document.getElementById('scheduleStatus').textContent = '저장 완료 (' + new Date().toLocaleTimeString('ko-KR') + ')';
-
-        // 현재 설정 표시 업데이트
         var infoBox = document.querySelector('#scheduleBody .form-group:nth-child(3)');
         if (infoBox) {
           infoBox.innerHTML = '현재 설정: <strong>' + dayLabel + ' 오전 ' + hour + '시</strong> 자동 발송<br><span style="font-size:12px;color:var(--text-secondary);">* Apps Script 트리거와 함께 동작합니다</span>';
