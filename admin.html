@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THE AI INSIGHT - 관리자 대시보드</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/shared.css">
+  <style>
+    /* ── Auth Screen ── */
+    .auth-screen {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(100vh - 64px);
+      padding: 24px;
+    }
+    .auth-card {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 48px 40px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+    }
+    .auth-card .lock-icon {
+      width: 56px;
+      height: 56px;
+      background: var(--primary-50);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 24px;
+    }
+    .auth-card h2 { font-size: 20px; margin-bottom: 8px; }
+    .auth-card p { font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; }
+    .auth-card input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 15px;
+      font-family: inherit;
+      text-align: center;
+      margin-bottom: 16px;
+      outline: none;
+    }
+    .auth-card input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(6,95,70,0.1); }
+    .auth-error { color: var(--danger); font-size: 13px; margin-top: 8px; display: none; }
+
+    /* ── Dashboard ── */
+    .dashboard { display: none; }
+    .dashboard.active { display: block; }
+
+    .dash-header {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: #fff;
+      padding: 32px 24px;
+    }
+    .dash-header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .dash-header h1 { font-size: 24px; font-weight: 900; }
+    .dash-header p { opacity: 0.8; font-size: 14px; margin-top: 4px; }
+    .btn-logout {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 500;
+    }
+    .btn-logout:hover { background: rgba(255,255,255,0.25); }
+
+    .dash-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    /* ── Stats Cards ── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+    }
+    .stat-card .stat-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    .stat-card .stat-value {
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--primary);
+      line-height: 1;
+    }
+    .stat-card .stat-sub {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 6px;
+    }
+    .stat-card.highlight { background: var(--primary); border-color: var(--primary); }
+    .stat-card.highlight .stat-label { color: rgba(255,255,255,0.8); }
+    .stat-card.highlight .stat-value { color: #fff; }
+    .stat-card.highlight .stat-sub { color: rgba(255,255,255,0.7); }
+
+    /* ── Panels ── */
+    .panel-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    @media (max-width: 768px) { .panel-grid { grid-template-columns: 1fr; } }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .panel-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .panel-header h3 { font-size: 15px; font-weight: 700; }
+    .panel-body { padding: 20px; }
+
+    /* ── Chart (simple CSS bar chart) ── */
+    .bar-chart { display: flex; flex-direction: column; gap: 10px; }
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .bar-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      width: 60px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .bar-track {
+      flex: 1;
+      height: 24px;
+      background: var(--primary-50);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+      min-width: 32px;
+      transition: width 0.6s ease;
+    }
+
+    /* ── Source Pie (CSS) ── */
+    .source-list { display: flex; flex-direction: column; gap: 12px; }
+    .source-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .source-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .source-name { font-size: 13px; flex: 1; }
+    .source-count { font-size: 13px; font-weight: 700; color: var(--primary); }
+
+    /* ── Subscriber Table ── */
+    .table-container {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+    .table-toolbar {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .table-toolbar h3 { font-size: 15px; font-weight: 700; }
+    .table-search {
+      padding: 8px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 13px;
+      font-family: inherit;
+      outline: none;
+      width: 240px;
+    }
+    .table-search:focus { border-color: var(--primary); }
+
+    .table-filter {
+      display: flex;
+      gap: 6px;
+    }
+    .filter-btn {
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: 6px;
+      font-size: 12px;
+      font-family: inherit;
+      cursor: pointer;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+    .filter-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 12px 20px;
+      text-align: left;
+      font-size: 13px;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      font-weight: 600;
+      color: var(--text-secondary);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      background: #fafbfc;
+    }
+    td { color: var(--text); }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--primary-50); }
+
+    .status-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .status-active { background: var(--primary-50); color: var(--primary); }
+    .status-inactive { background: #f3f4f6; color: #9ca3af; }
+
+    .action-btn {
+      padding: 4px 10px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: 6px;
+      font-size: 11px;
+      cursor: pointer;
+      font-family: inherit;
+      color: var(--danger);
+    }
+    .action-btn:hover { background: #fef2f2; border-color: var(--danger); }
+
+    /* ── Send Newsletter Panel ── */
+    .send-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 32px;
+    }
+    .send-panel .panel-header { cursor: pointer; }
+    .send-panel .panel-header:hover { background: #fafbfc; }
+    .send-body { padding: 20px; display: none; }
+    .send-body.active { display: block; }
+    .send-body .form-group { margin-bottom: 16px; }
+    .send-body label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .send-body input, .send-body textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+    }
+    .send-body textarea { min-height: 200px; resize: vertical; }
+    .send-body input:focus, .send-body textarea:focus { border-color: var(--primary); }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--primary);
+      color: #fff;
+      padding: 14px 24px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      z-index: 999;
+      animation: slideUp 0.3s ease;
+      display: none;
+    }
+    .toast.show { display: block; }
+    .toast.error { background: var(--danger); }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">THE AI <span>INSIGHT</span></a>
+      <div class="nav-links">
+        <a href="index.html">구독</a>
+        <a href="archive.html">아카이브</a>
+        <a href="admin.html" class="active">관리자</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Auth Screen -->
+  <div id="authScreen" class="auth-screen">
+    <div class="auth-card">
+      <div class="lock-icon">&#x1F512;</div>
+      <h2>관리자 인증</h2>
+      <p>대시보드에 접근하려면 비밀번호를 입력하세요</p>
+      <form onsubmit="handleAuth(event)">
+        <input type="password" id="authPassword" placeholder="비밀번호 입력" autofocus>
+        <button type="submit" class="btn btn-primary" style="width:100%;">로그인</button>
+      </form>
+      <p id="authError" class="auth-error">비밀번호가 올바르지 않습니다.</p>
+    </div>
+  </div>
+
+  <!-- Dashboard -->
+  <div id="dashboard" class="dashboard">
+    <div class="dash-header">
+      <div class="dash-header-inner">
+        <div>
+          <h1>관리자 대시보드</h1>
+          <p>THE AI INSIGHT 뉴스레터 현황</p>
+        </div>
+        <button class="btn-logout" onclick="logout()">로그아웃</button>
+      </div>
+    </div>
+
+    <div class="dash-content">
+      <!-- Stats -->
+      <div class="stats-grid" id="statsGrid">
+        <div class="stat-card highlight">
+          <div class="stat-label">활성 구독자</div>
+          <div class="stat-value" id="statActive">-</div>
+          <div class="stat-sub">외부 구독자</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">내부 구독자</div>
+          <div class="stat-value" id="statInternal">6</div>
+          <div class="stat-sub">Gmail 자동 발송</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">구독 취소</div>
+          <div class="stat-value" id="statInactive">-</div>
+          <div class="stat-sub">비활성</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">발송한 뉴스레터</div>
+          <div class="stat-value" id="statNewsletters">-</div>
+          <div class="stat-sub">총 발송 횟수</div>
+        </div>
+      </div>
+
+      <!-- Charts -->
+      <div class="panel-grid">
+        <div class="panel">
+          <div class="panel-header">
+            <h3>월별 구독자 추이</h3>
+          </div>
+          <div class="panel-body" id="monthlyChart">
+            <div class="bar-chart" id="barChart"></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-header">
+            <h3>유입 경로</h3>
+          </div>
+          <div class="panel-body" id="sourceChart">
+            <div class="source-list" id="sourceList"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Send Newsletter -->
+      <div class="send-panel">
+        <div class="panel-header" onclick="toggleSendPanel()">
+          <h3>&#x2709;&#xFE0F; 뉴스레터 발송</h3>
+          <span id="sendToggle" style="font-size:13px;color:var(--text-secondary);">펼치기 &#x25BC;</span>
+        </div>
+        <div id="sendBody" class="send-body">
+          <div class="form-group">
+            <label>제목</label>
+            <input type="text" id="nlSubject" placeholder="이번 주 AI 뉴스 하이라이트">
+          </div>
+          <div class="form-group">
+            <label>HTML 내용</label>
+            <textarea id="nlContent" placeholder="뉴스레터 HTML 내용을 입력하세요..."></textarea>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;">
+            <button class="btn btn-primary" onclick="sendNewsletter()">발송하기</button>
+            <span id="sendStatus" style="font-size:13px;color:var(--text-secondary);"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Subscriber Table -->
+      <div class="table-container">
+        <div class="table-toolbar">
+          <h3>구독자 목록</h3>
+          <div style="display:flex;gap:12px;align-items:center;">
+            <div class="table-filter">
+              <button class="filter-btn active" onclick="filterTable('all', this)">전체</button>
+              <button class="filter-btn" onclick="filterTable('active', this)">활성</button>
+              <button class="filter-btn" onclick="filterTable('inactive', this)">비활성</button>
+            </div>
+            <input type="text" class="table-search" id="tableSearch" placeholder="이메일 검색..." oninput="searchTable()">
+          </div>
+        </div>
+        <div style="overflow-x:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>이메일</th>
+                <th>이름</th>
+                <th>구독일</th>
+                <th>상태</th>
+                <th>유입</th>
+                <th>관리</th>
+              </tr>
+            </thead>
+            <tbody id="subscriberTable">
+              <tr><td colspan="6" style="text-align:center;padding:40px;color:var(--text-secondary);">데이터를 불러오는 중...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast"></div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2026 THE AI INSIGHT by AX추진팀 (서연이화)</p>
+  </footer>
+
+  <script>
+    const SHEET_ID = '1XpalUZ3ap_97U4VPwCPD5603o107WAS9-B6ebxSPtFc';
+    const ADMIN_PWD = 'AX123';
+    let adminPassword = '';
+    let allSubscribers = [];
+    let currentFilter = 'all';
+
+    // ─── Google Sheets gviz API로 데이터 읽기 ─────────────
+    function fetchSheetData(sheetName) {
+      return new Promise(function(resolve) {
+        var cbName = 'gviz_' + Date.now() + '_' + Math.random().toString(36).substr(2,5);
+        var url = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID +
+          '/gviz/tq?tqx=out:json;responseHandler:' + cbName + '&sheet=' + encodeURIComponent(sheetName);
+        window[cbName] = function(response) {
+          delete window[cbName];
+          if (s.parentNode) s.remove();
+          if (response && response.table) {
+            var rows = response.table.rows.map(function(row) {
+              return row.c.map(function(cell) {
+                return cell ? (cell.v !== null ? cell.v : '') : '';
+              });
+            });
+            resolve(rows);
+          } else { resolve([]); }
+        };
+        var s = document.createElement('script');
+        s.src = url;
+        s.onerror = function() { delete window[cbName]; if (s.parentNode) s.remove(); resolve([]); };
+        document.body.appendChild(s);
+      });
+    }
+
+    // ─── 샘플 데이터 ─────────────────────────────────────
+    const SAMPLE_STATS = {
+      totalSubscribers: 23,
+      activeSubscribers: 19,
+      inactiveSubscribers: 4,
+      totalNewsletters: 5,
+      internalCount: 6,
+      monthlyGrowth: {
+        '2026-01': 3, '2026-02': 5, '2026-03': 8, '2026-04': 7
+      },
+      sourceCounts: {
+        'web': 12, 'email': 5, 'referral': 4, 'direct': 2
+      }
+    };
+
+    const SAMPLE_SUBSCRIBERS = [
+      { email: 'kim.minjun@example.com', name: '김민준', subscribedAt: '2026-01-15T09:00:00', status: 'active', source: 'web' },
+      { email: 'lee.soyeon@example.com', name: '이소연', subscribedAt: '2026-01-20T10:30:00', status: 'active', source: 'email' },
+      { email: 'park.jihoon@example.com', name: '박지훈', subscribedAt: '2026-02-05T14:00:00', status: 'active', source: 'referral' },
+      { email: 'choi.yuna@example.com', name: '최유나', subscribedAt: '2026-02-12T11:00:00', status: 'inactive', source: 'web', unsubscribedAt: '2026-03-20' },
+      { email: 'jung.siwoo@example.com', name: '정시우', subscribedAt: '2026-02-28T16:00:00', status: 'active', source: 'web' },
+      { email: 'han.eunji@example.com', name: '한은지', subscribedAt: '2026-03-01T09:30:00', status: 'active', source: 'direct' },
+      { email: 'oh.donghyun@example.com', name: '오동현', subscribedAt: '2026-03-10T13:00:00', status: 'active', source: 'email' },
+      { email: 'kang.subin@example.com', name: '강수빈', subscribedAt: '2026-03-15T10:00:00', status: 'active', source: 'referral' },
+      { email: 'yoon.hyemin@example.com', name: '윤혜민', subscribedAt: '2026-03-22T15:00:00', status: 'inactive', source: 'web', unsubscribedAt: '2026-04-01' },
+      { email: 'shin.taehyung@example.com', name: '신태형', subscribedAt: '2026-04-01T08:30:00', status: 'active', source: 'web' },
+    ];
+
+    // ─── 인증 ────────────────────────────────────────────
+    function handleAuth(e) {
+      e.preventDefault();
+      const pwd = document.getElementById('authPassword').value;
+      if (pwd === ADMIN_PWD) {
+        adminPassword = pwd;
+        showDashboard();
+      } else {
+        document.getElementById('authError').style.display = 'block';
+      }
+    }
+
+    function showDashboard() {
+      document.getElementById('authScreen').style.display = 'none';
+      document.getElementById('dashboard').classList.add('active');
+      loadDashboard();
+    }
+
+    function logout() {
+      adminPassword = '';
+      document.getElementById('dashboard').classList.remove('active');
+      document.getElementById('authScreen').style.display = 'flex';
+      document.getElementById('authPassword').value = '';
+      document.getElementById('authError').style.display = 'none';
+    }
+
+    // ─── 대시보드 로드 (Google Sheets에서 직접 읽기) ────
+    async function loadDashboard() {
+      try {
+        var [subRows, nlRows] = await Promise.all([
+          fetchSheetData('subscribers'),
+          fetchSheetData('newsletters')
+        ]);
+
+        // 구독자 데이터 파싱
+        allSubscribers = subRows.map(function(r) {
+          return {
+            email: r[0] || '', name: r[1] || '',
+            subscribedAt: r[2] || '', status: r[3] || 'active',
+            source: r[4] || 'web', unsubscribedAt: r[5] || ''
+          };
+        });
+
+        // 통계 계산
+        var active = 0, inactive = 0, monthlyGrowth = {}, sourceCounts = {};
+        allSubscribers.forEach(function(sub) {
+          if (sub.status === 'active') active++; else inactive++;
+          var month = sub.subscribedAt ? sub.subscribedAt.toString().substring(0, 7) : 'unknown';
+          monthlyGrowth[month] = (monthlyGrowth[month] || 0) + 1;
+          var src = sub.source || 'direct';
+          sourceCounts[src] = (sourceCounts[src] || 0) + 1;
+        });
+
+        renderStats({
+          activeSubscribers: active,
+          inactiveSubscribers: inactive,
+          totalNewsletters: nlRows.length,
+          internalCount: 6,
+          monthlyGrowth: monthlyGrowth,
+          sourceCounts: sourceCounts
+        });
+        renderTable(allSubscribers);
+      } catch (e) {
+        showToast('데이터 로드 실패', true);
+      }
+    }
+
+    // ─── 통계 렌더링 ───────────────────────────────────
+    function renderStats(data) {
+      document.getElementById('statActive').textContent = data.activeSubscribers;
+      document.getElementById('statInternal').textContent = data.internalCount;
+      document.getElementById('statInactive').textContent = data.inactiveSubscribers;
+      document.getElementById('statNewsletters').textContent = data.totalNewsletters;
+
+      // 월별 차트
+      const months = data.monthlyGrowth;
+      const maxVal = Math.max(...Object.values(months), 1);
+      const barChart = document.getElementById('barChart');
+      barChart.innerHTML = Object.entries(months)
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([month, count]) => `
+          <div class="bar-row">
+            <span class="bar-label">${month.substring(5)}월</span>
+            <div class="bar-track">
+              <div class="bar-fill" style="width:${(count/maxVal)*100}%">${count}</div>
+            </div>
+          </div>
+        `).join('');
+
+      // 유입 경로
+      const sources = data.sourceCounts;
+      const sourceColors = { web: '#065f46', email: '#059669', referral: '#10b981', direct: '#6ee7b7' };
+      const sourceNames = { web: '웹사이트', email: '이메일', referral: '추천', direct: '직접 방문' };
+      const sourceList = document.getElementById('sourceList');
+      sourceList.innerHTML = Object.entries(sources).map(([src, count]) => `
+        <div class="source-item">
+          <div class="source-dot" style="background:${sourceColors[src] || '#94a3b8'}"></div>
+          <span class="source-name">${sourceNames[src] || src}</span>
+          <span class="source-count">${count}명</span>
+        </div>
+      `).join('');
+    }
+
+    // ─── 구독자 테이블 ─────────────────────────────────
+    function renderTable(subscribers) {
+      const tbody = document.getElementById('subscriberTable');
+
+      if (subscribers.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--text-secondary);">구독자가 없습니다.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = subscribers.map(sub => `
+        <tr>
+          <td style="font-weight:500;">${sub.email}</td>
+          <td>${sub.name || '-'}</td>
+          <td>${formatDate(sub.subscribedAt)}</td>
+          <td><span class="status-badge ${sub.status === 'active' ? 'status-active' : 'status-inactive'}">${sub.status === 'active' ? '활성' : '비활성'}</span></td>
+          <td>${getSourceLabel(sub.source)}</td>
+          <td><button class="action-btn" onclick="deleteSubscriber('${sub.email}')">삭제</button></td>
+        </tr>
+      `).join('');
+    }
+
+    function filterTable(filter, btn) {
+      currentFilter = filter;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+
+      let filtered = allSubscribers;
+      if (filter !== 'all') {
+        filtered = allSubscribers.filter(s => s.status === filter);
+      }
+
+      const query = document.getElementById('tableSearch').value.toLowerCase();
+      if (query) {
+        filtered = filtered.filter(s =>
+          s.email.toLowerCase().includes(query) ||
+          (s.name && s.name.toLowerCase().includes(query))
+        );
+      }
+
+      renderTable(filtered);
+    }
+
+    function searchTable() {
+      filterTable(currentFilter, document.querySelector('.filter-btn.active'));
+    }
+
+    async function deleteSubscriber(email) {
+      if (!confirm(email + ' 구독자를 삭제하시겠습니까?\n\nGoogle Sheets에서 직접 해당 행을 삭제해주세요.')) return;
+      window.open('https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/edit#gid=0', '_blank');
+      showToast('Google Sheets에서 ' + email + ' 행을 삭제해주세요.');
+      if (true) {
+      } else {
+        showToast(result.message, true);
+      }
+    }
+
+    // ─── 뉴스레터 발송 ─────────────────────────────────
+    function toggleSendPanel() {
+      const body = document.getElementById('sendBody');
+      const toggle = document.getElementById('sendToggle');
+      body.classList.toggle('active');
+      toggle.innerHTML = body.classList.contains('active') ? '접기 &#x25B2;' : '펼치기 &#x25BC;';
+    }
+
+    async function sendNewsletter() {
+      showToast('뉴스레터 발송은 Apps Script에서 직접 실행해주세요.\n(sendNewsletter 함수 사용)');
+    }
+
+    // ─── 유틸리티 (callAPI 제거 - Sheets gviz 사용) ─────
+
+    function formatDate(dateStr) {
+      if (!dateStr) return '-';
+      const d = new Date(dateStr);
+      return d.getFullYear() + '.' + String(d.getMonth()+1).padStart(2,'0') + '.' + String(d.getDate()).padStart(2,'0');
+    }
+
+    function getSourceLabel(source) {
+      const labels = { web: '웹사이트', email: '이메일', referral: '추천', direct: '직접' };
+      return labels[source] || source || '-';
+    }
+
+    function showToast(message, isError) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.className = 'toast show' + (isError ? ' error' : '');
+      setTimeout(() => { toast.classList.remove('show'); }, 3500);
+    }
+  </script>
+</body>
+</html>

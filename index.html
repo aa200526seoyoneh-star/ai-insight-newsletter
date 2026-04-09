@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THE AI INSIGHT - AI 트렌드 뉴스레터 구독</title>
+  <meta name="description" content="서연이화 AX추진팀이 전하는 AI 트렌드, 실전 가이드, 업무 자동화 팁. 무료 구독하세요.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #065f46;
+      --primary-light: #059669;
+      --primary-dark: #064e3b;
+      --primary-50: #ecfdf5;
+      --primary-100: #d1fae5;
+      --accent: #10b981;
+      --bg: #f8fafb;
+      --surface: #ffffff;
+      --text: #1f2937;
+      --text-secondary: #6b7280;
+      --border: #e5e7eb;
+      --danger: #ef4444;
+      --radius: 12px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Nav ── */
+    .nav {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .nav-logo {
+      font-weight: 900;
+      font-size: 18px;
+      color: var(--primary);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 8px; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover { background: var(--primary-50); color: var(--primary); }
+    .nav-links a.active { background: var(--primary); color: #fff; }
+
+    /* ── Hero ── */
+    .hero {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%);
+      color: #fff;
+      padding: 80px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 50%, rgba(16,185,129,0.15) 0%, transparent 50%),
+                  radial-gradient(circle at 70% 80%, rgba(255,255,255,0.05) 0%, transparent 40%);
+      animation: float 20s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(-2%, 2%) rotate(1deg); }
+    }
+    .hero-content { position: relative; max-width: 650px; margin: 0 auto; }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 24px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .hero h1 {
+      font-size: 42px;
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 16px;
+      letter-spacing: -1px;
+    }
+    .hero p {
+      font-size: 17px;
+      opacity: 0.9;
+      line-height: 1.8;
+      margin-bottom: 40px;
+    }
+
+    /* ── Subscribe Form ── */
+    .subscribe-card {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 40px;
+      max-width: 520px;
+      margin: -40px auto 0;
+      position: relative;
+      z-index: 10;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .subscribe-card h2 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--primary);
+    }
+    .subscribe-card .subtitle {
+      color: var(--text-secondary);
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    .form-group { margin-bottom: 16px; }
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 15px;
+      font-family: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    .form-group input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(6,95,70,0.1);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 28px;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      width: 100%;
+    }
+    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(6,95,70,0.3); }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--primary);
+      border: 1.5px solid var(--primary);
+    }
+    .btn-outline:hover { background: var(--primary-50); }
+
+    .btn-danger {
+      background: transparent;
+      color: var(--danger);
+      border: 1.5px solid var(--danger);
+      width: 100%;
+    }
+    .btn-danger:hover { background: #fef2f2; }
+
+    /* ── Features ── */
+    .features {
+      max-width: 1100px;
+      margin: 60px auto;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .feature-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 32px;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+    .feature-card:hover { border-color: var(--primary-light); box-shadow: 0 8px 24px rgba(6,95,70,0.06); transform: translateY(-2px); }
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--primary-50);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 16px;
+    }
+    .feature-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .feature-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+
+    /* ── Tabs ── */
+    .tab-section {
+      max-width: 520px;
+      margin: 60px auto;
+      padding: 0 24px;
+    }
+    .tabs {
+      display: flex;
+      background: var(--primary-50);
+      border-radius: 10px;
+      padding: 4px;
+      margin-bottom: 24px;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      background: transparent;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      color: var(--text-secondary);
+      transition: all 0.2s;
+    }
+    .tab-btn.active {
+      background: var(--surface);
+      color: var(--primary);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* ── Message ── */
+    .message {
+      padding: 14px 18px;
+      border-radius: 10px;
+      font-size: 14px;
+      margin-top: 16px;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    .message.show { display: block; }
+    .message.success { background: var(--primary-50); color: var(--primary); border: 1px solid var(--primary-100); }
+    .message.error { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ── Stats Bar ── */
+    .stats-bar {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px;
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+    .stats-bar strong { color: var(--primary); font-size: 20px; display: block; }
+
+    /* ── Footer ── */
+    .footer {
+      margin-top: auto;
+      background: var(--primary-dark);
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      padding: 32px 24px;
+      font-size: 13px;
+    }
+    .footer a { color: var(--accent); text-decoration: none; }
+
+    /* ── Spinner ── */
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .hero { padding: 60px 20px; }
+      .hero h1 { font-size: 28px; }
+      .subscribe-card { margin: -30px 16px 0; padding: 28px 20px; }
+      .stats-bar { gap: 24px; flex-wrap: wrap; }
+      .nav-links a { padding: 8px 10px; font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">THE AI <span>INSIGHT</span></a>
+      <div class="nav-links">
+        <a href="index.html" class="active">구독</a>
+        <a href="archive.html">아카이브</a>
+        <a href="admin.html">관리자</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">by 서연이화 AX추진팀</div>
+      <h1>AI 트렌드를<br>가장 먼저 만나보세요</h1>
+      <p>매주 엄선한 AI 뉴스, 실전 활용 가이드, 업무 자동화 팁을<br>이메일로 보내드립니다. 무료로 구독하세요.</p>
+    </div>
+  </section>
+
+  <!-- Subscribe / Unsubscribe Card -->
+  <div class="tab-section">
+    <div class="subscribe-card">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="subscribe" onclick="switchTab('subscribe')">구독하기</button>
+        <button class="tab-btn" data-tab="unsubscribe" onclick="switchTab('unsubscribe')">구독취소</button>
+      </div>
+
+      <!-- Subscribe Tab -->
+      <div id="tab-subscribe" class="tab-content active">
+        <h2>뉴스레터 구독</h2>
+        <p class="subtitle">AI 인사이트를 놓치지 마세요</p>
+        <form id="subscribeForm" onsubmit="handleSubscribe(event)">
+          <div class="form-group">
+            <label for="subName">이름 (선택)</label>
+            <input type="text" id="subName" placeholder="홍길동">
+          </div>
+          <div class="form-group">
+            <label for="subEmail">이메일 *</label>
+            <input type="email" id="subEmail" placeholder="email@example.com" required>
+          </div>
+          <button type="submit" class="btn btn-primary" id="subBtn">
+            무료 구독하기
+          </button>
+        </form>
+        <div id="subMessage" class="message"></div>
+      </div>
+
+      <!-- Unsubscribe Tab -->
+      <div id="tab-unsubscribe" class="tab-content">
+        <h2>구독 취소</h2>
+        <p class="subtitle">언제든 다시 돌아오실 수 있습니다</p>
+        <form id="unsubscribeForm" onsubmit="handleUnsubscribe(event)">
+          <div class="form-group">
+            <label for="unsubEmail">이메일</label>
+            <input type="email" id="unsubEmail" placeholder="email@example.com" required>
+          </div>
+          <button type="submit" class="btn btn-danger" id="unsubBtn">
+            구독 취소하기
+          </button>
+        </form>
+        <div id="unsubMessage" class="message"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Features -->
+  <section class="features">
+    <div class="feature-card">
+      <div class="feature-icon">&#x1F4CA;</div>
+      <h3>AI 트렌드 분석</h3>
+      <p>주요 AI 모델 업데이트, 기업 도입 사례, 산업별 영향 분석을 한눈에 정리해드립니다.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#x1F6E0;</div>
+      <h3>실전 활용 가이드</h3>
+      <p>Claude, ChatGPT, Copilot 등 AI 도구를 업무에 바로 적용할 수 있는 실전 팁을 제공합니다.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#x26A1;</div>
+      <h3>업무 자동화 레시피</h3>
+      <p>반복 업무를 AI로 자동화하는 방법을 단계별로 알려드립니다. 누구나 따라할 수 있어요.</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2026 THE AI INSIGHT by AX추진팀 (서연이화)</p>
+    <p style="margin-top:8px;">
+      <a href="archive.html">지난 뉴스레터</a> &middot;
+      <a href="mailto:aa200526@seoyoneh.com">문의하기</a>
+    </p>
+  </footer>
+
+  <!-- Google Form 제출용 숨김 iframe -->
+  <iframe name="hiddenFrame" id="hiddenFrame" style="display:none;"></iframe>
+
+  <script>
+    // ─── 설정 (Google Form + Sheets 방식) ─────────────────
+    const FORM_ACTION = 'https://docs.google.com/forms/d/e/1GSfXbBWkE4f5eqqnW1LRfwj6V9snexJTSRbUR2NwOyo/formResponse';
+    const ENTRY_EMAIL = 'entry.1443858870';
+    const ENTRY_NAME  = 'entry.304391785';
+    const ENTRY_SOURCE = 'entry.1573810244';
+
+    const SHEET_ID = '1XpalUZ3ap_97U4VPwCPD5603o107WAS9-B6ebxSPtFc';
+
+    // URL 파라미터에서 이메일 추출 (뉴스레터 내 구독취소 링크용)
+    const urlParams = new URLSearchParams(window.location.search);
+    const emailParam = urlParams.get('email');
+    const actionParam = urlParams.get('action');
+
+    if (emailParam && actionParam === 'unsubscribe') {
+      switchTab('unsubscribe');
+      document.getElementById('unsubEmail').value = emailParam;
+    }
+
+    // ─── 탭 전환 ─────────────────────────────────────────
+    function switchTab(tab) {
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.tab === tab);
+      });
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.toggle('active', content.id === 'tab-' + tab);
+      });
+    }
+
+    // ─── 구독 처리 (Google Form 제출) ────────────────────
+    function handleSubscribe(e) {
+      e.preventDefault();
+      var btn = document.getElementById('subBtn');
+      var msg = document.getElementById('subMessage');
+      var email = document.getElementById('subEmail').value.trim();
+      var name = document.getElementById('subName').value.trim();
+
+      if (!email) return;
+
+      btn.disabled = true;
+      btn.innerHTML = '<div class="spinner"></div> 처리 중...';
+
+      // 숨김 폼 생성 → iframe으로 제출 (CORS 우회)
+      var form = document.createElement('form');
+      form.method = 'POST';
+      form.action = FORM_ACTION;
+      form.target = 'hiddenFrame';
+
+      var fields = {};
+      fields[ENTRY_EMAIL] = email;
+      fields[ENTRY_NAME] = name;
+      fields[ENTRY_SOURCE] = 'web';
+
+      for (var key in fields) {
+        var input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = fields[key];
+        form.appendChild(input);
+      }
+
+      document.body.appendChild(form);
+      form.submit();
+      form.remove();
+
+      // Google Form은 성공/실패 응답을 주지 않으므로 타이머로 처리
+      setTimeout(function() {
+        msg.className = 'message show success';
+        msg.textContent = '구독이 완료되었습니다! THE AI INSIGHT 뉴스레터를 통해 최신 AI 트렌드를 만나보세요.';
+        btn.disabled = false;
+        btn.textContent = '무료 구독하기';
+        document.getElementById('subscribeForm').reset();
+      }, 1500);
+    }
+
+    // ─── 구독취소 처리 ───────────────────────────────────
+    function handleUnsubscribe(e) {
+      e.preventDefault();
+      var btn = document.getElementById('unsubBtn');
+      var msg = document.getElementById('unsubMessage');
+      var email = document.getElementById('unsubEmail').value.trim();
+
+      if (!email) return;
+
+      btn.disabled = true;
+      btn.innerHTML = '<div class="spinner"></div> 처리 중...';
+
+      // 구독취소는 관리자에게 이메일 알림 방식으로 처리
+      var mailtoLink = 'mailto:aa200526@seoyoneh.com?subject=' +
+        encodeURIComponent('[THE AI INSIGHT] 구독취소 요청') +
+        '&body=' + encodeURIComponent('구독 취소를 요청합니다.\n이메일: ' + email);
+
+      // 구독취소 알림 + 시트에서 관리자가 직접 처리
+      setTimeout(function() {
+        msg.className = 'message show success';
+        msg.textContent = '구독 취소 요청이 접수되었습니다. 처리 완료 시 안내 메일을 보내드리겠습니다.';
+        btn.disabled = false;
+        btn.textContent = '구독 취소하기';
+        document.getElementById('unsubscribeForm').reset();
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
