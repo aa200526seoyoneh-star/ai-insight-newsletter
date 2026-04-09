@@ -491,7 +491,20 @@
 
   <script>
     const SHEET_ID = '1XpalUZ3ap_97U4VPwCPD5603o107WAS9-B6ebxSPtFc';
-    const ADMIN_PWD = 'AX123';
+    const ADMIN_PWD = 'ax123';
+
+    // ─── 관리자 Google Form 설정 ─────────────────────────
+    const ADMIN_FORM_ID = '1a2KI-p3c55Oy9xMJ9seQn_FKQ8Alx3gGRvuBjtleZ9U';
+    const ADMIN_FORM_ACTION = 'https://docs.google.com/forms/d/' + ADMIN_FORM_ID + '/formResponse';
+    const ENTRY = {
+      PASSWORD:  'entry.1220354735',
+      ACTION:    'entry.1172398797',
+      SUBJECT:   'entry.750230884',
+      CONTENT:   'entry.959932790',
+      EMAIL:     'entry.1316908729',
+      STATUS:    'entry.2049694165'
+    };
+
     let adminPassword = '';
     let allSubscribers = [];
     let currentFilter = 'all';
@@ -668,7 +681,10 @@
           <td>${formatDate(sub.subscribedAt)}</td>
           <td><span class="status-badge ${sub.status === 'active' ? 'status-active' : 'status-inactive'}">${sub.status === 'active' ? '활성' : '비활성'}</span></td>
           <td>${getSourceLabel(sub.source)}</td>
-          <td><button class="action-btn" onclick="deleteSubscriber('${sub.email}')">삭제</button></td>
+          <td style="white-space:nowrap;">
+            <button class="action-btn" onclick="changeSubscriberStatus('${sub.email}', '${sub.status === 'active' ? 'inactive' : 'active'}')" title="상태 변경">${sub.status === 'active' ? '비활성화' : '활성화'}</button>
+            <button class="action-btn" onclick="deleteSubscriber('${sub.email}')" style="color:var(--danger);">삭제</button>
+          </td>
         </tr>
       `).join('');
     }
@@ -699,12 +715,41 @@
     }
 
     async function deleteSubscriber(email) {
-      if (!confirm(email + ' 구독자를 삭제하시겠습니까?\n\nGoogle Sheets에서 직접 해당 행을 삭제해주세요.')) return;
-      window.open('https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/edit#gid=0', '_blank');
-      showToast('Google Sheets에서 ' + email + ' 행을 삭제해주세요.');
-      if (true) {
-      } else {
-        showToast(result.message, true);
+      if (!confirm(email + ' 구독자를 삭제하시겠습니까?')) return;
+
+      try {
+        var fields = {};
+        fields[ENTRY.ACTION] = '구독자 삭제';
+        fields[ENTRY.EMAIL] = email;
+
+        await submitAdminForm(fields);
+        showToast(email + ' 삭제 요청이 전송되었습니다.');
+        // 로컬 목록에서도 즉시 제거
+        allSubscribers = allSubscribers.filter(function(s) { return s.email !== email; });
+        filterTable(currentFilter, document.querySelector('.filter-btn.active'));
+      } catch (e) {
+        showToast('삭제 요청 실패: ' + e.message, true);
+      }
+    }
+
+    async function changeSubscriberStatus(email, newStatus) {
+      if (!confirm(email + ' 구독자의 상태를 "' + newStatus + '"(으)로 변경하시겠습니까?')) return;
+
+      try {
+        var fields = {};
+        fields[ENTRY.ACTION] = '구독자 상태 변경';
+        fields[ENTRY.EMAIL] = email;
+        fields[ENTRY.STATUS] = newStatus;
+
+        await submitAdminForm(fields);
+        showToast(email + ' → ' + newStatus + ' 변경 요청이 전송되었습니다.');
+        // 로컬 목록 즉시 반영
+        allSubscribers.forEach(function(s) {
+          if (s.email === email) s.status = newStatus;
+        });
+        filterTable(currentFilter, document.querySelector('.filter-btn.active'));
+      } catch (e) {
+        showToast('상태 변경 요청 실패: ' + e.message, true);
       }
     }
 
@@ -716,8 +761,84 @@
       toggle.innerHTML = body.classList.contains('active') ? '접기 &#x25B2;' : '펼치기 &#x25BC;';
     }
 
+    // ─── Google Form 제출 헬퍼 ─────────────────────────
+    function submitAdminForm(fields) {
+      return new Promise(function(resolve) {
+        var iframeName = 'adminForm_' + Date.now();
+        var iframe = document.createElement('iframe');
+        iframe.name = iframeName;
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
+
+        var form = document.createElement('form');
+        form.method = 'POST';
+        form.action = ADMIN_FORM_ACTION;
+        form.target = iframeName;
+
+        // 비밀번호는 항상 포함
+        var pwdInput = document.createElement('input');
+        pwdInput.type = 'hidden';
+        pwdInput.name = ENTRY.PASSWORD;
+        pwdInput.value = adminPassword;
+        form.appendChild(pwdInput);
+
+        // 나머지 필드 추가
+        Object.keys(fields).forEach(function(entryName) {
+          var input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = entryName;
+          input.value = fields[entryName];
+          form.appendChild(input);
+        });
+
+        document.body.appendChild(form);
+        form.submit();
+
+        // Google Form은 성공/실패 응답을 주지 않으므로 타이머로 처리
+        setTimeout(function() {
+          form.remove();
+          iframe.remove();
+          resolve(true);
+        }, 2000);
+      });
+    }
+
     async function sendNewsletter() {
-      showToast('뉴스레터 발송은 Apps Script에서 직접 실행해주세요.\n(sendNewsletter 함수 사용)');
+      var subject = document.getElementById('nlSubject').value.trim();
+      var content = document.getElementById('nlContent').value.trim();
+
+      if (!subject) {
+        showToast('제목을 입력해주세요.', true);
+        return;
+      }
+
+      if (!confirm('뉴스레터를 발송하시겠습니까?\n\n제목: ' + subject + '\n내용 길이: ' + (content.length || 0) + '자')) return;
+
+      var sendBtn = document.querySelector('.send-body .btn-primary');
+      var sendStatus = document.getElementById('sendStatus');
+      sendBtn.disabled = true;
+      sendBtn.textContent = '발송 중...';
+      sendStatus.textContent = 'Google Form을 통해 발송 요청 중...';
+
+      try {
+        var fields = {};
+        fields[ENTRY.ACTION] = '뉴스레터 발송';
+        fields[ENTRY.SUBJECT] = subject;
+        fields[ENTRY.CONTENT] = content || '<p>' + subject + '</p>';
+
+        await submitAdminForm(fields);
+
+        showToast('발송 요청이 전송되었습니다! Apps Script에서 처리됩니다.');
+        sendStatus.textContent = '발송 요청 완료 (' + new Date().toLocaleTimeString('ko-KR') + ')';
+        document.getElementById('nlSubject').value = '';
+        document.getElementById('nlContent').value = '';
+      } catch (e) {
+        showToast('발송 요청 실패: ' + e.message, true);
+        sendStatus.textContent = '발송 실패';
+      } finally {
+        sendBtn.disabled = false;
+        sendBtn.textContent = '발송하기';
+      }
     }
 
     // ─── 유틸리티 (callAPI 제거 - Sheets gviz 사용) ─────

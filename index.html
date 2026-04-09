@@ -324,6 +324,82 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    /* ── Preview Section ── */
+    .preview-section {
+      max-width: 1100px;
+      margin: 60px auto 0;
+      padding: 0 24px;
+      text-align: center;
+    }
+    .preview-section h2 {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .preview-section .preview-subtitle {
+      color: var(--text-secondary);
+      font-size: 15px;
+      margin-bottom: 32px;
+    }
+    .preview-frame-wrapper {
+      max-width: 640px;
+      margin: 0 auto;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.06);
+      border: 1px solid var(--border);
+      background: #fff;
+      position: relative;
+    }
+    .preview-toolbar {
+      background: #f9fafb;
+      border-bottom: 1px solid var(--border);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .preview-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #e5e7eb;
+    }
+    .preview-dot:nth-child(1) { background: #fca5a5; }
+    .preview-dot:nth-child(2) { background: #fcd34d; }
+    .preview-dot:nth-child(3) { background: #86efac; }
+    .preview-toolbar span {
+      flex: 1;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    .preview-frame-wrapper iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      display: block;
+    }
+    .preview-fade {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 120px;
+      background: linear-gradient(transparent, rgba(255,255,255,0.95));
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 20px;
+    }
+    .preview-fade .btn {
+      padding: 10px 24px;
+      font-size: 14px;
+      box-shadow: 0 4px 12px rgba(6,95,70,0.2);
+    }
+
     /* ── Responsive ── */
     @media (max-width: 640px) {
       .hero { padding: 60px 20px; }
@@ -331,6 +407,8 @@
       .subscribe-card { margin: -30px 16px 0; padding: 28px 20px; }
       .stats-bar { gap: 24px; flex-wrap: wrap; }
       .nav-links a { padding: 8px 10px; font-size: 13px; }
+      .preview-section h2 { font-size: 22px; }
+      .preview-frame-wrapper iframe { height: 450px; }
     }
   </style>
 </head>
@@ -402,6 +480,25 @@
       </div>
     </div>
   </div>
+
+  <!-- Newsletter Preview -->
+  <section class="preview-section">
+    <h2>이런 뉴스레터를 보내드려요</h2>
+    <p class="preview-subtitle">매일 아침, 핵심 AI 트렌드를 한눈에 정리해 드립니다</p>
+    <div class="preview-frame-wrapper">
+      <div class="preview-toolbar">
+        <div class="preview-dot"></div>
+        <div class="preview-dot"></div>
+        <div class="preview-dot"></div>
+        <span>THE AI INSIGHT — Monday Morning Briefing</span>
+        <div style="width:30px;"></div>
+      </div>
+      <iframe src="sample_newsletter.html" title="뉴스레터 미리보기" loading="lazy"></iframe>
+      <div class="preview-fade">
+        <a href="#tab-subscribe" class="btn btn-primary" onclick="switchTab('subscribe');window.scrollTo({top:0,behavior:'smooth'});">구독하고 전체 보기</a>
+      </div>
+    </div>
+  </section>
 
   <!-- Features -->
   <section class="features">
