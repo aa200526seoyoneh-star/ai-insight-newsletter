@@ -859,19 +859,36 @@
       || (window.ADMIN_CONFIG && window.ADMIN_CONFIG.ADMIN_PW_HASH)
       || '';
 
-    // ─── Apps Script WEBAPP JSONP 호출 (비공개 시트 읽기용) ─────
-    // 인증이 필요한 액션: getSubscribers, getFeedback — params.password 포함해야 함
-    // 공개 액션: getArchive — password 불필요
+    // ─── Apps Script WEBAPP 호출 (프록시 경유 우선, 회사망 차단 우회) ─────
+    // PROXY_URL이 설정되어 있으면: Cloudflare Worker 경유 (CORS 지원 fetch)
+    // 없으면: script.google.com 직접 JSONP 호출
     function fetchViaWebApp(action, extraParams) {
       return new Promise(function(resolve) {
-        if (!WEBAPP_URL) { resolve({success:false, data:[]}); return; }
-        var cbName = 'wa_' + Date.now() + '_' + Math.random().toString(36).substr(2,5);
-        var params = 'action=' + encodeURIComponent(action) + '&callback=' + cbName;
+        var proxy = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.PROXY_URL) || '';
+        if (!WEBAPP_URL && !proxy) { resolve({success:false, data:[]}); return; }
+
+        var qs = 'action=' + encodeURIComponent(action);
         if (extraParams) {
           for (var k in extraParams) {
-            if (extraParams[k] != null) params += '&' + k + '=' + encodeURIComponent(extraParams[k]);
+            if (extraParams[k] != null) qs += '&' + k + '=' + encodeURIComponent(extraParams[k]);
           }
         }
+
+        // ── Case 1: PROXY_URL 사용 (fetch + CORS, 회사 네트워크 호환) ──
+        if (proxy) {
+          var proxyUrl = proxy.replace(/\/$/, '') + '/?' + qs;
+          fetch(proxyUrl, { method: 'GET', mode: 'cors' })
+            .then(function(res) { return res.text(); })
+            .then(function(txt) {
+              try { resolve(JSON.parse(txt)); }
+              catch (e) { resolve({success:false, data:[], raw:txt}); }
+            })
+            .catch(function() { resolve({success:false, data:[]}); });
+          return;
+        }
+
+        // ── Case 2: JSONP (직접 호출, 회사 차단 시 실패) ──
+        var cbName = 'wa_' + Date.now() + '_' + Math.random().toString(36).substr(2,5);
         var s = document.createElement('script');
         var done = false;
         window[cbName] = function(response) {
@@ -880,7 +897,7 @@
           if (s.parentNode) s.remove();
           resolve(response || {success:false, data:[]});
         };
-        s.src = WEBAPP_URL + '?' + params;
+        s.src = WEBAPP_URL + '?' + qs + '&callback=' + cbName;
         s.onerror = function() {
           if (done) return;
           delete window[cbName];

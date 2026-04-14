@@ -1402,13 +1402,30 @@
       document.querySelector('.unsub-section').scrollIntoView({ behavior: 'smooth' });
     }
 
-    // ─── Apps Script 웹앱 URL ───────────────────────────
+    // ─── Apps Script 웹앱 URL / 프록시 URL ────────────────
     var WEBAPP_URL = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.WEBAPP_URL) || '';
+    var PROXY_URL = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.PROXY_URL) || '';
 
-    // ─── 구독 제출 (Apps Script로 직접 전송 → subscribers 시트 기록) ──
+    // ─── 구독 제출 (프록시 우선 → Apps Script → subscribers 시트 기록) ──
     function submitToGoogleForm(email, name, source, onDone) {
-      // 1) Apps Script 직접 호출 (JSONP) — subscribers 시트에 기록
-      if (WEBAPP_URL) {
+      var qs = 'action=subscribe'
+        + '&email=' + encodeURIComponent(email)
+        + '&name=' + encodeURIComponent(name || '')
+        + '&source=' + encodeURIComponent(source || 'web');
+
+      // 1-A) PROXY_URL 우선 사용 (회사 네트워크 호환)
+      if (PROXY_URL) {
+        var proxyUrl = PROXY_URL.replace(/\/$/, '') + '/?' + qs;
+        fetch(proxyUrl, { method: 'GET', mode: 'cors' })
+          .then(function(res) { return res.text(); })
+          .then(function(txt) {
+            try { if (typeof onDone === 'function') onDone(JSON.parse(txt)); }
+            catch (e) { if (typeof onDone === 'function') onDone({ok:false}); }
+          })
+          .catch(function() { if (typeof onDone === 'function') onDone({ok:false}); });
+      }
+      // 1-B) 프록시 없으면 Apps Script 직접 JSONP 호출
+      else if (WEBAPP_URL) {
         var s = document.createElement('script');
         var cbName = 'sub_' + Date.now();
         var done = false;
@@ -1418,12 +1435,7 @@
           if (s.parentNode) s.remove();
           if (typeof onDone === 'function') onDone(response);
         };
-        var params = 'action=subscribe'
-          + '&email=' + encodeURIComponent(email)
-          + '&name=' + encodeURIComponent(name || '')
-          + '&source=' + encodeURIComponent(source || 'web')
-          + '&callback=' + cbName;
-        s.src = WEBAPP_URL + '?' + params;
+        s.src = WEBAPP_URL + '?' + qs + '&callback=' + cbName;
         s.onerror = function() {
           if (done) return;
           delete window[cbName];

@@ -15,7 +15,7 @@ window.ADMIN_CONFIG = {
   FORM_ID:  '1a2KI-p3c55Oy9xMJ9seQn_FKQ8Alx3gGRvuBjtleZ9U',
   SUB_FORM_ACTION: 'https://docs.google.com/forms/d/e/1GSfXbBWkE4f5eqqnW1LRfwj6V9snexJTSRbUR2NwOyo/formResponse',
   WEBAPP_URL: 'https://script.google.com/macros/s/AKfycbxX56OBdahXeBP3wACO5AqzlhmPA5m74lYTYtgTZYCsd8EWJk6R6Wla_q7Lpf9A4LkVaA/exec',
-  PROXY_URL: '',
+  PROXY_URL: 'https://ai-insight-proxy.aa200526seoyoneh.workers.dev',
   // ── 로그인용 비밀번호 해시 (SHA-256) ── 비밀번호 변경 시 해시도 업데이트 필요
   ADMIN_PW_HASH: 'a7fb82f3d2903e567fa57862ec3bef68c3a61db0b1580f5d216d2e72431911e6'
 };
