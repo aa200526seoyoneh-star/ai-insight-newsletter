@@ -853,7 +853,11 @@
     // ─── 로그인 시도 관리 (5회 잠금) ───
     var AUTH_FAIL_COUNT = 0;
     var AUTH_LOCKED = false;
-    var ADMIN_PW_HASH = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.ADMIN_PW_HASH) || '';
+    // 로컬 재설정 해시 우선, 없으면 config.js 값 사용
+    var ADMIN_PW_HASH_OVERRIDE_KEY = 'admin_pw_hash_override_v1';
+    var ADMIN_PW_HASH = localStorage.getItem(ADMIN_PW_HASH_OVERRIDE_KEY)
+      || (window.ADMIN_CONFIG && window.ADMIN_CONFIG.ADMIN_PW_HASH)
+      || '';
 
     // ─── Google Sheets gviz API로 데이터 읽기 ─────────────
     function fetchSheetData(sheetName) {
@@ -1634,6 +1638,8 @@
         resetBtn.disabled = false;
         var newHash = await sha256(newPw);
         ADMIN_PW_HASH = newHash;
+        // 영구 저장 — 페이지 새로고침 후에도 새 비밀번호로 로그인 가능
+        try { localStorage.setItem(ADMIN_PW_HASH_OVERRIDE_KEY, newHash); } catch(e) {}
         AUTH_LOCKED = false;
         AUTH_FAIL_COUNT = 0;
         successEl.textContent = '비밀번호가 변경되었습니다. 새 비밀번호로 로그인해주세요.';
