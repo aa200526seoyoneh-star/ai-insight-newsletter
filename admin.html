@@ -859,7 +859,48 @@
       || (window.ADMIN_CONFIG && window.ADMIN_CONFIG.ADMIN_PW_HASH)
       || '';
 
-    // ─── Google Sheets gviz API로 데이터 읽기 ─────────────
+    // ─── Apps Script WEBAPP JSONP 호출 (비공개 시트 읽기용) ─────
+    // 인증이 필요한 액션: getSubscribers, getFeedback — params.password 포함해야 함
+    // 공개 액션: getArchive — password 불필요
+    function fetchViaWebApp(action, extraParams) {
+      return new Promise(function(resolve) {
+        if (!WEBAPP_URL) { resolve({success:false, data:[]}); return; }
+        var cbName = 'wa_' + Date.now() + '_' + Math.random().toString(36).substr(2,5);
+        var params = 'action=' + encodeURIComponent(action) + '&callback=' + cbName;
+        if (extraParams) {
+          for (var k in extraParams) {
+            if (extraParams[k] != null) params += '&' + k + '=' + encodeURIComponent(extraParams[k]);
+          }
+        }
+        var s = document.createElement('script');
+        var done = false;
+        window[cbName] = function(response) {
+          done = true;
+          delete window[cbName];
+          if (s.parentNode) s.remove();
+          resolve(response || {success:false, data:[]});
+        };
+        s.src = WEBAPP_URL + '?' + params;
+        s.onerror = function() {
+          if (done) return;
+          delete window[cbName];
+          if (s.parentNode) s.remove();
+          resolve({success:false, data:[]});
+        };
+        document.head.appendChild(s);
+        setTimeout(function() {
+          if (window[cbName]) {
+            delete window[cbName];
+            if (s.parentNode) s.remove();
+            resolve({success:false, data:[], timeout:true});
+          }
+        }, 10000);
+      });
+    }
+
+    // ─── (레거시) Google Sheets gviz API ─────────────
+    // 비공개 시트(제한됨) 상태에서는 ACCESS_DENIED가 뜨므로 WEBAPP 경유로 전환함.
+    // 공개 시트(newsletters 등) 읽기 용도로만 유지.
     function fetchSheetData(sheetName) {
       return new Promise(function(resolve) {
         var cbName = 'gviz_' + Date.now() + '_' + Math.random().toString(36).substr(2,5);
@@ -982,18 +1023,27 @@
     // ─── 대시보드 로드 (Google Sheets에서 직접 읽기) ────
     async function loadDashboard() {
       try {
-        var [subRows, nlRows] = await Promise.all([
-          fetchSheetData('subscribers'),
-          fetchSheetData('newsletters')
+        var [subResp, nlResp] = await Promise.all([
+          fetchViaWebApp('getSubscribers', { password: adminPassword }),
+          fetchViaWebApp('getArchive')
         ]);
 
-        // 구독자 데이터 파싱
-        allSubscribers = subRows.map(function(r) {
+        if (!subResp || subResp.success === false) {
+          showToast('구독자 목록 로드 실패: ' + (subResp && subResp.message ? subResp.message : '인증 오류'), true);
+        }
+        var subList = (subResp && subResp.data) || [];
+        var nlList = (nlResp && nlResp.data) || [];
+
+        // 구독자 데이터 정규화
+        allSubscribers = subList.map(function(s) {
           return {
-            email: r[0] || '', name: r[1] || '',
-            subscribedAt: r[2] || '', status: r[3] || 'active',
-            source: r[4] || 'web', unsubscribedAt: r[5] || '',
-            isInternal: false
+            email: s.email || '',
+            name: s.name || '',
+            subscribedAt: s.subscribedAt || '',
+            status: s.status || 'active',
+            source: s.source || 'web',
+            unsubscribedAt: s.unsubscribedAt || '',
+            isInternal: !!s.isInternal
           };
         });
 
@@ -1010,7 +1060,7 @@
         renderStats({
           activeSubscribers: active,
           inactiveSubscribers: inactive,
-          totalNewsletters: nlRows.length,
+          totalNewsletters: nlList.length,
           monthlyGrowth: monthlyGrowth,
           sourceCounts: sourceCounts
         });
@@ -1454,16 +1504,16 @@
       tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:40px;color:var(--text-secondary);">피드백을 불러오는 중...</td></tr>';
 
       try {
-        var rows = await fetchSheetData('feedback');
+        var resp = await fetchViaWebApp('getFeedback', { password: adminPassword });
         body.dataset.loaded = '1';
-        if (rows && rows.length > 0) {
-          var items = rows.map(function(r) {
+        var list = (resp && resp.data) || [];
+        if (list.length > 0) {
+          var items = list.map(function(r) {
             return {
-              timestamp: r[0] || '',
-              email: r[1] || '',
-              rating: parseInt(r[2]) || 0,
-              category: r[3] || '',
-              message: r[4] || ''
+              timestamp: r.timestamp || '',
+              email: r.email || '',
+              name: r.name || '',
+              message: r.message || ''
             };
           });
           // 최신 날짜가 상단
