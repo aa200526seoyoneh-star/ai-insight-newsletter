@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THE AI INSIGHT - 의견 보내기</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #065f46;
+      --primary-light: #059669;
+      --accent: #10b981;
+      --bg: #f0f4f3;
+      --surface: #ffffff;
+      --text: #1e293b;
+      --text-secondary: #64748b;
+      --text-muted: #94a3b8;
+      --border: #e2e8f0;
+      --radius: 14px;
+      /* Weekly colors */
+      --mon: #f59e0b;
+      --tue: #e74c3c;
+      --wed: #dc2626;
+      --thu: #059669;
+      --fri: #c97a4a;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Noto Sans KR', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+    p, h1, h2, h3, h4, h5, h6, li, td, th, span, div, a, button, label {
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+
+    .feedback-card {
+      background: var(--surface);
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      padding: 44px;
+      max-width: 520px;
+      width: 100%;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Weekly color bar at top */
+    .weekly-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      display: flex;
+    }
+    .weekly-bar span { flex:1; }
+    .weekly-bar .bar-mon { background: var(--mon); }
+    .weekly-bar .bar-tue { background: var(--tue); }
+    .weekly-bar .bar-wed { background: var(--wed); }
+    .weekly-bar .bar-thu { background: var(--thu); }
+    .weekly-bar .bar-fri { background: var(--fri); }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 8px;
+      padding-top: 8px;
+    }
+    .logo-badge {
+      display: inline-block;
+      background: #f0fdf4;
+      border: 1px solid #d1fae5;
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 11px;
+      color: var(--primary-light);
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .logo h1 {
+      font-size: 22px;
+      font-weight: 900;
+      color: #0f172a;
+      letter-spacing: -0.8px;
+      margin-top: 12px;
+    }
+    .logo p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-top: 6px;
+      line-height: 1.6;
+    }
+
+    /* Day indicator chips */
+    .day-chips {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 16px;
+    }
+    .day-chip {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 4px;
+      letter-spacing: 0.3px;
+    }
+    .day-chip.mon { background: #fffbeb; color: #b45309; border: 1px solid #fef3c7; }
+    .day-chip.tue { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+    .day-chip.wed { background: #fff1f2; color: #9f1239; border: 1px solid #fecdd3; }
+    .day-chip.thu { background: #f0fdf4; color: #065f46; border: 1px solid #bbf7d0; }
+    .day-chip.fri { background: #fdf4ed; color: #92400e; border: 1px solid #f5d6bc; }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 28px 0;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      background: #f8fafc;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(16,185,129,0.1);
+      background: #fff;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: var(--text-muted);
+    }
+    .form-group select {
+      -webkit-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      background-color: #f8fafc;
+      padding-right: 36px;
+    }
+    .form-group select option {
+      background: #fff;
+      color: var(--text);
+    }
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+      line-height: 1.7;
+    }
+
+    /* Rating Buttons */
+    .rating-group {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .rating-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      border: 1.5px solid var(--border);
+      background: #f8fafc;
+      font-size: 22px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .rating-btn:hover {
+      border-color: #bbf7d0;
+      background: #f0fdf4;
+      transform: translateY(-2px);
+    }
+    .rating-btn.active {
+      border-color: var(--accent);
+      background: #ecfdf5;
+      box-shadow: 0 2px 8px rgba(16,185,129,0.15);
+      transform: translateY(-2px);
+    }
+    .rating-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #059669, #10b981);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 8px;
+      box-shadow: 0 4px 12px rgba(5,150,105,0.2);
+    }
+    .btn-submit:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(5,150,105,0.25); }
+    .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+
+    .success-message {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .success-message .check-icon {
+      width: 64px;
+      height: 64px;
+      background: #f0fdf4;
+      border: 2px solid #bbf7d0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 28px;
+    }
+    .success-message h2 { font-size: 20px; color: #0f172a; margin-bottom: 8px; }
+    .success-message p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+    .success-message a {
+      display: inline-block;
+      margin-top: 24px;
+      color: var(--primary-light);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .success-message a:hover { text-decoration: underline; }
+
+    .spinner {
+      width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 560px) {
+      .feedback-card { padding: 28px 20px; }
+      .day-chips { gap: 4px; }
+      .day-chip { font-size: 9px; padding: 2px 6px; }
+      .rating-btn { width: 42px; height: 42px; font-size: 18px; }
+    }
+  </style>
+  <script src="config.js"></script>
+</head>
+<body>
+
+<div class="feedback-card">
+  <!-- Weekly color bar -->
+  <div class="weekly-bar">
+    <span class="bar-mon"></span>
+    <span class="bar-tue"></span>
+    <span class="bar-wed"></span>
+    <span class="bar-thu"></span>
+    <span class="bar-fri"></span>
+  </div>
+
+  <!-- Form -->
+  <div id="feedbackForm">
+    <div class="logo">
+      <span class="logo-badge">THE AI INSIGHT</span>
+      <h1>의견을 보내주세요</h1>
+      <p>뉴스레터를 더 좋게 만들기 위해<br>여러분의 생각을 듣고 싶습니다.</p>
+      <div class="day-chips">
+        <span class="day-chip mon">MON</span>
+        <span class="day-chip tue">TUE</span>
+        <span class="day-chip wed">WED</span>
+        <span class="day-chip thu">THU</span>
+        <span class="day-chip fri">FRI</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <form onsubmit="submitFeedback(event)">
+      <div class="form-group">
+        <label>이메일 *</label>
+        <input type="email" id="fbEmail" placeholder="example@company.com" required>
+      </div>
+
+      <div class="form-group">
+        <label>이름 *</label>
+        <input type="text" id="fbName" placeholder="홍길동" required>
+      </div>
+
+      <div class="form-group">
+        <label>피드백 내용 *</label>
+        <textarea id="fbMessage" placeholder="자유롭게 의견을 남겨주세요. 개선 사항, 칭찬, 제안 모두 환영합니다!" required></textarea>
+      </div>
+
+      <button type="submit" class="btn-submit" id="fbSubmitBtn">의견 보내기</button>
+    </form>
+  </div>
+
+  <!-- Success -->
+  <div id="feedbackSuccess" class="success-message">
+    <div class="check-icon">✅</div>
+    <h2>감사합니다!</h2>
+    <p>소중한 의견이 접수되었습니다.<br>더 나은 뉴스레터를 만드는 데 반영하겠습니다.</p>
+    <a href="index.html">← 뉴스레터 구독 페이지로 돌아가기</a>
+  </div>
+</div>
+
+<script>
+  var WEBAPP_URL = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.WEBAPP_URL) || '';
+  var selectedRating = 0;
+  var ratingLabels = {1:'불만족', 2:'보통', 3:'만족', 4:'좋아요', 5:'최고!'};
+
+  function setRating(value) {
+    selectedRating = value;
+    document.querySelectorAll('.rating-btn').forEach(function(btn) {
+      btn.classList.toggle('active', parseInt(btn.dataset.value) <= value);
+    });
+    document.getElementById('ratingLabel').textContent = ratingLabels[value] || '';
+  }
+
+  function submitFeedback(e) {
+    e.preventDefault();
+    var btn = document.getElementById('fbSubmitBtn');
+    var email = document.getElementById('fbEmail').value.trim();
+    var name = document.getElementById('fbName').value.trim();
+    var message = document.getElementById('fbMessage').value.trim();
+    if (!email || !name || !message) return;
+
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> 전송 중...';
+
+    var s = document.createElement('script');
+    var cbName = 'fb_' + Date.now();
+    window[cbName] = function(response) {
+      delete window[cbName];
+      if (s.parentNode) s.remove();
+      showSuccess();
+    };
+
+    var params = 'action=submitFeedback'
+      + '&email=' + encodeURIComponent(email)
+      + '&name=' + encodeURIComponent(name)
+      + '&message=' + encodeURIComponent(message)
+      + '&callback=' + cbName;
+
+    s.src = WEBAPP_URL + '?' + params;
+    s.onerror = function() {
+      delete window[cbName];
+      if (s.parentNode) s.remove();
+      showSuccess();
+    };
+    document.head.appendChild(s);
+
+    setTimeout(function() {
+      if (window[cbName]) {
+        delete window[cbName];
+        if (s.parentNode) s.remove();
+        showSuccess();
+      }
+    }, 5000);
+  }
+
+  function showSuccess() {
+    document.getElementById('feedbackForm').style.display = 'none';
+    document.getElementById('feedbackSuccess').style.display = 'block';
+  }
+
+  var urlParams = new URLSearchParams(window.location.search);
+  var emailParam = urlParams.get('email');
+  if (emailParam) {
+    document.getElementById('fbEmail').value = emailParam;
+  }
+</script>
+</body>
+</html>
