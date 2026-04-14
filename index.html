@@ -1402,29 +1402,68 @@
       document.querySelector('.unsub-section').scrollIntoView({ behavior: 'smooth' });
     }
 
-    // ─── Google Form 제출 공통 ──────────────────────────
-    function submitToGoogleForm(email, name, source) {
-      var form = document.createElement('form');
-      form.method = 'POST';
-      form.action = FORM_ACTION;
-      form.target = 'hiddenFrame';
+    // ─── Apps Script 웹앱 URL ───────────────────────────
+    var WEBAPP_URL = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.WEBAPP_URL) || '';
 
-      var fields = {};
-      fields[ENTRY_EMAIL] = email;
-      fields[ENTRY_NAME] = name || '';
-      fields[ENTRY_SOURCE] = source || 'web';
-
-      for (var key in fields) {
-        var input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = key;
-        input.value = fields[key];
-        form.appendChild(input);
+    // ─── 구독 제출 (Apps Script로 직접 전송 → subscribers 시트 기록) ──
+    function submitToGoogleForm(email, name, source, onDone) {
+      // 1) Apps Script 직접 호출 (JSONP) — subscribers 시트에 기록
+      if (WEBAPP_URL) {
+        var s = document.createElement('script');
+        var cbName = 'sub_' + Date.now();
+        var done = false;
+        window[cbName] = function(response) {
+          done = true;
+          delete window[cbName];
+          if (s.parentNode) s.remove();
+          if (typeof onDone === 'function') onDone(response);
+        };
+        var params = 'action=subscribe'
+          + '&email=' + encodeURIComponent(email)
+          + '&name=' + encodeURIComponent(name || '')
+          + '&source=' + encodeURIComponent(source || 'web')
+          + '&callback=' + cbName;
+        s.src = WEBAPP_URL + '?' + params;
+        s.onerror = function() {
+          if (done) return;
+          delete window[cbName];
+          if (s.parentNode) s.remove();
+          if (typeof onDone === 'function') onDone({ok:false});
+        };
+        document.head.appendChild(s);
+        setTimeout(function() {
+          if (window[cbName]) {
+            delete window[cbName];
+            if (s.parentNode) s.remove();
+            if (typeof onDone === 'function') onDone({ok:false, timeout:true});
+          }
+        }, 6000);
       }
 
-      document.body.appendChild(form);
-      form.submit();
-      form.remove();
+      // 2) 백업: Google Form에도 전송 (선택)
+      if (FORM_ACTION) {
+        var form = document.createElement('form');
+        form.method = 'POST';
+        form.action = FORM_ACTION;
+        form.target = 'hiddenFrame';
+
+        var fields = {};
+        fields[ENTRY_EMAIL] = email;
+        fields[ENTRY_NAME] = name || '';
+        fields[ENTRY_SOURCE] = source || 'web';
+
+        for (var key in fields) {
+          var input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = key;
+          input.value = fields[key];
+          form.appendChild(input);
+        }
+
+        document.body.appendChild(form);
+        form.submit();
+        form.remove();
+      }
     }
 
     // ─── 구독 상태에 따라 아카이브 섹션 표시 ──────────────
