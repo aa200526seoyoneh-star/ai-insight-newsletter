@@ -605,35 +605,133 @@ function sendPromoEmails(password, emails) {
  * 구독 안내 메일 본문 생성 (promo_email.html 템플릿과 동일 스타일)
  */
 function buildPromoEmailHtml(subscribeUrl) {
-  var archiveUrl = subscribeUrl.replace('?action=subscribe', '');
-  return ''
-    + '<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"></head>'
-    + '<body style="margin:0;padding:0;background:#f0f4f3;font-family:\'맑은 고딕\',\'Malgun Gothic\',\'Apple SD Gothic Neo\',sans-serif;word-break:keep-all;overflow-wrap:break-word;">'
-    + '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f0f4f3;padding:40px 16px;"><tr><td align="center">'
-    + '<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:20px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.06);">'
-    // 컬러 바
-    + '<tr><td style="font-size:0;line-height:0;height:5px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="table-layout:fixed;"><tr>'
-    + '<td style="height:5px;background:#f59e0b;"></td><td style="height:5px;background:#dc2626;"></td><td style="height:5px;background:#be185d;"></td>'
-    + '<td style="height:5px;background:#059669;"></td><td style="height:5px;background:#0e7490;"></td><td style="height:5px;background:#4f46e5;"></td>'
-    + '<td style="height:5px;background:#c2410c;"></td>'
-    + '</tr></table></td></tr>'
-    // 헤더
-    + '<tr><td style="padding:48px 44px 32px;text-align:center;">'
-    + '<p style="margin:0 0 12px;font-size:11px;color:#059669;font-weight:700;letter-spacing:0.5px;">서연이화 AX추진팀</p>'
-    + '<h1 style="margin:0 0 12px;font-size:34px;font-weight:900;color:#0f172a;letter-spacing:-1.5px;">THE AI INSIGHT</h1>'
-    + '<p style="margin:0;font-size:15px;color:#64748b;line-height:1.8;">매일 아침, 최신 AI 뉴스·트렌드와<br>업무 활용 가이드를 정리하여 이메일로 보내드립니다.</p>'
-    + '</td></tr>'
-    // 본문
-    + '<tr><td style="padding:24px 44px 32px;">'
-    + '<p style="font-size:15px;color:#374151;line-height:1.8;margin:0 0 20px;">안녕하세요!<br><br>AX추진팀에서 <strong style="color:#059669;">AI 뉴스레터 「THE AI INSIGHT」</strong>를 발행하고 있습니다. 월~금 매일 + 월말/연말 스페셜 에디션으로 AI 트렌드를 정리해 드립니다.</p>'
-    + '<div style="text-align:center;margin:28px 0;"><a href="' + subscribeUrl + '" style="display:inline-block;background:linear-gradient(135deg,#059669,#10b981);color:#fff;font-size:16px;font-weight:700;padding:16px 52px;border-radius:14px;text-decoration:none;">지금 구독하기</a></div>'
-    + '<p style="text-align:center;margin:0;font-size:13px;color:#94a3b8;"><a href="' + archiveUrl + '" style="color:#94a3b8;text-decoration:none;">지난 뉴스레터 보기 →</a></p>'
-    + '</td></tr>'
-    // 푸터
-    + '<tr><td style="background:#f8fafc;padding:22px 44px;text-align:center;border-top:1px solid #f1f5f9;">'
-    + '<p style="margin:0;font-size:12px;color:#94a3b8;">THE AI INSIGHT by AX추진팀 (서연이화)</p>'
-    + '</td></tr>'
-    + '</table></td></tr></table></body></html>';
+  var baseUrl = subscribeUrl.split('?')[0].replace(/\/?$/, '/');
+  var archiveUrl = baseUrl + 'archive.html';
+  var feedbackUrl = baseUrl + 'feedback.html';
+
+  var h = '';
+  h += '<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>THE AI INSIGHT 뉴스레터 구독 안내</title></head>';
+  h += '<body style="margin:0;padding:0;background:#f0f4f3;font-family:\'맑은 고딕\',\'Malgun Gothic\',\'Apple SD Gothic Neo\',sans-serif;word-break:keep-all;overflow-wrap:break-word;">';
+  h += '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f0f4f3;padding:40px 16px;"><tr><td align="center">';
+  h += '<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:20px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.06);">';
+
+  // 7색 컬러 바
+  h += '<tr><td style="font-size:0;line-height:0;height:5px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="table-layout:fixed;"><tr>';
+  h += '<td style="height:5px;background:#f59e0b;" bgcolor="#f59e0b"></td>';
+  h += '<td style="height:5px;background:#dc2626;" bgcolor="#dc2626"></td>';
+  h += '<td style="height:5px;background:#be185d;" bgcolor="#be185d"></td>';
+  h += '<td style="height:5px;background:#059669;" bgcolor="#059669"></td>';
+  h += '<td style="height:5px;background:#0e7490;" bgcolor="#0e7490"></td>';
+  h += '<td style="height:5px;background:#4f46e5;" bgcolor="#4f46e5"></td>';
+  h += '<td style="height:5px;background:#c2410c;" bgcolor="#c2410c"></td>';
+  h += '</tr></table></td></tr>';
+
+  // 헤더
+  h += '<tr><td style="padding:48px 44px 32px;text-align:center;">';
+  h += '<table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 auto 20px;"><tr>';
+  h += '<td style="background:#f0fdf4;border:1px solid #d1fae5;border-radius:24px;padding:5px 16px;">';
+  h += '<p style="margin:0;font-size:11px;color:#059669;font-weight:600;letter-spacing:0.5px;">서연이화 AX추진팀</p>';
+  h += '</td></tr></table>';
+  h += '<h1 style="margin:0 0 12px;font-size:34px;font-weight:900;color:#0f172a;letter-spacing:-1.5px;line-height:1.2;">THE AI INSIGHT</h1>';
+  h += '<p style="margin:0;font-size:15px;color:#64748b;line-height:1.8;">매일 아침, 최신 AI 뉴스와 트렌드 그리고<br>업무 활용 가이드를 정리하여 이메일로 보내드립니다.</p>';
+  h += '</td></tr>';
+
+  // 구분선
+  h += '<tr><td style="padding:0 44px;"><div style="height:1px;background:#e5e7eb;"></div></td></tr>';
+
+  // 본문 시작
+  h += '<tr><td style="padding:32px 44px;">';
+  h += '<p style="font-size:15px;color:#374151;line-height:1.8;margin:0 0 28px;">안녕하세요!<br><br>AX추진팀에서 <strong style="color:#059669;">AI 트렌드 뉴스레터 「THE AI INSIGHT」</strong>를 발행하고 있습니다. 바쁜 아침, 꼭 필요한 AI 소식만 골라 전해드립니다.</p>';
+
+  // Weekly Line-up
+  h += '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:16px;"><tr>';
+  h += '<td style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#9ca3af;font-weight:700;">WEEKLY LINE-UP</td>';
+  h += '<td align="right" style="font-size:11px;color:#9ca3af;">월 ~ 금 매일 발행</td>';
+  h += '</tr></table>';
+
+  // 요일 카드 헬퍼
+  function dayCard(bg, border, badgeBg, badgeColor, label, title, desc, marginBottom) {
+    var mb = marginBottom || '8px';
+    var row = '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:' + mb + ';"><tr>';
+    row += '<td style="padding:14px 18px;background:' + bg + ';border-radius:12px;border:1px solid ' + border + ';">';
+    row += '<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>';
+    row += '<td width="52" valign="middle"><div style="width:42px;height:42px;background:' + badgeBg + ';border-radius:10px;text-align:center;line-height:42px;font-size:11px;font-weight:800;color:' + badgeColor + ';letter-spacing:-0.3px;">' + label + '</div></td>';
+    row += '<td><p style="margin:0 0 2px;font-size:14px;font-weight:700;color:#1e293b;">' + title + '</p>';
+    row += '<p style="margin:0;font-size:12px;color:#78716c;line-height:1.5;">' + desc + '</p></td>';
+    row += '</tr></table></td></tr></table>';
+    return row;
+  }
+
+  h += dayCard('#fffbeb','#fef3c7','#fef3c7','#b45309','MON','AI 트렌드 위클리','한 주의 시작을 여는 AI 업계 핵심 뉴스와 트렌드 정리');
+  h += dayCard('#fef2f2','#fecaca','#fecaca','#991b1b','TUE','딥다이브 분석','주요 AI 기술과 모델을 심층 분석하여 비즈니스 관점에서 해설');
+  h += dayCard('#fdf2f8','#fbcfe8','#fbcfe8','#9d174d','WED','AI 실전 가이드','바로 따라할 수 있는 AI 도구 활용법과 프롬프트 팁');
+  h += dayCard('#f0fdf4','#bbf7d0','#bbf7d0','#065f46','THU','자동화 레시피','반복 업무를 AI로 자동화하는 구체적인 방법과 워크플로우');
+  h += dayCard('#ecfeff','#a5f3fc','#a5f3fc','#155e75','FRI','금주의 AI 픽','한 주 마무리와 함께 놓치면 안 될 AI 서비스·도구·콘텐츠 큐레이션','28px');
+
+  // Special Edition
+  h += '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:16px;"><tr>';
+  h += '<td style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#9ca3af;font-weight:700;">SPECIAL EDITION</td>';
+  h += '<td align="right" style="font-size:11px;color:#9ca3af;">월말 · 연말 발행</td>';
+  h += '</tr></table>';
+
+  // Special 카드 헬퍼 (배지 폭 더 넓음)
+  function specialCard(bg, border, badgeBg, badgeColor, label, title, desc, marginBottom) {
+    var mb = marginBottom || '8px';
+    var row = '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:' + mb + ';"><tr>';
+    row += '<td style="padding:14px 18px;background:' + bg + ';border-radius:12px;border:1px solid ' + border + ';">';
+    row += '<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>';
+    row += '<td width="72" valign="middle"><div style="width:62px;height:42px;background:' + badgeBg + ';border-radius:10px;text-align:center;line-height:42px;font-size:10px;font-weight:800;color:' + badgeColor + ';letter-spacing:-0.2px;">' + label + '</div></td>';
+    row += '<td style="padding-left:4px;"><p style="margin:0 0 2px;font-size:14px;font-weight:700;color:#1e293b;">' + title + '</p>';
+    row += '<p style="margin:0;font-size:12px;color:#78716c;line-height:1.5;">' + desc + '</p></td>';
+    row += '</tr></table></td></tr></table>';
+    return row;
+  }
+
+  h += specialCard('#eef2ff','#c7d2fe','#c7d2fe','#3730a3','MONTHLY','월말 스페셜','매월 마지막 평일. 한 달 AI 주요 이슈·트렌드를 심층 분석한 월간 리포트');
+  h += specialCard('#fff7ed','#fed7aa','#fed7aa','#7c2d12','ANNUAL','연간 결산 리포트','매년 12월 마지막 평일. 한 해의 AI 흐름을 되짚는 연말 결산 리포트','28px');
+
+  // Trust badges
+  h += '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:32px;"><tr><td align="center"><table role="presentation" cellpadding="0" cellspacing="0"><tr>';
+  h += '<td style="padding:5px 14px;background:#f8fafc;border-radius:20px;border:1px solid #e2e8f0;"><span style="font-size:12px;color:#64748b;">✓ 무료</span></td>';
+  h += '<td width="8"></td>';
+  h += '<td style="padding:5px 14px;background:#f8fafc;border-radius:20px;border:1px solid #e2e8f0;"><span style="font-size:12px;color:#64748b;">✓ 스팸 없음</span></td>';
+  h += '<td width="8"></td>';
+  h += '<td style="padding:5px 14px;background:#f8fafc;border-radius:20px;border:1px solid #e2e8f0;"><span style="font-size:12px;color:#64748b;">✓ 언제든 구독 취소</span></td>';
+  h += '</tr></table></td></tr></table>';
+
+  // CTA
+  h += '<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center">';
+  h += '<a href="' + subscribeUrl + '" style="display:inline-block;background:linear-gradient(135deg,#059669,#10b981);color:#ffffff;font-size:16px;font-weight:700;padding:16px 52px;border-radius:14px;text-decoration:none;box-shadow:0 4px 16px rgba(5,150,105,0.25);">지금 구독하기</a>';
+  h += '</td></tr></table>';
+
+  // Sub Links
+  h += '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:20px;"><tr><td align="center">';
+  h += '<a href="' + archiveUrl + '" style="font-size:13px;color:#94a3b8;text-decoration:none;">지난 뉴스레터 보기 →</a>';
+  h += '<span style="color:#d1d5db;margin:0 10px;">|</span>';
+  h += '<a href="' + feedbackUrl + '" style="font-size:13px;color:#94a3b8;text-decoration:none;">의견 보내기 →</a>';
+  h += '</td></tr></table>';
+
+  h += '</td></tr>'; // 본문 end
+
+  // 구분선
+  h += '<tr><td style="padding:0 44px;"><div style="height:1px;background:#e5e7eb;"></div></td></tr>';
+
+  // Testimonial
+  h += '<tr><td style="padding:28px 44px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>';
+  h += '<td style="background:#f8fafc;border-radius:14px;border:1px solid #e2e8f0;padding:22px 26px;text-align:center;">';
+  h += '<p style="margin:0 0 8px;font-size:22px;">💬</p>';
+  h += '<p style="margin:0 0 10px;font-size:14px;color:#475569;line-height:1.7;font-style:italic;">"아침에 메일 확인할 때 가장 먼저 읽게 됩니다.<br>AI 트렌드를 한눈에 파악할 수 있어서 업무에 큰 도움이 돼요."</p>';
+  h += '<p style="margin:0;font-size:12px;color:#94a3b8;">— 사내 구독자</p>';
+  h += '</td></tr></table></td></tr>';
+
+  // 푸터
+  h += '<tr><td style="background:#f8fafc;padding:24px 44px;text-align:center;border-top:1px solid #f1f5f9;">';
+  h += '<p style="margin:0 0 4px;font-size:12px;color:#94a3b8;">THE AI INSIGHT by AX추진팀 (서연이화)</p>';
+  h += '<p style="margin:0;font-size:11px;color:#cbd5e1;">문의: <a href="mailto:aa200526@seoyoneh.com" style="color:#059669;text-decoration:none;">aa200526@seoyoneh.com</a></p>';
+  h += '</td></tr>';
+
+  h += '</table></td></tr></table></body></html>';
+  return h;
 }
 
 // ─── 이메일 발송 ────────────────────────────────────────────
