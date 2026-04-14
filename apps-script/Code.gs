@@ -572,8 +572,8 @@ function sendPromoEmails(password, emails) {
     return { success: false, message: '유효한 이메일이 없습니다.' };
   }
 
-  var webappUrl = ScriptApp.getService().getUrl();
-  var subscribeUrl = webappUrl + '?action=subscribe';
+  // GitHub Pages 구독 페이지 (index.html 의 구독 폼으로 이동)
+  var subscribeUrl = 'https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/index.html#subscribe';
 
   // 구독 요청 메일 HTML — promo_email.html 템플릿과 동일한 디자인을 코드로 구성
   var html = buildPromoEmailHtml(subscribeUrl);
@@ -605,7 +605,10 @@ function sendPromoEmails(password, emails) {
  * 구독 안내 메일 본문 생성 (promo_email.html 템플릿과 동일 스타일)
  */
 function buildPromoEmailHtml(subscribeUrl) {
-  var baseUrl = subscribeUrl.split('?')[0].replace(/\/?$/, '/');
+  // baseUrl = subscribeUrl 의 폴더 경로 (쿼리/프래그먼트 제거)
+  var cleaned = subscribeUrl.split('#')[0].split('?')[0];
+  var baseUrl = cleaned.replace(/\/[^\/]*$/, '/');
+  if (!/\/$/.test(baseUrl)) baseUrl += '/';
   var archiveUrl = baseUrl + 'archive.html';
   var feedbackUrl = baseUrl + 'feedback.html';
 
@@ -727,7 +730,7 @@ function buildPromoEmailHtml(subscribeUrl) {
   // 푸터
   h += '<tr><td style="background:#f8fafc;padding:24px 44px;text-align:center;border-top:1px solid #f1f5f9;">';
   h += '<p style="margin:0 0 4px;font-size:12px;color:#94a3b8;">THE AI INSIGHT by AX추진팀 (서연이화)</p>';
-  h += '<p style="margin:0;font-size:11px;color:#cbd5e1;">문의: <a href="mailto:aa200526@seoyoneh.com" style="color:#059669;text-decoration:none;">aa200526@seoyoneh.com</a></p>';
+  h += '<p style="margin:0;font-size:11px;color:#cbd5e1;">문의: <span style="color:#059669;">aa200526@seoyoneh.com</span></p>';
   h += '</td></tr>';
 
   h += '</table></td></tr></table></body></html>';
