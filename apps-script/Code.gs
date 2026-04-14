@@ -182,7 +182,7 @@ function doGet(e) {
         result = authenticate(params.password);
         break;
       case 'submitFeedback':
-        result = submitFeedback(params.email, params.rating, params.category, params.message);
+        result = submitFeedback(params.email, params.name, params.message);
         break;
       case 'getFeedback':
         result = getFeedback(params.password);
@@ -709,8 +709,6 @@ function buildPromoEmailHtml(subscribeUrl) {
 
   // Sub Links
   h += '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:20px;"><tr><td align="center">';
-  h += '<a href="' + archiveUrl + '" style="font-size:13px;color:#94a3b8;text-decoration:none;">지난 뉴스레터 보기 &rarr;</a>';
-  h += '<span style="color:#d1d5db;margin:0 10px;">|</span>';
   h += '<a href="' + feedbackUrl + '" style="font-size:13px;color:#94a3b8;text-decoration:none;">의견 보내기 &rarr;</a>';
   h += '</td></tr></table>';
 
@@ -2077,45 +2075,59 @@ function initTrackingSheet() {
 /**
  * 피드백 저장
  */
-function submitFeedback(email, rating, category, message) {
-  if (!message) {
-    return { success: false, message: '의견을 입력해주세요.' };
+function submitFeedback(email, name, message) {
+  if (!email || !name || !message) {
+    return { success: false, message: '이메일, 이름, 의견을 모두 입력해주세요.' };
   }
 
-  // [보안] 피드백 Rate limiting — 동일 이메일/세션에서 10분 내 중복 방지
+  // [보안] 피드백 Rate limiting — 동일 이메일에서 10분 내 중복 방지
   var cache = CacheService.getScriptCache();
   var fbKey = 'fb_' + (email || 'anon').toLowerCase().replace(/[^a-z0-9]/g, '_');
   if (cache.get(fbKey)) {
     return { success: false, message: '피드백은 10분에 1회만 가능합니다.' };
   }
-  cache.put(fbKey, '1', 600); // 10분
+  cache.put(fbKey, '1', 600);
 
-  // 입력값 살균 — HTML 태그 및 스크립트 제거
-  var allowedCategories = ['content','frequency','topic','design','bug','other'];
+  // 입력값 살균
   var safeEmail = (email || '').toLowerCase().trim().substring(0, 254);
-  var safeRating = Math.min(Math.max(parseInt(rating) || 0, 0), 5);
-  var safeCategory = allowedCategories.indexOf(category) > -1 ? category : 'other';
+  var safeName = stripHtml(name || '').substring(0, 100);
   var safeMessage = stripHtml(message).substring(0, 2000);
 
   var ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
   var sheet = ss.getSheetByName('feedback');
   if (!sheet) {
     sheet = ss.insertSheet('feedback');
-    sheet.getRange(1, 1, 1, 6).setValues([['timestamp', 'email', 'rating', 'category', 'message', 'status']]);
-    sheet.getRange(1, 1, 1, 6).setFontWeight('bold');
+    sheet.getRange(1, 1, 1, 4).setValues([['timestamp', 'email', 'name', 'message']]);
+    sheet.getRange(1, 1, 1, 4).setFontWeight('bold');
     sheet.setFrozenRows(1);
   }
 
-  sheet.appendRow([
-    new Date().toISOString(),
-    safeEmail,
-    safeRating,
-    safeCategory,
-    safeMessage,
-    'new'
-  ]);
+  // 구 포맷(6컬럼)에서 새 포맷(4컬럼)으로 자동 마이그레이션되지 않음 — 기존 시트는 6컬럼 유지
+  // 새 데이터도 기존 컬럼 수에 맞춰 저장 (timestamp/email/name/message + 빈칸 2개)
+  var headerRange = sheet.getRange(1, 1, 1, sheet.getLastColumn() || 4);
+  var headers = headerRange.getValues()[0];
+  var hasOldFormat = headers.length >= 5 && (headers[2] === 'rating' || headers[3] === 'category');
 
-  addLog('FEEDBACK', maskEmail(safeEmail) + ' - ' + safeCategory + ' (⭐' + safeRating + ')');
+  if (hasOldFormat) {
+    // 기존 6컬럼 구조에 맞춰 저장 (rating=0, category='other', status='new')
+    sheet.appendRow([
+      new Date().toISOString(),
+      safeEmail,
+      0,
+      safeName,  // category 자리에 name 저장 (호환용) — 관리자 페이지는 별도로 name 컬럼 탐색
+      safeMessage,
+      'new'
+    ]);
+  } else {
+    sheet.appendRow([
+      new Date().toISOString(),
+      safeEmail,
+      safeName,
+      safeMessage
+    ]);
+  }
+
+  addLog('FEEDBACK', maskEmail(safeEmail) + ' - ' + safeName);
 
   return { success: true, message: '피드백이 접수되었습니다. 감사합니다!' };
 }
@@ -2135,16 +2147,30 @@ function getFeedback(password) {
   }
 
   var data = sheet.getDataRange().getValues();
+  if (data.length < 2) return { success: true, data: [] };
+
+  var headers = data[0];
+  var hasOldFormat = headers.length >= 5 && (headers[2] === 'rating' || headers[3] === 'category');
+
   var feedbacks = [];
   for (var i = 1; i < data.length; i++) {
-    feedbacks.push({
-      timestamp: data[i][0],
-      email: data[i][1],
-      rating: data[i][2],
-      category: data[i][3],
-      message: data[i][4],
-      status: data[i][5]
-    });
+    if (hasOldFormat) {
+      // 구 포맷: timestamp | email | rating | category/name | message | status
+      feedbacks.push({
+        timestamp: data[i][0],
+        email: data[i][1],
+        name: data[i][3],  // category 자리에 name 저장해왔음
+        message: data[i][4]
+      });
+    } else {
+      // 신 포맷: timestamp | email | name | message
+      feedbacks.push({
+        timestamp: data[i][0],
+        email: data[i][1],
+        name: data[i][2],
+        message: data[i][3]
+      });
+    }
   }
 
   // 최신순 정렬
