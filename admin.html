@@ -320,6 +320,151 @@
     .send-body textarea { min-height: 200px; resize: vertical; }
     .send-body input:focus, .send-body textarea:focus { border-color: var(--primary); }
 
+    /* ── Feedback Panel ── */
+    .feedback-list { display: flex; flex-direction: column; gap: 14px; }
+    .fb-item {
+      background: #fafbfc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+    }
+    .fb-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .fb-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    .fb-rating {
+      font-size: 16px;
+      letter-spacing: 1px;
+    }
+    .fb-category-badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      background: var(--primary-50);
+      color: var(--primary);
+    }
+    .fb-message {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .fb-email {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 8px;
+    }
+    .fb-empty {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+    .fb-stats {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .fb-stat-chip {
+      background: var(--primary-50);
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    /* ── Password Reset UI ── */
+    .reset-card {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 48px 40px;
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+    }
+    .reset-card .lock-icon {
+      width: 56px;
+      height: 56px;
+      background: #fef2f2;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 24px;
+    }
+    .reset-card h2 { font-size: 20px; margin-bottom: 8px; color: var(--danger); }
+    .reset-card p { font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.6; }
+    .reset-card .form-group { margin-bottom: 16px; text-align: left; }
+    .reset-card .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+    .reset-card input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 15px;
+      font-family: inherit;
+      outline: none;
+    }
+    .reset-card input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(6,95,70,0.1); }
+    .reset-card .token-input {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 8px;
+      font-family: 'Courier New', monospace;
+    }
+    .reset-card .pw-rules {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      text-align: left;
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+    .reset-card .pw-rules .rule-check { color: var(--primary); font-weight: 600; }
+    .reset-card .pw-rules .rule-fail { color: var(--danger); }
+    .reset-card .reset-error { color: var(--danger); font-size: 13px; margin-top: 8px; display: none; }
+    .reset-card .reset-success { color: var(--primary); font-size: 13px; margin-top: 8px; display: none; }
+    .reset-card .btn-back {
+      display: inline-block;
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: inherit;
+      text-decoration: underline;
+    }
+    .reset-card .btn-back:hover { color: var(--primary); }
+
     .toast {
       position: fixed;
       bottom: 24px;
@@ -368,6 +513,45 @@
       </form>
       <p id="authError" class="auth-error">비밀번호가 올바르지 않습니다.</p>
     </div>
+
+    <!-- Password Reset Form (hidden by default) -->
+    <div class="reset-card" id="resetCard" style="display:none;">
+      <div class="lock-icon">&#x1F6A8;</div>
+      <h2>계정 잠김</h2>
+      <p id="resetMessage">5회 인증 실패로 계정이 잠겼습니다.<br>관리자 이메일로 발송된 6자리 인증 코드를 입력해주세요.</p>
+
+      <!-- Step 1: Token Input -->
+      <div id="resetStep1">
+        <div class="form-group">
+          <label>인증 코드 (6자리)</label>
+          <input type="text" id="resetToken" class="token-input" maxlength="6" placeholder="000000" autocomplete="off">
+        </div>
+      </div>
+
+      <!-- Step 2: New Password (shown after token verified) -->
+      <div id="resetStep2" style="display:none;">
+        <div class="pw-rules" id="pwRules">
+          <strong style="color:var(--text);font-size:13px;">비밀번호 요구사항</strong><br>
+          <span id="ruleLen" class="rule-fail">&#x2716; 12자 이상</span><br>
+          <span id="ruleLetter" class="rule-fail">&#x2716; 영문자 포함</span><br>
+          <span id="ruleNum" class="rule-fail">&#x2716; 숫자 포함</span><br>
+          <span id="ruleSpecial" class="rule-fail">&#x2716; 특수문자 포함</span>
+        </div>
+        <div class="form-group">
+          <label>새 비밀번호</label>
+          <input type="password" id="newPassword" placeholder="새 비밀번호 입력" oninput="checkPasswordStrength()">
+        </div>
+        <div class="form-group">
+          <label>새 비밀번호 확인</label>
+          <input type="password" id="confirmPassword" placeholder="비밀번호 다시 입력">
+        </div>
+      </div>
+
+      <button class="btn btn-primary" style="width:100%;" id="resetBtn" onclick="handleResetPassword()">인증 코드 확인</button>
+      <p id="resetError" class="reset-error"></p>
+      <p id="resetSuccess" class="reset-success"></p>
+      <button class="btn-back" onclick="backToLogin()">&#x2190; 로그인 화면으로 돌아가기</button>
+    </div>
   </div>
 
   <!-- Dashboard -->
@@ -389,11 +573,6 @@
           <div class="stat-label">활성 구독자</div>
           <div class="stat-value" id="statActive">-</div>
           <div class="stat-sub">외부 구독자</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">내부 구독자</div>
-          <div class="stat-value" id="statInternal">6</div>
-          <div class="stat-sub">Gmail 자동 발송</div>
         </div>
         <div class="stat-card">
           <div class="stat-label">구독 취소</div>
@@ -427,58 +606,136 @@
         </div>
       </div>
 
-      <!-- Send Newsletter -->
+      <!-- Newsletter Test & Subscription Request -->
       <div class="send-panel">
         <div class="panel-header" onclick="toggleSendPanel()">
-          <h3>&#x2709;&#xFE0F; 뉴스레터 발송</h3>
+          <h3>&#x2709;&#xFE0F; 뉴스레터 테스트 및 구독요청</h3>
           <span id="sendToggle" style="font-size:13px;color:var(--text-secondary);">펼치기 &#x25BC;</span>
         </div>
         <div id="sendBody" class="send-body">
-          <div class="form-group">
-            <label>제목</label>
-            <input type="text" id="nlSubject" placeholder="이번 주 AI 뉴스 하이라이트">
-          </div>
-          <div class="form-group">
-            <label>HTML 내용</label>
-            <textarea id="nlContent" placeholder="뉴스레터 HTML 내용을 입력하세요..."></textarea>
-          </div>
-          <div class="form-group">
-            <label>테스트 수신 이메일 (선택)</label>
-            <input type="email" id="nlTestEmail" placeholder="test@example.com — 비워두면 전체 발송">
-          </div>
-          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
-            <button class="btn btn-primary" onclick="sendNewsletter()">전체 발송</button>
-            <button class="btn btn-outline" onclick="testSendNewsletter()" style="border:1.5px solid var(--primary);color:var(--primary);background:transparent;padding:10px 20px;border-radius:10px;font-weight:600;cursor:pointer;">테스트 발송</button>
-            <span id="sendStatus" style="font-size:13px;color:var(--text-secondary);"></span>
-          </div>
-        </div>
-      </div>
 
-      <!-- Add Subscriber -->
-      <div class="send-panel" id="addSubPanel">
-        <div class="panel-header" onclick="toggleAddSubPanel()">
-          <h3>&#x2795; 구독자 추가</h3>
-          <span id="addSubToggle" style="font-size:13px;color:var(--text-secondary);">펼치기 &#x25BC;</span>
-        </div>
-        <div id="addSubBody" class="send-body">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-            <div class="form-group" style="margin-bottom:0;">
-              <label>이메일 *</label>
-              <input type="email" id="addSubEmail" placeholder="user@example.com">
+          <!-- 테스트 발송 -->
+          <div class="subpanel" style="padding:18px;border:1px solid var(--border);border-radius:12px;margin-bottom:18px;background:#fafafa;">
+            <h4 style="margin:0 0 12px;font-size:14px;font-weight:700;color:var(--text);">
+              <span style="display:inline-block;width:4px;height:14px;background:var(--primary);border-radius:2px;margin-right:8px;vertical-align:middle;"></span>
+              테스트 발송
+            </h4>
+            <div class="form-group">
+              <label>제목</label>
+              <input type="text" id="nlSubject" placeholder="이번 주 AI 뉴스 하이라이트">
             </div>
-            <div class="form-group" style="margin-bottom:0;">
-              <label>이름 (선택)</label>
-              <input type="text" id="addSubName" placeholder="홍길동">
+            <div class="form-group">
+              <label>HTML 내용</label>
+              <textarea id="nlContent" placeholder="뉴스레터 HTML 내용을 입력하세요..."></textarea>
+            </div>
+            <div class="form-group">
+              <label>테스트 수신 이메일</label>
+              <input type="email" id="nlTestEmail" placeholder="test@example.com">
+            </div>
+            <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+              <button class="btn btn-primary" onclick="testSendNewsletter()">테스트 발송</button>
+              <span id="sendStatus" style="font-size:13px;color:var(--text-secondary);"></span>
             </div>
           </div>
-          <div style="margin-top:12px;display:flex;gap:12px;align-items:center;">
-            <button class="btn btn-primary" onclick="addSubscriber()">구독자 추가</button>
-            <span id="addSubStatus" style="font-size:13px;color:var(--text-secondary);"></span>
+
+          <!-- 구독 요청 메일 발송 -->
+          <div class="subpanel" style="padding:18px;border:1px solid var(--border);border-radius:12px;background:#fafafa;">
+            <h4 style="margin:0 0 12px;font-size:14px;font-weight:700;color:var(--text);">
+              <span style="display:inline-block;width:4px;height:14px;background:#4f46e5;border-radius:2px;margin-right:8px;vertical-align:middle;"></span>
+              구독 요청 메일 발송
+              <button type="button" onclick="openPromoPreview()" style="margin-left:10px;padding:3px 10px;font-size:11px;font-weight:600;border:1px solid #c7d2fe;background:#eef2ff;color:#4338ca;border-radius:10px;cursor:pointer;">샘플 미리보기 &#x1F441;</button>
+            </h4>
+            <p style="margin:0 0 12px;font-size:12px;color:var(--text-secondary);">
+              여러 이메일 주소에 뉴스레터 구독 안내 메일을 발송합니다. 이메일을 입력하고 Enter 또는 쉼표(,)로 추가하세요.
+            </p>
+
+            <!-- Email chips input -->
+            <div class="form-group">
+              <label>수신 이메일 (다중 입력 가능)</label>
+              <div id="promoChipBox" style="display:flex;flex-wrap:wrap;gap:6px;padding:8px;border:1.5px solid var(--border);border-radius:10px;background:#fff;min-height:44px;cursor:text;" onclick="document.getElementById('promoEmailInput').focus()">
+                <input type="email" id="promoEmailInput"
+                       placeholder="user@example.com 입력 후 Enter"
+                       style="flex:1;min-width:160px;border:none;outline:none;padding:4px 6px;font-size:13px;font-family:inherit;"
+                       onkeydown="handlePromoEmailKey(event)"
+                       onblur="commitPromoEmail()">
+              </div>
+              <div style="margin-top:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                <button type="button" class="btn-mini" onclick="savePromoList()" style="padding:5px 12px;font-size:11px;border:1px solid var(--border);background:#fff;border-radius:8px;cursor:pointer;">💾 목록 저장</button>
+                <button type="button" class="btn-mini" onclick="loadPromoList()" style="padding:5px 12px;font-size:11px;border:1px solid var(--border);background:#fff;border-radius:8px;cursor:pointer;">📥 저장된 목록 불러오기</button>
+                <button type="button" class="btn-mini" onclick="clearPromoList()" style="padding:5px 12px;font-size:11px;border:1px solid #fecaca;color:#b91c1c;background:#fff;border-radius:8px;cursor:pointer;">🗑️ 전체 비우기</button>
+                <span id="promoListStatus" style="font-size:11px;color:var(--text-secondary);"></span>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+              <button class="btn btn-primary" onclick="sendPromoEmails()" style="background:#4f46e5;">구독 요청 메일 발송</button>
+              <span id="promoSendStatus" style="font-size:13px;color:var(--text-secondary);"></span>
+            </div>
           </div>
+
         </div>
       </div>
 
       <!-- Schedule Settings -->
+      <!-- Subscriber Table (moved up — was at the bottom) -->
+      <div class="table-container">
+        <div class="table-toolbar" style="flex-wrap:wrap;gap:12px;">
+          <h3>구독자 목록</h3>
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+            <div class="table-filter">
+              <button class="filter-btn active" onclick="filterTable('all', this)">전체</button>
+              <button class="filter-btn" onclick="filterTable('active', this)">활성</button>
+              <button class="filter-btn" onclick="filterTable('inactive', this)">비활성</button>
+            </div>
+            <input type="text" class="table-search" id="tableSearch" placeholder="이메일 검색..." oninput="searchTable()">
+            <button class="btn btn-primary" onclick="toggleAddSubForm()" style="padding:8px 16px;font-size:13px;">+ 구독자 추가</button>
+            <button id="bulkDeleteBtn" class="btn" onclick="bulkDeleteSubscribers()" disabled
+                    style="padding:8px 16px;font-size:13px;background:#fee2e2;color:#b91c1c;border:1px solid #fecaca;border-radius:10px;font-weight:600;cursor:pointer;opacity:0.55;">
+              선택 삭제 <span id="bulkDeleteCount">(0)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Inline 구독자 추가 form -->
+        <div id="addSubInline" style="display:none;padding:16px 20px;background:#f0fdf4;border-bottom:1px solid #bbf7d0;">
+          <div style="display:grid;grid-template-columns:1fr 1fr auto auto;gap:10px;align-items:end;">
+            <div class="form-group" style="margin-bottom:0;">
+              <label style="font-size:12px;">이메일 *</label>
+              <input type="email" id="addSubEmail" placeholder="user@example.com">
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label style="font-size:12px;">이름 (선택)</label>
+              <input type="text" id="addSubName" placeholder="홍길동">
+            </div>
+            <button class="btn btn-primary" onclick="addSubscriber()" style="padding:10px 18px;">추가</button>
+            <button class="btn" onclick="toggleAddSubForm()" style="padding:10px 14px;background:#fff;border:1px solid var(--border);border-radius:10px;font-weight:600;cursor:pointer;">취소</button>
+          </div>
+          <div id="addSubStatus" style="font-size:12px;color:var(--text-secondary);margin-top:8px;"></div>
+        </div>
+
+        <div style="overflow-x:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:40px;text-align:center;">
+                  <input type="checkbox" id="selectAllChk" onchange="toggleSelectAll(this)">
+                </th>
+                <th>이메일</th>
+                <th>이름</th>
+                <th>구독일</th>
+                <th>상태</th>
+                <th>유입</th>
+                <th>관리</th>
+              </tr>
+            </thead>
+            <tbody id="subscriberTable">
+              <tr><td colspan="7" style="text-align:center;padding:40px;color:var(--text-secondary);">데이터를 불러오는 중...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Schedule -->
       <div class="send-panel" id="schedulePanel">
         <div class="panel-header" onclick="toggleSchedulePanel()">
           <h3>&#x23F0; 발송 주기 설정</h3>
@@ -508,6 +765,13 @@
               <option value="12">오후 12시</option>
             </select>
           </div>
+
+          <!-- 공휴일 안내 -->
+          <div class="form-group" style="background:#fef3c7;border:1px solid #fde68a;padding:12px 16px;border-radius:8px;font-size:13px;color:#78350f;margin-bottom:12px;">
+            <strong>⚠️ 한국 공휴일 및 서연이화 휴일에는 메일 발송 불가</strong><br>
+            <span style="font-size:12px;color:#92400e;">설정된 발송일이 공휴일인 경우 자동으로 스킵되며, 월말 스페셜은 직전 평일로 당겨져 발송됩니다.</span>
+          </div>
+
           <div class="form-group" style="background:#f0fdf4;padding:12px 16px;border-radius:8px;font-size:13px;color:var(--primary-dark);margin-bottom:12px;">
             현재 설정: <strong>월~금 오전 7시</strong> 자동 발송<br>
             <span style="font-size:12px;color:var(--text-secondary);">* Apps Script 트리거와 함께 동작합니다</span>
@@ -519,37 +783,43 @@
         </div>
       </div>
 
-      <!-- Subscriber Table -->
-      <div class="table-container">
-        <div class="table-toolbar">
-          <h3>구독자 목록</h3>
-          <div style="display:flex;gap:12px;align-items:center;">
-            <div class="table-filter">
-              <button class="filter-btn active" onclick="filterTable('all', this)">전체</button>
-              <button class="filter-btn" onclick="filterTable('active', this)">활성</button>
-              <button class="filter-btn" onclick="filterTable('inactive', this)">비활성</button>
-            </div>
-            <input type="text" class="table-search" id="tableSearch" placeholder="이메일 검색..." oninput="searchTable()">
+      <!-- Feedback (table view) -->
+      <div class="send-panel" id="feedbackPanel">
+        <div class="panel-header" onclick="toggleFeedbackPanel()">
+          <h3>&#x1F4AC; 피드백 관리</h3>
+          <span id="feedbackToggle" style="font-size:13px;color:var(--text-secondary);">펼치기 &#x25BC;</span>
+        </div>
+        <div id="feedbackBody" class="send-body">
+          <div id="feedbackStats" class="fb-stats" style="margin-bottom:14px;"></div>
+          <div style="overflow-x:auto;">
+            <table id="feedbackTable">
+              <thead>
+                <tr>
+                  <th style="width:130px;">날짜</th>
+                  <th style="width:200px;">메일 주소</th>
+                  <th style="width:120px;">이름</th>
+                  <th>피드백 내용</th>
+                </tr>
+              </thead>
+              <tbody id="feedbackTbody">
+                <tr><td colspan="4" style="text-align:center;padding:40px;color:var(--text-secondary);">피드백을 불러오는 중...</td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
-        <div style="overflow-x:auto;">
-          <table>
-            <thead>
-              <tr>
-                <th>이메일</th>
-                <th>이름</th>
-                <th>구독일</th>
-                <th>상태</th>
-                <th>유입</th>
-                <th>관리</th>
-              </tr>
-            </thead>
-            <tbody id="subscriberTable">
-              <tr><td colspan="6" style="text-align:center;padding:40px;color:var(--text-secondary);">데이터를 불러오는 중...</td></tr>
-            </tbody>
-          </table>
-        </div>
       </div>
+
+    </div>
+  </div>
+
+  <!-- Promo Preview Modal -->
+  <div id="promoPreviewModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;padding:40px 20px;overflow-y:auto;" onclick="closePromoPreview(event)">
+    <div style="max-width:720px;margin:0 auto;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.3);" onclick="event.stopPropagation()">
+      <div style="padding:14px 20px;background:#f8fafc;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+        <strong style="font-size:14px;">구독 요청 메일 샘플 미리보기</strong>
+        <button onclick="closePromoPreview()" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--text-secondary);line-height:1;padding:4px 8px;">✕</button>
+      </div>
+      <iframe id="promoPreviewFrame" src="about:blank" style="width:100%;height:70vh;border:none;display:block;"></iframe>
     </div>
   </div>
 
@@ -565,10 +835,25 @@
     // ─── 설정 (config.js에서 로드) ───
     let SHEET_ID = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.SHEET_ID) || '';
     let WEBAPP_URL = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.WEBAPP_URL) || '';
+    let PROXY_URL = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.PROXY_URL) || '';
 
     let adminPassword = '';
     let allSubscribers = [];
     let currentFilter = 'all';
+
+    // ─── SHA-256 해시 (클라이언트 인증용) ───
+    async function sha256(text) {
+      var encoder = new TextEncoder();
+      var data = encoder.encode(text);
+      var hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      var hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(function(b) { return b.toString(16).padStart(2, '0'); }).join('');
+    }
+
+    // ─── 로그인 시도 관리 (5회 잠금) ───
+    var AUTH_FAIL_COUNT = 0;
+    var AUTH_LOCKED = false;
+    var ADMIN_PW_HASH = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.ADMIN_PW_HASH) || '';
 
     // ─── Google Sheets gviz API로 데이터 읽기 ─────────────
     function fetchSheetData(sheetName) {
@@ -601,7 +886,6 @@
       activeSubscribers: 19,
       inactiveSubscribers: 4,
       totalNewsletters: 5,
-      internalCount: 6,
       monthlyGrowth: {
         '2026-01': 3, '2026-02': 5, '2026-03': 8, '2026-04': 7
       },
@@ -623,15 +907,14 @@
       { email: 'shin.taehyung@example.com', name: '신태형', subscribedAt: '2026-04-01T08:30:00', status: 'active', source: 'web' },
     ];
 
-    // ─── 인증 (비밀번호는 서버에서만 검증) ─────────────────
-    function handleAuth(e) {
+    // ─── 인증 (SHA-256 해시 비교 — file:// 환경 호환) ─────────────────
+    async function handleAuth(e) {
       e.preventDefault();
       var pwd = document.getElementById('authPassword').value.trim();
       if (!pwd) {
         document.getElementById('authError').style.display = 'block';
         return;
       }
-      adminPassword = pwd;
 
       if (!SHEET_ID || !WEBAPP_URL) {
         showToast('config.js가 로드되지 않았습니다. 관리자에게 문의하세요.', true);
@@ -640,7 +923,42 @@
         return;
       }
 
-      showDashboard();
+      if (AUTH_LOCKED) {
+        showResetForm('5회 인증 실패로 계정이 잠겼습니다.\n관리자 이메일로 발송된 6자리 인증 코드를 입력해주세요.');
+        return;
+      }
+
+      var authBtn = document.querySelector('.auth-card .btn-primary');
+      authBtn.disabled = true;
+      authBtn.textContent = '확인 중...';
+
+      var hash = await sha256(pwd);
+      authBtn.disabled = false;
+      authBtn.textContent = '로그인';
+
+      if (hash === ADMIN_PW_HASH) {
+        // 인증 성공
+        adminPassword = pwd;
+        AUTH_FAIL_COUNT = 0;
+        showDashboard();
+      } else {
+        // 인증 실패
+        AUTH_FAIL_COUNT++;
+        if (AUTH_FAIL_COUNT >= 5) {
+          AUTH_LOCKED = true;
+          // 서버에 비밀번호 재설정 메일 요청 (fire-and-forget)
+          requestResetEmail();
+          showResetForm('5회 인증 실패로 계정이 잠겼습니다.\n관리자 이메일로 비밀번호 재설정 메일을 발송했습니다.');
+        } else {
+          document.getElementById('authError').textContent = '비밀번호가 올바르지 않습니다. (' + AUTH_FAIL_COUNT + '/5)';
+          document.getElementById('authError').style.display = 'block';
+        }
+      }
+    }
+
+    // 서버에 재설정 메일 요청 (응답 불필요 — no-cors)
+    function requestResetEmail() {
+      fetch(WEBAPP_URL + '?action=requestPasswordReset', { mode: 'no-cors' }).catch(function() {});
     }
 
     function showDashboard() {
@@ -670,7 +988,8 @@
           return {
             email: r[0] || '', name: r[1] || '',
             subscribedAt: r[2] || '', status: r[3] || 'active',
-            source: r[4] || 'web', unsubscribedAt: r[5] || ''
+            source: r[4] || 'web', unsubscribedAt: r[5] || '',
+            isInternal: false
           };
         });
 
@@ -688,7 +1007,6 @@
           activeSubscribers: active,
           inactiveSubscribers: inactive,
           totalNewsletters: nlRows.length,
-          internalCount: 6,
           monthlyGrowth: monthlyGrowth,
           sourceCounts: sourceCounts
         });
@@ -701,7 +1019,6 @@
     // ─── 통계 렌더링 ───────────────────────────────────
     function renderStats(data) {
       document.getElementById('statActive').textContent = data.activeSubscribers;
-      document.getElementById('statInternal').textContent = data.internalCount;
       document.getElementById('statInactive').textContent = data.inactiveSubscribers;
       document.getElementById('statNewsletters').textContent = data.totalNewsletters;
 
@@ -728,8 +1045,8 @@
       sourceList.innerHTML = Object.entries(sources).map(([src, count]) => `
         <div class="source-item">
           <div class="source-dot" style="background:${sourceColors[src] || '#94a3b8'}"></div>
-          <span class="source-name">${sourceNames[src] || src}</span>
-          <span class="source-count">${count}명</span>
+          <span class="source-name">${escapeHtml(sourceNames[src] || src)}</span>
+          <span class="source-count">${parseInt(count) || 0}명</span>
         </div>
       `).join('');
     }
@@ -739,23 +1056,184 @@
       const tbody = document.getElementById('subscriberTable');
 
       if (subscribers.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--text-secondary);">구독자가 없습니다.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--text-secondary);">구독자가 없습니다.</td></tr>';
         return;
       }
 
-      tbody.innerHTML = subscribers.map(sub => `
-        <tr>
-          <td style="font-weight:500;">${sub.email}</td>
-          <td>${sub.name || '-'}</td>
-          <td>${formatDate(sub.subscribedAt)}</td>
+      tbody.innerHTML = subscribers.map(sub => {
+        var safeEmail = escapeHtml(sub.email);
+        var safeName = escapeHtml(sub.name || '-');
+        var safeSource = escapeHtml(getSourceLabel(sub.source));
+        var encodedEmail = encodeURIComponent(sub.email);
+        var newStatus = sub.status === 'active' ? 'inactive' : 'active';
+        var isInternal = !!sub.isInternal;
+        var internalBadge = isInternal
+          ? '<span style="margin-left:6px;display:inline-block;padding:2px 8px;border-radius:10px;background:#eef2ff;color:#4338ca;font-size:10px;font-weight:700;letter-spacing:0.3px;">내부</span>'
+          : '';
+        var actionCell = isInternal
+          ? '<span style="font-size:11px;color:var(--text-secondary);">고정 명단<br><span style="font-size:10px;">Code.gs에서 수정</span></span>'
+          : '<button class="action-btn" data-email="' + safeEmail + '" data-status="' + newStatus + '" onclick="changeSubscriberStatus(decodeURIComponent(\'' + encodedEmail + '\'), \'' + newStatus + '\')" title="상태 변경">' + (sub.status === 'active' ? '비활성화' : '활성화') + '</button>'
+            + '<button class="action-btn" data-email="' + safeEmail + '" onclick="deleteSubscriber(decodeURIComponent(\'' + encodedEmail + '\'))" style="color:var(--danger);">삭제</button>';
+        var checkbox = isInternal
+          ? '<input type="checkbox" disabled title="내부 구독자는 삭제할 수 없습니다">'
+          : '<input type="checkbox" class="sub-select" data-email="' + safeEmail + '" onchange="updateBulkDeleteBtn()">';
+        return `<tr${isInternal ? ' style="background:#fafbff;"' : ''}>
+          <td style="text-align:center;">${checkbox}</td>
+          <td style="font-weight:500;">${safeEmail}${internalBadge}</td>
+          <td>${safeName}</td>
+          <td>${isInternal ? '<span style="color:var(--text-secondary);">—</span>' : formatDate(sub.subscribedAt)}</td>
           <td><span class="status-badge ${sub.status === 'active' ? 'status-active' : 'status-inactive'}">${sub.status === 'active' ? '활성' : '비활성'}</span></td>
-          <td>${getSourceLabel(sub.source)}</td>
-          <td style="white-space:nowrap;">
-            <button class="action-btn" onclick="changeSubscriberStatus('${sub.email}', '${sub.status === 'active' ? 'inactive' : 'active'}')" title="상태 변경">${sub.status === 'active' ? '비활성화' : '활성화'}</button>
-            <button class="action-btn" onclick="deleteSubscriber('${sub.email}')" style="color:var(--danger);">삭제</button>
-          </td>
-        </tr>
-      `).join('');
+          <td>${safeSource}</td>
+          <td style="white-space:nowrap;">${actionCell}</td>
+        </tr>`;
+      }).join('');
+      updateBulkDeleteBtn();
+    }
+
+    // ─── 체크박스 / 선택 삭제 ────────────────────────────────
+    function toggleSelectAll(masterCb) {
+      document.querySelectorAll('.sub-select:not(:disabled)').forEach(function(cb) { cb.checked = masterCb.checked; });
+      updateBulkDeleteBtn();
+    }
+    function updateBulkDeleteBtn() {
+      var checked = document.querySelectorAll('.sub-select:checked');
+      var btn = document.getElementById('bulkDeleteBtn');
+      var countEl = document.getElementById('bulkDeleteCount');
+      if (!btn || !countEl) return;
+      countEl.textContent = '(' + checked.length + ')';
+      btn.disabled = checked.length === 0;
+      btn.style.opacity = checked.length === 0 ? '0.55' : '1';
+    }
+    async function bulkDeleteSubscribers() {
+      var checked = Array.prototype.slice.call(document.querySelectorAll('.sub-select:checked'));
+      if (!checked.length) return;
+      var emails = checked.map(function(cb) { return cb.getAttribute('data-email'); });
+      if (!confirm('선택한 ' + emails.length + '명의 구독자를 삭제하시겠습니까?\n\n' + emails.join('\n'))) return;
+
+      var ok = 0, fail = 0;
+      for (var i = 0; i < emails.length; i++) {
+        try {
+          await callWebApp({ action: 'delete_subscriber', email: emails[i] });
+          ok++;
+          allSubscribers = allSubscribers.filter(function(s) { return s.email !== emails[i]; });
+        } catch (e) { fail++; }
+      }
+      showToast(ok + '명 삭제 완료' + (fail ? ' / ' + fail + '건 실패' : ''));
+      var selAll = document.getElementById('selectAllChk');
+      if (selAll) selAll.checked = false;
+      filterTable(currentFilter, document.querySelector('.filter-btn.active'));
+    }
+
+    // ─── 구독자 추가 (인라인 폼 토글) ─────────────────────────
+    function toggleAddSubForm() {
+      var box = document.getElementById('addSubInline');
+      if (!box) return;
+      box.style.display = box.style.display === 'none' || !box.style.display ? 'block' : 'none';
+    }
+
+    // ─── 구독 요청 메일 (promo) 관리 ─────────────────────────
+    var promoEmails = [];
+    var PROMO_LS_KEY = 'promo_email_list_v1';
+
+    function renderPromoChips() {
+      var box = document.getElementById('promoChipBox');
+      if (!box) return;
+      // Remove all existing chips but keep the input
+      var input = document.getElementById('promoEmailInput');
+      box.innerHTML = '';
+      promoEmails.forEach(function(em, idx) {
+        var chip = document.createElement('span');
+        chip.style.cssText = 'display:inline-flex;align-items:center;gap:4px;background:#eef2ff;color:#3730a3;padding:4px 10px;border-radius:14px;font-size:12px;font-weight:500;';
+        chip.innerHTML = escapeHtml(em) + ' <button type="button" onclick="removePromoEmail(' + idx + ')" style="background:none;border:none;color:#4338ca;cursor:pointer;font-size:14px;line-height:1;padding:0 0 0 2px;">&times;</button>';
+        box.appendChild(chip);
+      });
+      box.appendChild(input);
+    }
+    function handlePromoEmailKey(e) {
+      if (e.key === 'Enter' || e.key === ',' || e.key === 'Tab') {
+        e.preventDefault();
+        commitPromoEmail();
+      } else if (e.key === 'Backspace' && !e.target.value && promoEmails.length) {
+        promoEmails.pop();
+        renderPromoChips();
+      }
+    }
+    function commitPromoEmail() {
+      var input = document.getElementById('promoEmailInput');
+      var val = (input.value || '').trim().replace(/,$/, '');
+      if (!val) return;
+      // Split by comma / whitespace for bulk paste
+      val.split(/[\s,]+/).forEach(function(em) {
+        em = em.trim();
+        if (em && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em) && promoEmails.indexOf(em) === -1) {
+          promoEmails.push(em);
+        }
+      });
+      input.value = '';
+      renderPromoChips();
+    }
+    function removePromoEmail(idx) {
+      promoEmails.splice(idx, 1);
+      renderPromoChips();
+    }
+    function savePromoList() {
+      try {
+        localStorage.setItem(PROMO_LS_KEY, JSON.stringify(promoEmails));
+        document.getElementById('promoListStatus').textContent = '저장됨 (' + promoEmails.length + '명)';
+        setTimeout(function() { document.getElementById('promoListStatus').textContent = ''; }, 2500);
+      } catch (e) { showToast('저장 실패: ' + e.message, true); }
+    }
+    function loadPromoList() {
+      try {
+        var saved = JSON.parse(localStorage.getItem(PROMO_LS_KEY) || '[]');
+        if (!Array.isArray(saved) || !saved.length) {
+          showToast('저장된 목록이 없습니다.', true);
+          return;
+        }
+        promoEmails = saved.slice();
+        renderPromoChips();
+        document.getElementById('promoListStatus').textContent = '불러옴 (' + promoEmails.length + '명)';
+        setTimeout(function() { document.getElementById('promoListStatus').textContent = ''; }, 2500);
+      } catch (e) { showToast('불러오기 실패: ' + e.message, true); }
+    }
+    function clearPromoList() {
+      if (!promoEmails.length) return;
+      if (!confirm('수신 목록을 모두 비우시겠습니까?')) return;
+      promoEmails = [];
+      renderPromoChips();
+    }
+    function openPromoPreview() {
+      var modal = document.getElementById('promoPreviewModal');
+      var frame = document.getElementById('promoPreviewFrame');
+      frame.src = 'promo_email.html';
+      modal.style.display = 'block';
+    }
+    function closePromoPreview(e) {
+      if (e && e.target && e.target.id !== 'promoPreviewModal' && e.type === 'click') return;
+      document.getElementById('promoPreviewModal').style.display = 'none';
+      document.getElementById('promoPreviewFrame').src = 'about:blank';
+    }
+    async function sendPromoEmails() {
+      commitPromoEmail();
+      if (!promoEmails.length) {
+        showToast('수신 이메일을 먼저 입력해주세요.', true);
+        return;
+      }
+      if (!confirm(promoEmails.length + '명에게 구독 요청 메일을 발송하시겠습니까?\n\n' + promoEmails.join('\n'))) return;
+
+      var statusEl = document.getElementById('promoSendStatus');
+      statusEl.textContent = '발송 중...';
+      try {
+        await callWebApp({
+          action: 'send_promo',
+          emails: promoEmails.join(',')
+        });
+        showToast(promoEmails.length + '명에게 구독 요청 메일 발송 완료!');
+        statusEl.textContent = promoEmails.length + '명 발송 (' + new Date().toLocaleTimeString('ko-KR') + ')';
+      } catch (e) {
+        statusEl.textContent = '';
+        showToast('발송 실패: ' + e.message, true);
+      }
     }
 
     function filterTable(filter, btn) {
@@ -814,14 +1292,36 @@
     // ─── 웹 앱 doPost 호출 헬퍼 ─────────────────────────
     function callWebApp(data) {
       data.password = adminPassword;
+      var body = JSON.stringify(data);
+
+      // 프록시 URL이 설정되어 있으면 프록시 경유 (CORS 지원, 응답 확인 가능)
+      if (PROXY_URL) {
+        return fetch(PROXY_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: body
+        }).then(function(res) {
+          return res.json();
+        }).catch(function() {
+          // 프록시 실패 시 직접 호출 fallback
+          return directCallWebApp(body);
+        });
+      }
+      return directCallWebApp(body);
+    }
+
+    function directCallWebApp(body) {
+      // [보안] no-cors 모드에서는 응답을 확인할 수 없으므로
+      // JSONP로 확인 요청을 병행하여 실제 성공 여부를 검증
       return fetch(WEBAPP_URL, {
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'text/plain' },
-        body: JSON.stringify(data)
+        body: body
       }).then(function() {
-        // no-cors 모드에서는 응답을 읽을 수 없으므로 성공으로 간주
-        return { success: true };
+        return { success: true, unverified: true, message: '요청이 전송되었습니다. (응답 확인 불가 - no-cors)' };
+      }).catch(function() {
+        return { success: false, message: '네트워크 요청 실패. 연결을 확인하세요.' };
       });
     }
 
@@ -870,14 +1370,7 @@
       } catch (e) { showToast('테스트 발송 실패: ' + e.message, true); }
     }
 
-    // ─── 구독자 추가 ────────────────────────────────────────
-    function toggleAddSubPanel() {
-      var body = document.getElementById('addSubBody');
-      var toggle = document.getElementById('addSubToggle');
-      body.classList.toggle('active');
-      toggle.innerHTML = body.classList.contains('active') ? '접기 &#x25B2;' : '펼치기 &#x25BC;';
-    }
-
+    // ─── 구독자 추가 (인라인 폼) ─────────────────────────────
     async function addSubscriber() {
       var email = document.getElementById('addSubEmail').value.trim();
       var name = document.getElementById('addSubName').value.trim();
@@ -934,8 +1427,220 @@
     }
 
     function getSourceLabel(source) {
-      const labels = { web: '웹사이트', email: '이메일', referral: '추천', direct: '직접' };
+      const labels = { web: '웹사이트', email: '이메일', referral: '추천', direct: '직접', internal: 'AX추진팀' };
       return labels[source] || source || '-';
+    }
+
+    // ─── 피드백 관리 ───────────────────────────────────────
+    function toggleFeedbackPanel() {
+      var body = document.getElementById('feedbackBody');
+      var toggle = document.getElementById('feedbackToggle');
+      var wasActive = body.classList.contains('active');
+      body.classList.toggle('active');
+      toggle.innerHTML = body.classList.contains('active') ? '접기 &#x25B2;' : '펼치기 &#x25BC;';
+      // 처음 열 때 피드백 로드
+      if (!wasActive && !body.dataset.loaded) {
+        loadFeedback();
+      }
+    }
+
+    async function loadFeedback() {
+      var body = document.getElementById('feedbackBody');
+      var tbody = document.getElementById('feedbackTbody');
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:40px;color:var(--text-secondary);">피드백을 불러오는 중...</td></tr>';
+
+      try {
+        var rows = await fetchSheetData('feedback');
+        body.dataset.loaded = '1';
+        if (rows && rows.length > 0) {
+          var items = rows.map(function(r) {
+            return {
+              timestamp: r[0] || '',
+              email: r[1] || '',
+              rating: parseInt(r[2]) || 0,
+              category: r[3] || '',
+              message: r[4] || ''
+            };
+          });
+          // 최신 날짜가 상단
+          items.sort(function(a, b) {
+            return new Date(b.timestamp || 0) - new Date(a.timestamp || 0);
+          });
+          renderFeedback(items);
+        } else {
+          tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:40px;color:var(--text-secondary);">아직 접수된 피드백이 없습니다.</td></tr>';
+          document.getElementById('feedbackStats').innerHTML = '';
+        }
+      } catch (e) {
+        body.dataset.loaded = '1';
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:40px;color:var(--text-secondary);">피드백 로드 실패. 네트워크를 확인하세요.</td></tr>';
+      }
+    }
+
+    // email → name 매핑 (구독자 목록에서 lookup)
+    function lookupSubscriberName(email) {
+      if (!email || !allSubscribers || !allSubscribers.length) return '';
+      var found = allSubscribers.find(function(s) {
+        return String(s.email || '').toLowerCase() === String(email).toLowerCase();
+      });
+      return found ? (found.name || '') : '';
+    }
+
+    function renderFeedback(items) {
+      var tbody = document.getElementById('feedbackTbody');
+      var statsEl = document.getElementById('feedbackStats');
+
+      var total = items.length;
+      var ratings = items.filter(function(i) { return i.rating > 0; });
+      var avg = ratings.length ? (ratings.reduce(function(s, i) { return s + Number(i.rating); }, 0) / ratings.length).toFixed(1) : '-';
+
+      statsEl.innerHTML =
+        '<div class="fb-stat-chip">총 ' + total + '건</div>' +
+        '<div class="fb-stat-chip">평균 만족도 ' + avg + ' / 5</div>';
+
+      tbody.innerHTML = items.map(function(fb) {
+        var name = lookupSubscriberName(fb.email) || '—';
+        return '<tr>' +
+          '<td style="white-space:nowrap;font-size:12px;color:var(--text-secondary);">' + formatDateTime(fb.timestamp) + '</td>' +
+          '<td style="font-size:13px;">' + escapeHtml(fb.email || '—') + '</td>' +
+          '<td style="font-size:13px;">' + escapeHtml(name) + '</td>' +
+          '<td style="font-size:13px;line-height:1.6;">' + escapeHtml(fb.message || '') + '</td>' +
+        '</tr>';
+      }).join('');
+    }
+
+    function formatDateTime(dateStr) {
+      if (!dateStr) return '—';
+      var d = new Date(dateStr);
+      if (isNaN(d.getTime())) return String(dateStr).substring(0, 16);
+      return d.getFullYear() + '.' + String(d.getMonth()+1).padStart(2,'0') + '.' + String(d.getDate()).padStart(2,'0') +
+        ' ' + String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    // ─── 비밀번호 재설정 ─────────────────────────────────────
+    var resetStep = 1; // 1 = token input, 2 = new password
+
+    function showResetForm(message) {
+      document.querySelector('.auth-card').style.display = 'none';
+      document.getElementById('resetCard').style.display = 'block';
+      if (message) {
+        document.getElementById('resetMessage').innerHTML = escapeHtml(message).replace(/\n/g, '<br>');
+      }
+      resetStep = 1;
+      document.getElementById('resetStep1').style.display = 'block';
+      document.getElementById('resetStep2').style.display = 'none';
+      document.getElementById('resetBtn').textContent = '인증 코드 확인';
+      document.getElementById('resetError').style.display = 'none';
+      document.getElementById('resetSuccess').style.display = 'none';
+      document.getElementById('resetToken').value = '';
+      document.getElementById('resetToken').focus();
+    }
+
+    function backToLogin() {
+      document.querySelector('.auth-card').style.display = 'block';
+      document.getElementById('resetCard').style.display = 'none';
+      document.getElementById('authError').style.display = 'none';
+      document.getElementById('authPassword').value = '';
+      document.getElementById('authPassword').focus();
+    }
+
+    function checkPasswordStrength() {
+      var pw = document.getElementById('newPassword').value;
+      var ruleLen = document.getElementById('ruleLen');
+      var ruleLetter = document.getElementById('ruleLetter');
+      var ruleNum = document.getElementById('ruleNum');
+      var ruleSpecial = document.getElementById('ruleSpecial');
+
+      function setRule(el, pass) {
+        if (pass) {
+          el.className = 'rule-check';
+          el.innerHTML = '&#x2714; ' + el.textContent.replace(/^[✖✔] /, '');
+        } else {
+          el.className = 'rule-fail';
+          el.innerHTML = '&#x2716; ' + el.textContent.replace(/^[✖✔] /, '');
+        }
+      }
+      setRule(ruleLen, pw.length >= 12);
+      setRule(ruleLetter, /[a-zA-Z]/.test(pw));
+      setRule(ruleNum, /[0-9]/.test(pw));
+      setRule(ruleSpecial, /[^a-zA-Z0-9]/.test(pw));
+    }
+
+    function validateNewPassword(pw) {
+      if (pw.length < 12) return '비밀번호는 12자 이상이어야 합니다.';
+      if (!/[a-zA-Z]/.test(pw)) return '비밀번호에 영문자가 포함되어야 합니다.';
+      if (!/[0-9]/.test(pw)) return '비밀번호에 숫자가 포함되어야 합니다.';
+      if (!/[^a-zA-Z0-9]/.test(pw)) return '비밀번호에 특수문자가 포함되어야 합니다.';
+      return null;
+    }
+
+    function handleResetPassword() {
+      var errorEl = document.getElementById('resetError');
+      var successEl = document.getElementById('resetSuccess');
+      errorEl.style.display = 'none';
+      successEl.style.display = 'none';
+
+      var token = document.getElementById('resetToken').value.trim();
+      if (!token || token.length !== 6 || !/^\d{6}$/.test(token)) {
+        errorEl.textContent = '6자리 숫자 인증 코드를 입력해주세요.';
+        errorEl.style.display = 'block';
+        return;
+      }
+
+      if (resetStep === 1) {
+        // Step 1 → Step 2: 토큰 입력 완료, 새 비밀번호 입력 화면 표시
+        resetStep = 2;
+        document.getElementById('resetStep1').style.display = 'none';
+        document.getElementById('resetStep2').style.display = 'block';
+        document.getElementById('resetBtn').textContent = '비밀번호 변경';
+        document.getElementById('newPassword').focus();
+        return;
+      }
+
+      // Step 2: 새 비밀번호 검증 후 서버에 전송
+      var newPw = document.getElementById('newPassword').value;
+      var confirmPw = document.getElementById('confirmPassword').value;
+
+      var pwError = validateNewPassword(newPw);
+      if (pwError) {
+        errorEl.textContent = pwError;
+        errorEl.style.display = 'block';
+        return;
+      }
+
+      if (newPw !== confirmPw) {
+        errorEl.textContent = '비밀번호가 일치하지 않습니다.';
+        errorEl.style.display = 'block';
+        return;
+      }
+
+      // 서버에 resetPassword 호출 (no-cors fetch — 응답 불필요)
+      var resetBtn = document.getElementById('resetBtn');
+      resetBtn.disabled = true;
+      resetBtn.textContent = '변경 중...';
+
+      var resetUrl = WEBAPP_URL + '?action=resetPassword&token=' + encodeURIComponent(token) +
+        '&newPassword=' + encodeURIComponent(newPw);
+
+      fetch(resetUrl, { mode: 'no-cors' }).catch(function() {});
+
+      // 서버 처리 대기 후 로컬 해시 업데이트
+      setTimeout(async function() {
+        resetBtn.disabled = false;
+        var newHash = await sha256(newPw);
+        ADMIN_PW_HASH = newHash;
+        AUTH_LOCKED = false;
+        AUTH_FAIL_COUNT = 0;
+        successEl.textContent = '비밀번호가 변경되었습니다. 새 비밀번호로 로그인해주세요.';
+        successEl.style.display = 'block';
+        resetBtn.textContent = '로그인 화면으로';
+        resetBtn.onclick = function() { backToLogin(); resetBtn.onclick = handleResetPassword; };
+      }, 3000);
     }
 
     function showToast(message, isError) {

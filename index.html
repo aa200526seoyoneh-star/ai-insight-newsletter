@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>THE AI INSIGHT - AI 트렌드 뉴스레터 구독</title>
+  <title>THE AI INSIGHT - AI 트렌드 뉴스레터</title>
   <meta name="description" content="서연이화 AX추진팀이 전하는 AI 트렌드, 실전 가이드, 업무 자동화 팁. 무료 구독하세요.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #065f46;
@@ -15,13 +15,21 @@
       --primary-50: #ecfdf5;
       --primary-100: #d1fae5;
       --accent: #10b981;
-      --bg: #f8fafb;
+      --accent-warm: #f59e0b;
+      --bg: #fafbfc;
       --surface: #ffffff;
-      --text: #1f2937;
+      --text: #111827;
       --text-secondary: #6b7280;
+      --text-tertiary: #9ca3af;
       --border: #e5e7eb;
+      --border-light: #f3f4f6;
       --danger: #ef4444;
-      --radius: 12px;
+      --radius: 14px;
+      --radius-sm: 10px;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+      --shadow-xl: 0 20px 60px rgba(0,0,0,0.1);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -34,12 +42,22 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+    /* 한국어 어절 단위 줄바꿈: 어떤 자식 요소든 상속받도록 명시 */
+    p, h1, h2, h3, h4, h5, h6, li, td, th, span, div, a, button, label, figcaption {
+      word-break: keep-all;
+      overflow-wrap: break-word;
     }
 
     /* ── Nav ── */
     .nav {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(229,231,235,0.6);
       padding: 0 24px;
       position: sticky;
       top: 0;
@@ -51,23 +69,32 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 64px;
+      height: 60px;
     }
     .nav-logo {
       font-weight: 900;
-      font-size: 18px;
+      font-size: 17px;
       color: var(--primary);
       text-decoration: none;
       letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-logo-dot {
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: inline-block;
     }
     .nav-logo span { color: var(--accent); }
-    .nav-links { display: flex; gap: 8px; }
+    .nav-links { display: flex; gap: 4px; }
     .nav-links a {
       text-decoration: none;
       color: var(--text-secondary);
       font-size: 14px;
       font-weight: 500;
-      padding: 8px 16px;
+      padding: 7px 14px;
       border-radius: 8px;
       transition: all 0.2s;
     }
@@ -76,9 +103,9 @@
 
     /* ── Hero ── */
     .hero {
-      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%);
+      background: linear-gradient(160deg, #022c22 0%, var(--primary-dark) 30%, var(--primary) 70%, #047857 100%);
       color: #fff;
-      padding: 80px 24px;
+      padding: 80px 24px 120px;
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -86,146 +113,235 @@
     .hero::before {
       content: '';
       position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle at 30% 50%, rgba(16,185,129,0.15) 0%, transparent 50%),
-                  radial-gradient(circle at 70% 80%, rgba(255,255,255,0.05) 0%, transparent 40%);
-      animation: float 20s ease-in-out infinite;
+      top: -40%;
+      left: -30%;
+      width: 160%;
+      height: 180%;
+      background:
+        radial-gradient(ellipse at 20% 40%, rgba(16,185,129,0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 60%, rgba(5,150,105,0.08) 0%, transparent 45%),
+        radial-gradient(ellipse at 50% 20%, rgba(255,255,255,0.03) 0%, transparent 40%);
+      animation: heroFloat 25s ease-in-out infinite;
     }
-    @keyframes float {
-      0%, 100% { transform: translate(0, 0) rotate(0deg); }
-      50% { transform: translate(-2%, 2%) rotate(1deg); }
+    @keyframes heroFloat {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(-1.5%, 1.5%); }
     }
-    .hero-content { position: relative; max-width: 650px; margin: 0 auto; }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 80px;
+      background: linear-gradient(transparent, var(--bg));
+    }
+    .hero-content {
+      position: relative;
+      max-width: 680px;
+      margin: 0 auto;
+      z-index: 2;
+    }
     .hero-badge {
-      display: inline-block;
-      background: rgba(255,255,255,0.15);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.1);
       backdrop-filter: blur(10px);
       padding: 6px 16px;
       border-radius: 20px;
       font-size: 13px;
       font-weight: 500;
-      margin-bottom: 24px;
-      border: 1px solid rgba(255,255,255,0.2);
+      margin-bottom: 28px;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.5); }
     }
     .hero h1 {
-      font-size: 42px;
+      font-size: 44px;
       font-weight: 900;
-      line-height: 1.3;
-      margin-bottom: 16px;
-      letter-spacing: -1px;
+      line-height: 1.25;
+      margin-bottom: 18px;
+      letter-spacing: -1.5px;
     }
-    .hero p {
-      font-size: 17px;
-      opacity: 0.9;
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, #6ee7b7, #34d399);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-desc {
+      font-size: 16px;
+      opacity: 0.85;
       line-height: 1.8;
       margin-bottom: 40px;
+      font-weight: 300;
     }
 
-    /* ── Subscribe Form ── */
-    .subscribe-card {
-      background: var(--surface);
+    /* ── Inline Subscribe (Hero) ── */
+    .hero-subscribe {
+      max-width: 480px;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(16px);
       border-radius: 16px;
-      padding: 40px;
-      max-width: 520px;
-      margin: -40px auto 0;
-      position: relative;
-      z-index: 10;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05);
+      padding: 6px;
+      border: 1px solid rgba(255,255,255,0.12);
     }
-    .subscribe-card h2 {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 4px;
-      color: var(--primary);
+    .hero-subscribe-inner {
+      display: flex;
+      gap: 8px;
     }
-    .subscribe-card .subtitle {
-      color: var(--text-secondary);
-      font-size: 14px;
-      margin-bottom: 24px;
-    }
-
-    .form-group { margin-bottom: 16px; }
-    .form-group label {
-      display: block;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 6px;
-    }
-    .form-group input {
-      width: 100%;
-      padding: 12px 16px;
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
+    .hero-subscribe input {
+      flex: 1;
+      padding: 14px 18px;
+      border: none;
+      border-radius: 12px;
       font-size: 15px;
       font-family: inherit;
-      transition: border-color 0.2s, box-shadow 0.2s;
       outline: none;
+      background: rgba(255,255,255,0.95);
+      color: var(--text);
     }
-    .form-group input:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(6,95,70,0.1);
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 13px 28px;
+    .hero-subscribe input::placeholder { color: #9ca3af; }
+    .hero-subscribe button {
+      padding: 14px 28px;
+      background: var(--accent);
+      color: #fff;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       font-size: 15px;
-      font-weight: 600;
+      font-weight: 700;
       font-family: inherit;
       cursor: pointer;
       transition: all 0.2s;
-      text-decoration: none;
+      white-space: nowrap;
     }
-    .btn-primary {
-      background: var(--primary);
-      color: #fff;
-      width: 100%;
+    .hero-subscribe button:hover { background: #059669; transform: translateY(-1px); }
+    .hero-subscribe button:active { transform: translateY(0); }
+    .hero-subscribe button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .hero-subscribe-note {
+      font-size: 12px;
+      opacity: 0.5;
+      margin-top: 12px;
     }
-    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(6,95,70,0.3); }
-    .btn-primary:active { transform: translateY(0); }
-    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .hero-message {
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      margin-top: 12px;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    .hero-message.show { display: block; }
+    .hero-message.success { background: rgba(16,185,129,0.2); color: #a7f3d0; border: 1px solid rgba(16,185,129,0.3); }
+    .hero-message.error { background: rgba(239,68,68,0.2); color: #fca5a5; border: 1px solid rgba(239,68,68,0.3); }
 
-    .btn-outline {
-      background: transparent;
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ── Stats Strip ── */
+    .stats-strip {
+      max-width: 600px;
+      margin: -40px auto 0;
+      position: relative;
+      z-index: 10;
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 20px 32px;
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border-light);
+    }
+    .stat-item { text-align: center; }
+    .stat-number {
+      font-size: 24px;
+      font-weight: 900;
       color: var(--primary);
-      border: 1.5px solid var(--primary);
+      letter-spacing: -0.5px;
+      line-height: 1.2;
     }
-    .btn-outline:hover { background: var(--primary-50); }
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      font-weight: 500;
+      margin-top: 2px;
+    }
 
-    .btn-danger {
-      background: transparent;
-      color: var(--danger);
-      border: 1.5px solid var(--danger);
-      width: 100%;
+    /* ── Section Styles ── */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 72px 24px;
     }
-    .btn-danger:hover { background: #fef2f2; }
+    .section-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .section-label {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: -0.8px;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .section-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      margin-top: 10px;
+      line-height: 1.7;
+    }
 
     /* ── Features ── */
-    .features {
-      max-width: 1100px;
-      margin: 60px auto;
-      padding: 0 24px;
+    .features-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
     }
     .feature-card {
       background: var(--surface);
       border-radius: var(--radius);
-      padding: 32px;
+      padding: 32px 28px;
       border: 1px solid var(--border);
-      transition: all 0.2s;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
     }
-    .feature-card:hover { border-color: var(--primary-light); box-shadow: 0 8px 24px rgba(6,95,70,0.06); transform: translateY(-2px); }
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .feature-card:hover {
+      border-color: var(--primary-100);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-3px);
+    }
+    .feature-card:hover::before { opacity: 1; }
     .feature-icon {
       width: 48px;
       height: 48px;
@@ -235,180 +351,774 @@
       align-items: center;
       justify-content: center;
       font-size: 22px;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
-    .feature-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
-    .feature-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+    .feature-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .feature-card p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
 
-    /* ── Tabs ── */
-    .tab-section {
-      max-width: 520px;
-      margin: 60px auto;
+    /* ── Recent Newsletters ── */
+    .recent-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+    .newsletter-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 28px;
+      border: 1px solid var(--border);
+      transition: all 0.25s ease;
+      cursor: default;
+      display: flex;
+      flex-direction: column;
+    }
+    .newsletter-card:hover {
+      border-color: var(--primary-100);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+    .newsletter-date {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .newsletter-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+    .newsletter-summary {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      flex: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .newsletter-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border-light);
+      font-size: 12px;
+      color: var(--text-tertiary);
+    }
+    .newsletter-meta svg { flex-shrink: 0; }
+
+    .newsletter-empty {
+      text-align: center;
+      padding: 48px 20px;
+      color: var(--text-tertiary);
+      font-size: 14px;
+      grid-column: 1 / -1;
+    }
+    .newsletter-loading {
+      text-align: center;
+      padding: 48px 20px;
+      color: var(--text-tertiary);
+      font-size: 14px;
+      grid-column: 1 / -1;
+    }
+    .newsletter-loading .dot-anim::after {
+      content: '';
+      animation: dots 1.5s steps(4) infinite;
+    }
+    @keyframes dots {
+      0% { content: ''; }
+      25% { content: '.'; }
+      50% { content: '..'; }
+      75% { content: '...'; }
+    }
+    .view-all-wrap {
+      text-align: center;
+      margin-top: 36px;
+    }
+
+    /* ── Weekly Theme Preview (always visible) ── */
+    .weekly-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    .weekly-grid > .weekly-card {
+      flex: 0 1 calc((100% - 40px) / 3);
+      max-width: calc((100% - 40px) / 3);
+    }
+    .weekly-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 0;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: all 0.25s ease;
+    }
+    .weekly-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-3px);
+    }
+    .weekly-card-top {
+      padding: 20px 24px 16px;
+      color: #fff;
+      position: relative;
+    }
+    .weekly-card-top .day-label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: 0.85;
+      margin-bottom: 4px;
+    }
+    .weekly-card-top h3 {
+      font-size: 17px;
+      font-weight: 900;
+      line-height: 1.3;
+    }
+    .weekly-card-body {
+      padding: 16px 24px 24px;
+    }
+    .weekly-card-body p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    .weekly-card-body .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+    .weekly-card-body .tag {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      background: #f3f4f6;
+      color: var(--text-secondary);
+    }
+    /* 뉴스레터별 고유 컬러 — 서로 겹치지 않는 7색 팔레트 */
+    .weekly-mon  .weekly-card-top { background: linear-gradient(135deg, #f59e0b, #d97706); } /* 앰버 */
+    .weekly-tue  .weekly-card-top { background: linear-gradient(135deg, #ef4444, #dc2626); } /* 레드 */
+    .weekly-wed  .weekly-card-top { background: linear-gradient(135deg, #ec4899, #be185d); } /* 핑크 */
+    .weekly-thu  .weekly-card-top { background: linear-gradient(135deg, #10b981, #059669); } /* 에메랄드 */
+    .weekly-fri  .weekly-card-top { background: linear-gradient(135deg, #0891b2, #0e7490); } /* 틸/시안 */
+    .weekly-sat  .weekly-card-top { background: linear-gradient(135deg, #6366f1, #4f46e5); } /* 인디고 (월말) */
+    .weekly-year .weekly-card-top { background: linear-gradient(135deg, #c2410c, #7c2d12); } /* 번트 오렌지 (연간) */
+
+    /* Clickable special cards */
+    a.weekly-card {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      position: relative;
+    }
+    a.weekly-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-3px);
+    }
+    .weekly-card-top .preview-chip {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.22);
+      color: #fff;
+      backdrop-filter: blur(4px);
+    }
+
+    /* Special Edition grid (Monthly + Yearly) */
+    .special-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-top: 28px;
+    }
+    .special-divider {
+      margin: 36px 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .special-divider::before,
+    .special-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .special-divider-text {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 768px) {
+      .weekly-grid > .weekly-card {
+        flex: 0 1 100%;
+        max-width: 100%;
+      }
+      .special-grid { grid-template-columns: 1fr; }
+    }
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .weekly-grid > .weekly-card {
+        flex: 0 1 calc((100% - 20px) / 2);
+        max-width: calc((100% - 20px) / 2);
+      }
+    }
+
+    /* ── Archive Preview Grid (hidden until subscribed) ── */
+    .archive-section {
+      display: none;
+    }
+    .archive-section.show {
+      display: block;
+    }
+    .archive-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    .archive-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 24px;
+      border: 1px solid var(--border);
+      transition: all 0.25s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .archive-card:hover {
+      border-color: var(--primary-100);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-3px);
+    }
+    .archive-card-day {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 13px;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .archive-card-day.mon { background: #f59e0b; }
+    .archive-card-day.tue { background: #e74c3c; }
+    .archive-card-day.wed { background: #dc2626; }
+    .archive-card-day.thu { background: #065f46; }
+    .archive-card-day.fri { background: #c97a4a; }
+    .archive-card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+    .archive-card-date {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      margin-bottom: 12px;
+    }
+    .archive-card-summary {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      flex: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* ── Archive Modal ── */
+    .archive-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .archive-modal.show {
+      display: flex;
+    }
+    .archive-modal-content {
+      background: var(--surface);
+      border-radius: 16px;
+      max-width: 800px;
+      width: 100%;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-xl);
+    }
+    .archive-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .archive-modal-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .archive-modal-close {
+      background: transparent;
+      border: none;
+      font-size: 24px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+    .archive-modal-close:hover {
+      background: var(--border-light);
+      color: var(--text);
+    }
+    .archive-modal-body {
+      flex: 1;
+      overflow-y: auto;
+    }
+    .archive-modal-body iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* ── Subscribe/Unsubscribe 2-Column Section ── */
+    .subscribe-unsub-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      max-width: 1000px;
+      margin: 0 auto 72px;
       padding: 0 24px;
     }
-    .tabs {
-      display: flex;
-      background: var(--primary-50);
-      border-radius: 10px;
-      padding: 4px;
-      margin-bottom: 24px;
+    .subscribe-column, .unsub-column {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 40px;
+      border: 1px solid var(--border);
     }
-    .tab-btn {
-      flex: 1;
-      padding: 10px;
+    .subscribe-column {
+      border-color: var(--primary-100);
+      background: linear-gradient(135deg, rgba(6,95,70,0.02), rgba(16,185,129,0.03));
+    }
+    .subscribe-column h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+    .subscribe-column p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+    .subscribe-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .subscribe-form input {
+      padding: 12px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .subscribe-form input:focus {
+      border-color: var(--primary);
+    }
+    .subscribe-form button {
+      padding: 12px 24px;
+      background: var(--primary);
+      color: #fff;
       border: none;
-      background: transparent;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .subscribe-form button:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+    .subscribe-form button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .subscribe-message {
+      padding: 10px 14px;
       border-radius: 8px;
+      font-size: 13px;
+      margin-top: 12px;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    .subscribe-message.show { display: block; }
+    .subscribe-message.success {
+      background: rgba(16,185,129,0.2);
+      color: #059669;
+      border: 1px solid rgba(16,185,129,0.3);
+    }
+    .subscribe-message.error {
+      background: rgba(239,68,68,0.2);
+      color: #dc2626;
+      border: 1px solid rgba(239,68,68,0.3);
+    }
+
+    .unsub-column {
+      background: linear-gradient(135deg, rgba(107,114,128,0.02), rgba(209,212,219,0.03));
+    }
+    .unsub-column h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .unsub-column p {
+      font-size: 13px;
+      color: var(--text-tertiary);
+      margin-bottom: 20px;
+    }
+    .unsub-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .unsub-form input {
+      padding: 12px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .unsub-form input:focus {
+      border-color: var(--danger);
+    }
+    .unsub-form button {
+      padding: 12px 24px;
+      background: transparent;
+      color: var(--danger);
+      border: 1.5px solid var(--danger);
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .unsub-form button:hover {
+      background: #fef2f2;
+    }
+    .unsub-form button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .unsub-message {
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      margin-top: 12px;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    .unsub-message.show { display: block; }
+    .unsub-message.success {
+      background: var(--primary-50);
+      color: var(--primary);
+      border: 1px solid var(--primary-100);
+    }
+
+    /* ── CTA Section ── */
+    .cta-section {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      border-radius: 20px;
+      padding: 56px 40px;
+      text-align: center;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      max-width: 800px;
+      margin: 0 auto 72px;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: -50%; right: -30%;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(16,185,129,0.15), transparent 60%);
+    }
+    .cta-section h2 {
+      font-size: 28px;
+      font-weight: 900;
+      margin-bottom: 12px;
+      position: relative;
+      letter-spacing: -0.5px;
+    }
+    .cta-section p {
+      font-size: 15px;
+      opacity: 0.8;
+      margin-bottom: 32px;
+      position: relative;
+    }
+    .cta-form {
+      max-width: 420px;
+      margin: 0 auto;
+      display: flex;
+      gap: 8px;
+      position: relative;
+    }
+    .cta-form input {
+      flex: 1;
+      padding: 14px 18px;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-family: inherit;
+      outline: none;
+    }
+    .cta-form input::placeholder { color: #9ca3af; }
+    .cta-form button {
+      padding: 14px 24px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .cta-form button:hover { background: #34d399; }
+    .cta-message {
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      margin-top: 12px;
+      display: none;
+      animation: fadeIn 0.3s ease;
+      position: relative;
+    }
+    .cta-message.show { display: block; }
+    .cta-message.success { background: rgba(16,185,129,0.2); color: #a7f3d0; }
+    .cta-message.error { background: rgba(239,68,68,0.2); color: #fca5a5; }
+
+    /* ── Unsub Section (compact) ── */
+    .unsub-section {
+      max-width: 480px;
+      margin: 0 auto 60px;
+      padding: 0 24px;
+    }
+    .unsub-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 28px;
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+    .unsub-card h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+    .unsub-card .unsub-desc {
+      font-size: 13px;
+      color: var(--text-tertiary);
+      margin-bottom: 16px;
+    }
+    .unsub-form-row {
+      display: flex;
+      gap: 8px;
+    }
+    .unsub-form-row input {
+      flex: 1;
+      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .unsub-form-row input:focus { border-color: var(--danger); }
+    .unsub-form-row button {
+      padding: 10px 20px;
+      background: transparent;
+      color: var(--danger);
+      border: 1.5px solid var(--danger);
+      border-radius: var(--radius-sm);
       font-size: 14px;
       font-weight: 600;
       font-family: inherit;
       cursor: pointer;
-      color: var(--text-secondary);
+      white-space: nowrap;
       transition: all 0.2s;
     }
-    .tab-btn.active {
-      background: var(--surface);
-      color: var(--primary);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-    }
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
-
-    /* ── Message ── */
-    .message {
-      padding: 14px 18px;
+    .unsub-form-row button:hover { background: #fef2f2; }
+    .unsub-message {
+      padding: 10px 16px;
       border-radius: 10px;
-      font-size: 14px;
-      margin-top: 16px;
+      font-size: 13px;
+      margin-top: 12px;
       display: none;
       animation: fadeIn 0.3s ease;
     }
-    .message.show { display: block; }
-    .message.success { background: var(--primary-50); color: var(--primary); border: 1px solid var(--primary-100); }
-    .message.error { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+    .unsub-message.show { display: block; }
+    .unsub-message.success { background: var(--primary-50); color: var(--primary); border: 1px solid var(--primary-100); }
 
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
-
-    /* ── Stats Bar ── */
-    .stats-bar {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 24px;
-      display: flex;
+    /* ── Buttons (shared) ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
       justify-content: center;
-      gap: 48px;
-      color: var(--text-secondary);
+      gap: 8px;
+      padding: 12px 24px;
+      border: none;
+      border-radius: var(--radius-sm);
       font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
     }
-    .stats-bar strong { color: var(--primary); font-size: 20px; display: block; }
-
-    /* ── Footer ── */
-    .footer {
-      margin-top: auto;
-      background: var(--primary-dark);
-      color: rgba(255,255,255,0.7);
-      text-align: center;
-      padding: 32px 24px;
-      font-size: 13px;
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
     }
-    .footer a { color: var(--accent); text-decoration: none; }
+    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(6,95,70,0.25); }
+    .btn-outline {
+      background: transparent;
+      color: var(--primary);
+      border: 1.5px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--primary); background: var(--primary-50); }
 
     /* ── Spinner ── */
     .spinner {
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       border: 2px solid rgba(255,255,255,0.3);
       border-top-color: #fff;
       border-radius: 50%;
       animation: spin 0.6s linear infinite;
+      display: inline-block;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ── Preview Section ── */
-    .preview-section {
+    /* ── Footer ── */
+    .footer {
+      margin-top: auto;
+      background: #111827;
+      color: rgba(255,255,255,0.5);
+      padding: 40px 24px;
+      font-size: 13px;
+    }
+    .footer-inner {
       max-width: 1100px;
-      margin: 60px auto 0;
-      padding: 0 24px;
-      text-align: center;
-    }
-    .preview-section h2 {
-      font-size: 28px;
-      font-weight: 900;
-      color: var(--text);
-      margin-bottom: 8px;
-    }
-    .preview-section .preview-subtitle {
-      color: var(--text-secondary);
-      font-size: 15px;
-      margin-bottom: 32px;
-    }
-    .preview-frame-wrapper {
-      max-width: 640px;
       margin: 0 auto;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.06);
-      border: 1px solid var(--border);
-      background: #fff;
-      position: relative;
-    }
-    .preview-toolbar {
-      background: #f9fafb;
-      border-bottom: 1px solid var(--border);
-      padding: 10px 16px;
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 8px;
     }
-    .preview-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #e5e7eb;
-    }
-    .preview-dot:nth-child(1) { background: #fca5a5; }
-    .preview-dot:nth-child(2) { background: #fcd34d; }
-    .preview-dot:nth-child(3) { background: #86efac; }
-    .preview-toolbar span {
-      flex: 1;
-      text-align: center;
-      font-size: 12px;
-      color: var(--text-secondary);
-      font-weight: 500;
-    }
-    .preview-frame-wrapper iframe {
-      width: 100%;
-      height: 600px;
-      border: none;
-      display: block;
-    }
-    .preview-fade {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 120px;
-      background: linear-gradient(transparent, rgba(255,255,255,0.95));
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      padding-bottom: 20px;
-    }
-    .preview-fade .btn {
-      padding: 10px 24px;
-      font-size: 14px;
-      box-shadow: 0 4px 12px rgba(6,95,70,0.2);
-    }
+    .footer a { color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s; }
+    .footer a:hover { color: var(--accent); }
+    .footer-links { display: flex; gap: 20px; }
 
     /* ── Responsive ── */
-    @media (max-width: 640px) {
-      .hero { padding: 60px 20px; }
-      .hero h1 { font-size: 28px; }
-      .subscribe-card { margin: -30px 16px 0; padding: 28px 20px; }
-      .stats-bar { gap: 24px; flex-wrap: wrap; }
-      .nav-links a { padding: 8px 10px; font-size: 13px; }
-      .preview-section h2 { font-size: 22px; }
-      .preview-frame-wrapper iframe { height: 450px; }
+    @media (max-width: 768px) {
+      .hero { padding: 60px 20px 100px; }
+      .hero h1 { font-size: 30px; }
+      .hero-desc { font-size: 14px; }
+      .hero-subscribe-inner { flex-direction: column; }
+      .hero-subscribe button { width: 100%; }
+      .stats-strip { gap: 28px; padding: 18px 24px; margin: -36px 16px 0; }
+      .stat-number { font-size: 20px; }
+      .section { padding: 48px 20px; }
+      .section-title { font-size: 24px; }
+      .features-grid { grid-template-columns: 1fr; }
+      .recent-grid { grid-template-columns: 1fr; }
+      .archive-grid { grid-template-columns: 1fr; }
+      .cta-section { margin: 0 16px 48px; padding: 40px 24px; border-radius: 16px; }
+      .cta-form { flex-direction: column; }
+      .cta-form button { width: 100%; }
+      .nav-links a { padding: 7px 10px; font-size: 13px; }
+      .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
+      .subscribe-unsub-section {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        margin: 0 auto 48px;
+        padding: 0 16px;
+      }
+      .subscribe-column, .unsub-column {
+        padding: 28px;
+      }
+      .archive-modal-content {
+        max-height: 80vh;
+        border-radius: 12px;
+      }
+      .archive-modal-header {
+        padding: 16px;
+      }
+      .archive-modal-title {
+        font-size: 16px;
+      }
     }
   </style>
   <script src="config.js"></script>
@@ -418,7 +1128,10 @@
   <!-- Navigation -->
   <nav class="nav">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo">THE AI <span>INSIGHT</span></a>
+      <a href="index.html" class="nav-logo">
+        <span class="nav-logo-dot"></span>
+        THE AI <span>INSIGHT</span>
+      </a>
       <div class="nav-links">
         <a href="index.html" class="active">구독</a>
         <a href="archive.html">아카이브</a>
@@ -430,151 +1143,267 @@
   <!-- Hero -->
   <section class="hero">
     <div class="hero-content">
-      <div class="hero-badge">by 서연이화 AX추진팀</div>
-      <h1>AI 트렌드를<br>가장 먼저 만나보세요</h1>
-      <p>매주 엄선한 AI 뉴스, 실전 활용 가이드, 업무 자동화 팁을<br>이메일로 보내드립니다. 무료로 구독하세요.</p>
-    </div>
-  </section>
+      <div class="hero-badge">서연이화 AX추진팀</div>
+      <h1>매일 아침, <em>AI 인사이트</em>를<br>가장 먼저 받아보세요</h1>
+      <p class="hero-desc">
+        업계를 선도하는 AI 트렌드, 바로 적용 가능한 실전 가이드,<br>
+        업무를 바꿀 자동화 레시피를 매일 이메일로 보내드립니다.
+      </p>
 
-  <!-- Subscribe / Unsubscribe Card -->
-  <div class="tab-section">
-    <div class="subscribe-card">
-      <div class="tabs">
-        <button class="tab-btn active" data-tab="subscribe" onclick="switchTab('subscribe')">구독하기</button>
-        <button class="tab-btn" data-tab="unsubscribe" onclick="switchTab('unsubscribe')">구독취소</button>
-      </div>
-
-      <!-- Subscribe Tab -->
-      <div id="tab-subscribe" class="tab-content active">
-        <h2>뉴스레터 구독</h2>
-        <p class="subtitle">AI 인사이트를 놓치지 마세요</p>
-        <form id="subscribeForm" onsubmit="handleSubscribe(event)">
-          <div class="form-group">
-            <label for="subName">이름 (선택)</label>
-            <input type="text" id="subName" placeholder="홍길동">
-          </div>
-          <div class="form-group">
-            <label for="subEmail">이메일 *</label>
-            <input type="email" id="subEmail" placeholder="email@example.com" required>
-          </div>
-          <button type="submit" class="btn btn-primary" id="subBtn">
-            무료 구독하기
-          </button>
-        </form>
-        <div id="subMessage" class="message"></div>
-      </div>
-
-      <!-- Unsubscribe Tab -->
-      <div id="tab-unsubscribe" class="tab-content">
-        <h2>구독 취소</h2>
-        <p class="subtitle">언제든 다시 돌아오실 수 있습니다</p>
-        <form id="unsubscribeForm" onsubmit="handleUnsubscribe(event)">
-          <div class="form-group">
-            <label for="unsubEmail">이메일</label>
-            <input type="email" id="unsubEmail" placeholder="email@example.com" required>
-          </div>
-          <button type="submit" class="btn btn-danger" id="unsubBtn">
-            구독 취소하기
-          </button>
-        </form>
-        <div id="unsubMessage" class="message"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Newsletter Preview -->
-  <section class="preview-section">
-    <h2>이런 뉴스레터를 보내드려요</h2>
-    <p class="preview-subtitle">매일 아침, 핵심 AI 트렌드를 한눈에 정리해 드립니다</p>
-    <div class="preview-frame-wrapper">
-      <div class="preview-toolbar">
-        <div class="preview-dot"></div>
-        <div class="preview-dot"></div>
-        <div class="preview-dot"></div>
-        <span>THE AI INSIGHT — Monday Morning Briefing</span>
-        <div style="width:30px;"></div>
-      </div>
-      <iframe src="sample_newsletter.html" title="뉴스레터 미리보기" loading="lazy"></iframe>
-      <div class="preview-fade">
-        <a href="#tab-subscribe" class="btn btn-primary" onclick="switchTab('subscribe');window.scrollTo({top:0,behavior:'smooth'});">구독하고 전체 보기</a>
-      </div>
+      <!-- Inline Subscribe Form -->
+      <form class="hero-subscribe" id="heroSubscribeForm" onsubmit="handleHeroSubscribe(event)">
+        <div class="hero-subscribe-inner">
+          <input type="email" id="heroEmail" placeholder="이메일을 입력하세요" required>
+          <button type="submit" id="heroBtn">무료 구독</button>
+        </div>
+      </form>
+      <div id="heroMessage" class="hero-message"></div>
+      <p class="hero-subscribe-note">스팸 없이, 언제든 구독 취소 가능</p>
     </div>
   </section>
 
   <!-- Features -->
-  <section class="features">
-    <div class="feature-card">
-      <div class="feature-icon">&#x1F4CA;</div>
-      <h3>AI 트렌드 분석</h3>
-      <p>주요 AI 모델 업데이트, 기업 도입 사례, 산업별 영향 분석을 한눈에 정리해드립니다.</p>
+  <section class="section">
+    <div class="section-header">
+      <div class="section-label">What We Cover</div>
+      <h2 class="section-title">당신의 AI 경쟁력을 높여드립니다</h2>
+      <p class="section-desc">쏟아지는 AI 정보 속에서 진짜 필요한 인사이트만 골라 전달합니다</p>
     </div>
-    <div class="feature-card">
-      <div class="feature-icon">&#x1F6E0;</div>
-      <h3>실전 활용 가이드</h3>
-      <p>Claude, ChatGPT, Copilot 등 AI 도구를 업무에 바로 적용할 수 있는 실전 팁을 제공합니다.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">&#x26A1;</div>
-      <h3>업무 자동화 레시피</h3>
-      <p>반복 업무를 AI로 자동화하는 방법을 단계별로 알려드립니다. 누구나 따라할 수 있어요.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">&#x1F4CA;</div>
+        <h3>AI 트렌드 분석</h3>
+        <p>주요 AI 모델 업데이트, 기업 도입 사례, 산업별 영향 분석을 한눈에 정리해드립니다.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#x1F6E0;</div>
+        <h3>실전 활용 가이드</h3>
+        <p>Claude, ChatGPT, Copilot 등 최신 AI 도구를 업무에 바로 적용할 수 있는 실전 팁을 제공합니다.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#x26A1;</div>
+        <h3>업무 자동화 레시피</h3>
+        <p>반복 업무를 AI로 자동화하는 방법을 단계별로 안내합니다. 누구나 따라할 수 있습니다.</p>
+      </div>
     </div>
   </section>
 
+  <!-- Weekly Newsletter Themes (always visible) -->
+  <section class="section" style="padding-top: 0;">
+    <div class="section-header">
+      <div class="section-label">Weekly Lineup</div>
+      <h2 class="section-title">매일 다른 주제, 매일 새로운 인사이트</h2>
+      <p class="section-desc">월요일부터 금요일까지, 요일별 특화 콘텐츠를 받아보세요</p>
+    </div>
+    <div class="weekly-grid">
+      <div class="weekly-card weekly-mon">
+        <div class="weekly-card-top">
+          <div class="day-label">MON</div>
+          <h3>AI 트렌드 위클리</h3>
+        </div>
+        <div class="weekly-card-body">
+          <p>한 주의 시작을 여는 AI 업계 핵심 뉴스와 트렌드를 정리합니다.</p>
+          <div class="tag-list">
+            <span class="tag">뉴스</span>
+            <span class="tag">트렌드</span>
+            <span class="tag">업계 동향</span>
+          </div>
+        </div>
+      </div>
+      <div class="weekly-card weekly-tue">
+        <div class="weekly-card-top">
+          <div class="day-label">TUE</div>
+          <h3>딥다이브 분석</h3>
+        </div>
+        <div class="weekly-card-body">
+          <p>주요 AI 기술과 모델을 심층 분석하여 비즈니스 관점에서 해설합니다.</p>
+          <div class="tag-list">
+            <span class="tag">분석</span>
+            <span class="tag">리서치</span>
+            <span class="tag">인사이트</span>
+          </div>
+        </div>
+      </div>
+      <div class="weekly-card weekly-wed">
+        <div class="weekly-card-top">
+          <div class="day-label">WED</div>
+          <h3>AI 실전 가이드</h3>
+        </div>
+        <div class="weekly-card-body">
+          <p>바로 따라할 수 있는 AI 도구 활용법과 프롬프트 엔지니어링 팁을 소개합니다.</p>
+          <div class="tag-list">
+            <span class="tag">실전</span>
+            <span class="tag">가이드</span>
+            <span class="tag">프롬프트</span>
+          </div>
+        </div>
+      </div>
+      <div class="weekly-card weekly-thu">
+        <div class="weekly-card-top">
+          <div class="day-label">THU</div>
+          <h3>자동화 레시피</h3>
+        </div>
+        <div class="weekly-card-body">
+          <p>반복 업무를 AI로 자동화하는 구체적인 방법과 워크플로우를 공유합니다.</p>
+          <div class="tag-list">
+            <span class="tag">자동화</span>
+            <span class="tag">워크플로우</span>
+            <span class="tag">생산성</span>
+          </div>
+        </div>
+      </div>
+      <div class="weekly-card weekly-fri">
+        <div class="weekly-card-top">
+          <div class="day-label">FRI</div>
+          <h3>금주의 AI 픽</h3>
+        </div>
+        <div class="weekly-card-body">
+          <p>한 주를 마무리하며 놓치면 안 될 AI 서비스, 도구, 콘텐츠를 큐레이션합니다.</p>
+          <div class="tag-list">
+            <span class="tag">큐레이션</span>
+            <span class="tag">추천</span>
+            <span class="tag">도구</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Special Edition row: Monthly + Yearly -->
+    <div class="special-divider">
+      <span class="special-divider-text">Special Edition</span>
+    </div>
+    <div class="special-grid">
+      <a class="weekly-card weekly-sat" href="newsletter_monthly_sample.html" target="_blank" rel="noopener">
+        <div class="weekly-card-top">
+          <span class="preview-chip">SAMPLE 보기</span>
+          <div class="day-label">MONTHLY SPECIAL</div>
+          <h3>월말 스페셜</h3>
+        </div>
+        <div class="weekly-card-body">
+          <p>매월 마지막 평일 발송. 한 달 동안의 AI 주요 이슈·트렌드·가이드를 심층 분석으로 정리한 월간 리포트입니다.</p>
+          <div class="tag-list">
+            <span class="tag">월간정리</span>
+            <span class="tag">심층분석</span>
+            <span class="tag">트렌드</span>
+          </div>
+        </div>
+      </a>
+      <a class="weekly-card weekly-year" href="newsletter_yearly_sample.html" target="_blank" rel="noopener">
+        <div class="weekly-card-top">
+          <span class="preview-chip">SAMPLE 보기</span>
+          <div class="day-label">ANNUAL EDITION</div>
+          <h3>연간 결산 리포트</h3>
+        </div>
+        <div class="weekly-card-body">
+          <p>매년 12월 마지막 평일 발송. 한 해의 AI 흐름을 12개 Monthly Special과 240+ 뉴스레터로 되짚는 연간 결산입니다.</p>
+          <div class="tag-list">
+            <span class="tag">연간결산</span>
+            <span class="tag">The Year in AI</span>
+            <span class="tag">회고</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Archive Preview Section (Hidden until subscribed) -->
+  <section class="section archive-section" id="archiveSection" style="padding-top: 0;">
+    <div class="section-header">
+      <div class="section-label">Archive Preview</div>
+      <h2 class="section-title">지난 뉴스레터 미리보기</h2>
+      <p class="section-desc">구독자 전용으로 공개되는 지난 뉴스레터들입니다</p>
+    </div>
+    <div class="archive-grid" id="archiveGrid">
+      <div class="newsletter-loading" style="grid-column: 1 / -1;"><span class="dot-anim">불러오는 중</span></div>
+    </div>
+  </section>
+
+  <!-- Subscribe & Unsubscribe 2-Column Section -->
+  <div class="subscribe-unsub-section">
+    <!-- Left Column: Subscribe -->
+    <div class="subscribe-column">
+      <h3>구독 신청</h3>
+      <p>매일 아침 AI 인사이트를 이메일로 받아보세요</p>
+      <form class="subscribe-form" id="bottomSubscribeForm" onsubmit="handleBottomSubscribe(event)">
+        <input type="email" id="bottomEmail" placeholder="이메일 주소" required>
+        <button type="submit" id="bottomSubBtn">무료 구독</button>
+      </form>
+      <div id="bottomSubMessage" class="subscribe-message"></div>
+    </div>
+
+    <!-- Right Column: Unsubscribe -->
+    <div class="unsub-column">
+      <h3>구독 취소</h3>
+      <p>언제든 구독을 취소할 수 있습니다</p>
+      <form class="unsub-form" id="unsubscribeForm" onsubmit="handleUnsubscribe(event)">
+        <input type="email" id="unsubEmail" placeholder="구독 중인 이메일" required>
+        <button type="submit" id="unsubBtn">구독 취소</button>
+      </form>
+      <div id="unsubMessage" class="unsub-message"></div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="footer">
-    <p>&copy; 2026 THE AI INSIGHT by AX추진팀 (서연이화)</p>
-    <p style="margin-top:8px;">
-      <a href="archive.html">지난 뉴스레터</a> &middot;
-      <a href="mailto:aa200526@seoyoneh.com">문의하기</a>
-    </p>
+    <div class="footer-inner">
+      <div>&copy; 2026 THE AI INSIGHT by AX추진팀 (서연이화)</div>
+      <div class="footer-links">
+        <a href="archive.html">지난 뉴스레터</a>
+        <a href="mailto:aa200526@seoyoneh.com">문의하기</a>
+      </div>
+    </div>
   </footer>
+
+  <!-- Archive Modal -->
+  <div id="archiveModal" class="archive-modal">
+    <div class="archive-modal-content">
+      <div class="archive-modal-header">
+        <h3 class="archive-modal-title" id="archiveModalTitle">뉴스레터</h3>
+        <button class="archive-modal-close" onclick="closeArchiveModal()">&times;</button>
+      </div>
+      <div class="archive-modal-body">
+        <iframe id="archiveModalIframe" title="뉴스레터 미리보기"></iframe>
+      </div>
+    </div>
+  </div>
 
   <!-- Google Form 제출용 숨김 iframe -->
   <iframe name="hiddenFrame" id="hiddenFrame" style="display:none;"></iframe>
 
   <script>
-    // ─── 설정 (민감 정보는 config.js에서 로드) ─────────────
-    const FORM_ACTION = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.SUB_FORM_ACTION) || '';
-    const ENTRY_EMAIL = 'entry.1443858870';
-    const ENTRY_NAME  = 'entry.304391785';
-    const ENTRY_SOURCE = 'entry.1573810244';
+    // ─── 설정 ───────────────────────────────────────────
+    var FORM_ACTION = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.SUB_FORM_ACTION) || '';
+    var ENTRY_EMAIL = 'entry.1443858870';
+    var ENTRY_NAME  = 'entry.304391785';
+    var ENTRY_SOURCE = 'entry.1573810244';
+    // 공개용 시트 ID 사용 (구독자 데이터 보호)
+    var SHEET_ID = (window.ADMIN_CONFIG && (window.ADMIN_CONFIG.PUBLIC_SHEET_ID || window.ADMIN_CONFIG.SHEET_ID)) || '';
 
-    const SHEET_ID = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.SHEET_ID) || '';
+    // ─── 구독 상태 ──────────────────────────────────────
+    var isSubscribed = false;
+
+    // 요일별 색상 매핑
+    var dayColorMap = {
+      'Mon': 'mon',
+      'Tue': 'tue',
+      'Wed': 'wed',
+      'Thu': 'thu',
+      'Fri': 'fri',
+      'Sat': 'sat',
+      'Sun': 'sun'
+    };
 
     // URL 파라미터에서 이메일 추출 (뉴스레터 내 구독취소 링크용)
-    const urlParams = new URLSearchParams(window.location.search);
-    const emailParam = urlParams.get('email');
-    const actionParam = urlParams.get('action');
-
+    var urlParams = new URLSearchParams(window.location.search);
+    var emailParam = urlParams.get('email');
+    var actionParam = urlParams.get('action');
     if (emailParam && actionParam === 'unsubscribe') {
-      switchTab('unsubscribe');
       document.getElementById('unsubEmail').value = emailParam;
+      document.querySelector('.unsub-section').scrollIntoView({ behavior: 'smooth' });
     }
 
-    // ─── 탭 전환 ─────────────────────────────────────────
-    function switchTab(tab) {
-      document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.tab === tab);
-      });
-      document.querySelectorAll('.tab-content').forEach(content => {
-        content.classList.toggle('active', content.id === 'tab-' + tab);
-      });
-    }
-
-    // ─── 구독 처리 (Google Form 제출) ────────────────────
-    function handleSubscribe(e) {
-      e.preventDefault();
-      var btn = document.getElementById('subBtn');
-      var msg = document.getElementById('subMessage');
-      var email = document.getElementById('subEmail').value.trim();
-      var name = document.getElementById('subName').value.trim();
-
-      if (!email) return;
-
-      btn.disabled = true;
-      btn.innerHTML = '<div class="spinner"></div> 처리 중...';
-
-      // 숨김 폼 생성 → iframe으로 제출 (CORS 우회)
+    // ─── Google Form 제출 공통 ──────────────────────────
+    function submitToGoogleForm(email, name, source) {
       var form = document.createElement('form');
       form.method = 'POST';
       form.action = FORM_ACTION;
@@ -582,8 +1411,8 @@
 
       var fields = {};
       fields[ENTRY_EMAIL] = email;
-      fields[ENTRY_NAME] = name;
-      fields[ENTRY_SOURCE] = 'web';
+      fields[ENTRY_NAME] = name || '';
+      fields[ENTRY_SOURCE] = source || 'web';
 
       for (var key in fields) {
         var input = document.createElement('input');
@@ -596,43 +1425,226 @@
       document.body.appendChild(form);
       form.submit();
       form.remove();
+    }
 
-      // Google Form은 성공/실패 응답을 주지 않으므로 타이머로 처리
+    // ─── 구독 상태에 따라 아카이브 섹션 표시 ──────────────
+    function showArchiveSection() {
+      isSubscribed = true;
+      var archiveSection = document.getElementById('archiveSection');
+      archiveSection.classList.add('show');
+      // 부드러운 스크롤로 이동
       setTimeout(function() {
-        msg.className = 'message show success';
-        msg.textContent = '구독이 완료되었습니다! THE AI INSIGHT 뉴스레터를 통해 최신 AI 트렌드를 만나보세요.';
+        archiveSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 300);
+    }
+
+    // ─── 아카이브 모달 열기 ──────────────────────────────
+    function openArchiveModal(title, contentUrl) {
+      if (!isSubscribed) return;
+      var modal = document.getElementById('archiveModal');
+      var modalTitle = document.getElementById('archiveModalTitle');
+      var iframe = document.getElementById('archiveModalIframe');
+      modalTitle.textContent = escapeHtml(title);
+      iframe.src = contentUrl;
+      modal.classList.add('show');
+    }
+
+    // ─── 아카이브 모달 닫기 ──────────────────────────────
+    function closeArchiveModal() {
+      var modal = document.getElementById('archiveModal');
+      var iframe = document.getElementById('archiveModalIframe');
+      modal.classList.remove('show');
+      iframe.src = '';
+    }
+
+    // ─── 모달 외부 클릭 시 닫기 ──────────────────────────
+    document.addEventListener('DOMContentLoaded', function() {
+      var modal = document.getElementById('archiveModal');
+      if (modal) {
+        modal.addEventListener('click', function(e) {
+          if (e.target === modal) {
+            closeArchiveModal();
+          }
+        });
+      }
+    });
+
+    // ─── Hero 구독 처리 ─────────────────────────────────
+    function handleHeroSubscribe(e) {
+      e.preventDefault();
+      var btn = document.getElementById('heroBtn');
+      var msg = document.getElementById('heroMessage');
+      var email = document.getElementById('heroEmail').value.trim();
+      if (!email) return;
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span>';
+
+      submitToGoogleForm(email, '', 'web-hero');
+
+      setTimeout(function() {
+        msg.className = 'hero-message show success';
+        msg.textContent = '구독 완료! 내일 아침부터 AI 인사이트를 만나보세요.';
         btn.disabled = false;
-        btn.textContent = '무료 구독하기';
-        document.getElementById('subscribeForm').reset();
+        btn.textContent = '무료 구독';
+        document.getElementById('heroSubscribeForm').reset();
+        showArchiveSection();
+        loadArchiveNewsletters();
+        setTimeout(function() { msg.classList.remove('show'); }, 5000);
       }, 1500);
     }
 
-    // ─── 구독취소 처리 ───────────────────────────────────
+    // ─── 하단 구독 처리 (Bottom Subscribe) ──────────────
+    function handleBottomSubscribe(e) {
+      e.preventDefault();
+      var btn = document.getElementById('bottomSubBtn');
+      var msg = document.getElementById('bottomSubMessage');
+      var email = document.getElementById('bottomEmail').value.trim();
+      if (!email) return;
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span>';
+
+      submitToGoogleForm(email, '', 'web-bottom');
+
+      setTimeout(function() {
+        msg.className = 'subscribe-message show success';
+        msg.textContent = '구독이 완료되었습니다!';
+        btn.disabled = false;
+        btn.textContent = '무료 구독';
+        document.getElementById('bottomSubscribeForm').reset();
+        showArchiveSection();
+        loadArchiveNewsletters();
+        setTimeout(function() { msg.classList.remove('show'); }, 5000);
+      }, 1500);
+    }
+
+    // ─── 구독취소 처리 ──────────────────────────────────
     function handleUnsubscribe(e) {
       e.preventDefault();
       var btn = document.getElementById('unsubBtn');
       var msg = document.getElementById('unsubMessage');
       var email = document.getElementById('unsubEmail').value.trim();
-
       if (!email) return;
 
       btn.disabled = true;
-      btn.innerHTML = '<div class="spinner"></div> 처리 중...';
+      btn.textContent = '처리 중...';
 
-      // 구독취소는 관리자에게 이메일 알림 방식으로 처리
-      var mailtoLink = 'mailto:aa200526@seoyoneh.com?subject=' +
-        encodeURIComponent('[THE AI INSIGHT] 구독취소 요청') +
-        '&body=' + encodeURIComponent('구독 취소를 요청합니다.\n이메일: ' + email);
-
-      // 구독취소 알림 + 시트에서 관리자가 직접 처리
       setTimeout(function() {
-        msg.className = 'message show success';
+        msg.className = 'unsub-message show success';
         msg.textContent = '구독 취소 요청이 접수되었습니다. 처리 완료 시 안내 메일을 보내드리겠습니다.';
         btn.disabled = false;
-        btn.textContent = '구독 취소하기';
+        btn.textContent = '구독 취소';
         document.getElementById('unsubscribeForm').reset();
       }, 1000);
     }
+
+    // ─── Google Sheets에서 최근 뉴스레터 로드 ──────────
+    function fetchSheetData(sheetName) {
+      return new Promise(function(resolve, reject) {
+        var cbName = 'gviz_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
+        var url = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID +
+          '/gviz/tq?tqx=out:json;responseHandler:' + cbName + '&sheet=' + encodeURIComponent(sheetName);
+
+        window[cbName] = function(response) {
+          delete window[cbName];
+          if (s && s.parentNode) s.remove();
+          if (response && response.table) {
+            var rows = response.table.rows.map(function(row) {
+              return row.c.map(function(cell) {
+                return cell ? (cell.v !== null ? cell.v : '') : '';
+              });
+            });
+            resolve(rows);
+          } else {
+            resolve([]);
+          }
+        };
+
+        var s = document.createElement('script');
+        s.src = url;
+        s.onerror = function() {
+          delete window[cbName];
+          if (s.parentNode) s.remove();
+          resolve([]);
+        };
+        document.head.appendChild(s);
+
+        // 타임아웃
+        setTimeout(function() {
+          if (window[cbName]) {
+            delete window[cbName];
+            if (s.parentNode) s.remove();
+            resolve([]);
+          }
+        }, 8000);
+      });
+    }
+
+    // ─── 아카이브 뉴스레터 로드 ──────────────────────────
+    function loadArchiveNewsletters() {
+      if (!SHEET_ID) {
+        document.getElementById('archiveGrid').innerHTML =
+          '<div class="newsletter-empty" style="grid-column: 1 / -1;">설정이 필요합니다.</div>';
+        return;
+      }
+
+      fetchSheetData('newsletters').then(function(rows) {
+        var container = document.getElementById('archiveGrid');
+
+        if (!rows || rows.length === 0) {
+          container.innerHTML = '<div class="newsletter-empty" style="grid-column: 1 / -1;">아직 발행된 뉴스레터가 없습니다.</div>';
+          return;
+        }
+
+        // 날짜 기준 내림차순 정렬 (col index 2 = date), 최근 6개만
+        rows.sort(function(a, b) {
+          return String(b[2]).localeCompare(String(a[2]));
+        });
+        var recent = rows.slice(0, 6);
+
+        var html = '';
+        for (var i = 0; i < recent.length; i++) {
+          var r = recent[i];
+          var id = r[0] || '';
+          var title = r[1] || '제목 없음';
+          var date = r[2] ? String(r[2]).substring(0, 10) : '';
+          var summary = r[3] || '';
+          var contentUrl = r[4] || '';
+
+          // 날짜 파싱 및 요일 결정
+          var dayBadge = 'mon';
+          var displayDate = date;
+          if (date && date.indexOf('-') > 0) {
+            var dateObj = new Date(date + 'T00:00:00');
+            var dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            var dayName = dayNames[dateObj.getDay()];
+            dayBadge = dayColorMap[dayName] || 'mon';
+
+            var parts = date.split('-');
+            displayDate = parts[0] + '년 ' + parseInt(parts[1]) + '월 ' + parseInt(parts[2]) + '일';
+          }
+
+          var clickHandler = contentUrl ? 'onclick="openArchiveModal(\'' + escapeHtml(title).replace(/'/g, '\\\'') + '\', \'' + contentUrl + '\')"' : '';
+
+          html += '<div class="archive-card" ' + clickHandler + ' style="' + (contentUrl ? 'cursor: pointer;' : '') + '">' +
+            '<div class="archive-card-day ' + dayBadge + '">' + (dayBadge === 'sun' ? '일' : dayBadge === 'mon' ? '월' : dayBadge === 'tue' ? '화' : dayBadge === 'wed' ? '수' : dayBadge === 'thu' ? '목' : dayBadge === 'fri' ? '금' : '토') + '</div>' +
+            '<div class="archive-card-title">' + escapeHtml(title) + '</div>' +
+            '<div class="archive-card-date">' + displayDate + '</div>' +
+            '<div class="archive-card-summary">' + escapeHtml(summary) + '</div>' +
+          '</div>';
+        }
+        container.innerHTML = html;
+      });
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    // ─── 초기화 ────────────────────────────────────────
+    // 아카이브는 구독 후에만 로드됨
   </script>
 </body>
 </html>
