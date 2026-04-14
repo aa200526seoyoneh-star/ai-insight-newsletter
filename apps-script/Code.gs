@@ -671,7 +671,7 @@ function buildPromoEmailHtml(subscribeUrl) {
   // Special Edition
   h += '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:16px;"><tr>';
   h += '<td style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#9ca3af;font-weight:700;">SPECIAL EDITION</td>';
-  h += '<td align="right" style="font-size:11px;color:#9ca3af;">월말 · 연말 발행</td>';
+  h += '<td align="right" style="font-size:11px;color:#9ca3af;">월말 &middot; 연말 발행</td>';
   h += '</tr></table>';
 
   // Special 카드 헬퍼 (배지 폭 더 넓음)
@@ -692,11 +692,11 @@ function buildPromoEmailHtml(subscribeUrl) {
 
   // Trust badges
   h += '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:32px;"><tr><td align="center"><table role="presentation" cellpadding="0" cellspacing="0"><tr>';
-  h += '<td style="padding:5px 14px;background:#f8fafc;border-radius:20px;border:1px solid #e2e8f0;"><span style="font-size:12px;color:#64748b;">✓ 무료</span></td>';
+  h += '<td style="padding:5px 14px;background:#f8fafc;border-radius:20px;border:1px solid #e2e8f0;"><span style="font-size:12px;color:#64748b;">&#10003; 무료</span></td>';
   h += '<td width="8"></td>';
-  h += '<td style="padding:5px 14px;background:#f8fafc;border-radius:20px;border:1px solid #e2e8f0;"><span style="font-size:12px;color:#64748b;">✓ 스팸 없음</span></td>';
+  h += '<td style="padding:5px 14px;background:#f8fafc;border-radius:20px;border:1px solid #e2e8f0;"><span style="font-size:12px;color:#64748b;">&#10003; 스팸 없음</span></td>';
   h += '<td width="8"></td>';
-  h += '<td style="padding:5px 14px;background:#f8fafc;border-radius:20px;border:1px solid #e2e8f0;"><span style="font-size:12px;color:#64748b;">✓ 언제든 구독 취소</span></td>';
+  h += '<td style="padding:5px 14px;background:#f8fafc;border-radius:20px;border:1px solid #e2e8f0;"><span style="font-size:12px;color:#64748b;">&#10003; 언제든 구독 취소</span></td>';
   h += '</tr></table></td></tr></table>';
 
   // CTA
@@ -706,9 +706,9 @@ function buildPromoEmailHtml(subscribeUrl) {
 
   // Sub Links
   h += '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:20px;"><tr><td align="center">';
-  h += '<a href="' + archiveUrl + '" style="font-size:13px;color:#94a3b8;text-decoration:none;">지난 뉴스레터 보기 →</a>';
+  h += '<a href="' + archiveUrl + '" style="font-size:13px;color:#94a3b8;text-decoration:none;">지난 뉴스레터 보기 &rarr;</a>';
   h += '<span style="color:#d1d5db;margin:0 10px;">|</span>';
-  h += '<a href="' + feedbackUrl + '" style="font-size:13px;color:#94a3b8;text-decoration:none;">의견 보내기 →</a>';
+  h += '<a href="' + feedbackUrl + '" style="font-size:13px;color:#94a3b8;text-decoration:none;">의견 보내기 &rarr;</a>';
   h += '</td></tr></table>';
 
   h += '</td></tr>'; // 본문 end
@@ -719,7 +719,7 @@ function buildPromoEmailHtml(subscribeUrl) {
   // Testimonial
   h += '<tr><td style="padding:28px 44px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>';
   h += '<td style="background:#f8fafc;border-radius:14px;border:1px solid #e2e8f0;padding:22px 26px;text-align:center;">';
-  h += '<p style="margin:0 0 8px;font-size:22px;">💬</p>';
+  h += '<p style="margin:0 0 8px;font-size:22px;">&#128172;</p>';
   h += '<p style="margin:0 0 10px;font-size:14px;color:#475569;line-height:1.7;font-style:italic;">"아침에 메일 확인할 때 가장 먼저 읽게 됩니다.<br>AI 트렌드를 한눈에 파악할 수 있어서 업무에 큰 도움이 돼요."</p>';
   h += '<p style="margin:0;font-size:12px;color:#94a3b8;">— 사내 구독자</p>';
   h += '</td></tr></table></td></tr>';
