@@ -1153,6 +1153,7 @@
       <!-- Inline Subscribe Form -->
       <form class="hero-subscribe" id="heroSubscribeForm" onsubmit="handleHeroSubscribe(event)">
         <div class="hero-subscribe-inner">
+          <input type="text" id="heroName" placeholder="이름" required>
           <input type="email" id="heroEmail" placeholder="이메일을 입력하세요" required>
           <button type="submit" id="heroBtn">무료 구독</button>
         </div>
@@ -1325,6 +1326,7 @@
       <h3>구독 신청</h3>
       <p>매일 아침 AI 인사이트를 이메일로 받아보세요</p>
       <form class="subscribe-form" id="bottomSubscribeForm" onsubmit="handleBottomSubscribe(event)">
+        <input type="text" id="bottomName" placeholder="이름" required>
         <input type="email" id="bottomEmail" placeholder="이메일 주소" required>
         <button type="submit" id="bottomSubBtn">무료 구독</button>
       </form>
@@ -1526,12 +1528,13 @@
       var btn = document.getElementById('heroBtn');
       var msg = document.getElementById('heroMessage');
       var email = document.getElementById('heroEmail').value.trim();
-      if (!email) return;
+      var name = document.getElementById('heroName').value.trim();
+      if (!email || !name) return;
 
       btn.disabled = true;
       btn.innerHTML = '<span class="spinner"></span>';
 
-      submitToGoogleForm(email, '', 'web-hero');
+      submitToGoogleForm(email, name, 'web-hero');
 
       setTimeout(function() {
         msg.className = 'hero-message show success';
@@ -1551,12 +1554,13 @@
       var btn = document.getElementById('bottomSubBtn');
       var msg = document.getElementById('bottomSubMessage');
       var email = document.getElementById('bottomEmail').value.trim();
-      if (!email) return;
+      var name = document.getElementById('bottomName').value.trim();
+      if (!email || !name) return;
 
       btn.disabled = true;
       btn.innerHTML = '<span class="spinner"></span>';
 
-      submitToGoogleForm(email, '', 'web-bottom');
+      submitToGoogleForm(email, name, 'web-bottom');
 
       setTimeout(function() {
         msg.className = 'subscribe-message show success';
