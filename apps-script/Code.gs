@@ -29,7 +29,7 @@ const CONFIG = {
       get authkey() { return PropertiesService.getScriptProperties().getProperty('WOORIMAIL_AUTHKEY') || ''; },
       domain: 'seoyoneh.com',
       senderEmail: 'aa200526@seoyoneh.com',
-      senderName: 'THE AI INSIGHT'
+      senderName: 'AX DesK'
     }
   }
 };
@@ -133,11 +133,46 @@ function safeErrorMessage(error) {
   return msg;
 }
 
+// [보안] 현재 요청의 클라이언트 IP. Cloudflare Worker가 body._clientIp로 주입하며
+// doGet 시작 시 세팅됨. authenticate()가 IP별 잠금 키 생성에 사용.
+var CURRENT_REQUEST_IP = 'unknown';
+
+/** IP를 cache 키 접미사로 변환 (영숫자/언더스코어만, 길이 제한) */
+function ipKeySuffix(ip) {
+  return String(ip || 'unknown').replace(/[^a-zA-Z0-9]/g, '_').substring(0, 64);
+}
+
+/** 잠긴 IP 접미사 목록을 캐시에 누적 (resetPassword가 일괄 해제용으로 사용) */
+function trackLockedIp(ipSuffix) {
+  var cache = CacheService.getScriptCache();
+  var list = [];
+  try { list = JSON.parse(cache.get('locked_ip_list') || '[]'); } catch (_) { list = []; }
+  if (list.indexOf(ipSuffix) === -1) list.push(ipSuffix);
+  // 과도하게 커지는 것을 방지 (최근 100개만 유지)
+  if (list.length > 100) list = list.slice(-100);
+  cache.put('locked_ip_list', JSON.stringify(list), 3600);
+}
+
+/** 잠긴 모든 IP를 일괄 해제 (비밀번호 재설정 성공 시 호출) */
+function clearAllIpLocks() {
+  var cache = CacheService.getScriptCache();
+  var list = [];
+  try { list = JSON.parse(cache.get('locked_ip_list') || '[]'); } catch (_) { list = []; }
+  list.forEach(function(ipSuffix) {
+    cache.remove('auth_locked_' + ipSuffix);
+    cache.remove('auth_fail_count_' + ipSuffix);
+  });
+  cache.remove('locked_ip_list');
+}
+
 // ─── 웹 앱 엔드포인트 (JSONP 지원) ──────────────────────────
 function doGet(e) {
   const params = e.parameter || {};
   const action = params.action || '';
   const callback = params.callback || '';
+
+  // Worker가 주입한 클라이언트 IP. Worker 경유 아닌 직접 호출(cron, 스크립트 등)은 'direct'.
+  CURRENT_REQUEST_IP = String(params._clientIp || 'direct').substring(0, 64);
 
   let result;
   try {
@@ -549,7 +584,7 @@ function sendTestNewsletter(password, subject, htmlContent, email) {
   var wrapped = wrapWithKeepAll(htmlContent || ('<p>' + subject + '</p>'));
   GmailApp.sendEmail(email, '[THE AI INSIGHT-테스트] ' + subject, '', {
     htmlBody: wrapped,
-    name: 'THE AI INSIGHT - AX추진팀'
+    name: 'AX DesK'
   });
   addLog('TEST_SEND', email);
   return { success: true, message: email + ' 테스트 발송 완료' };
@@ -584,7 +619,7 @@ function sendPromoEmails(password, emails) {
     try {
       GmailApp.sendEmail(to, subject, '', {
         htmlBody: html,
-        name: 'THE AI INSIGHT - AX추진팀'
+        name: 'AX DesK'
       });
       sent++;
     } catch (e) {
@@ -761,9 +796,9 @@ function sendNewsletter(password, subject, htmlContent) {
   CONFIG.INTERNAL_EMAILS.forEach(email => {
     try {
       var trackedHtml = insertTrackingPixel(wrappedContent, email, nlId);
-      GmailApp.sendEmail(email, '[THE AI INSIGHT] ' + subject, '', {
+      GmailApp.sendEmail(email, subject, '', {
         htmlBody: trackedHtml,
-        name: 'THE AI INSIGHT - AX추진팀'
+        name: 'AX DesK'
       });
       sentCount++;
       sentEmails.push(email);
@@ -817,9 +852,9 @@ function sendExternalEmail(to, subject, htmlContent) {
   switch (provider) {
     case 'gmail':
       // Gmail로 외부도 발송 (일 100통 제한 주의)
-      GmailApp.sendEmail(to, '[THE AI INSIGHT] ' + subject, '', {
+      GmailApp.sendEmail(to, subject, '', {
         htmlBody: htmlContent,
-        name: 'THE AI INSIGHT'
+        name: 'AX DesK'
       });
       break;
 
@@ -855,7 +890,7 @@ function sendViaWoorimail(to, subject, htmlContent) {
     receiver_email: to,
     receiver_nickname: to.split('@')[0],
     member_regdate: now,
-    title: '[THE AI INSIGHT] ' + subject,
+    title: subject,
     content: htmlContent
   };
 
@@ -881,9 +916,9 @@ function sendViaMailgun(to, subject, htmlContent) {
         'Authorization': 'Basic ' + Utilities.base64Encode('api:' + cfg.apiKey)
       },
       payload: {
-        from: 'THE AI INSIGHT <' + cfg.senderEmail + '>',
+        from: 'AX DesK <' + cfg.senderEmail + '>',
         to: to,
-        subject: '[THE AI INSIGHT] ' + subject,
+        subject: subject,
         html: htmlContent
       }
     }
@@ -898,8 +933,8 @@ function sendViaSendgrid(to, subject, htmlContent) {
     headers: { 'Authorization': 'Bearer ' + cfg.apiKey },
     payload: JSON.stringify({
       personalizations: [{ to: [{ email: to }] }],
-      from: { email: cfg.senderEmail, name: 'THE AI INSIGHT' },
-      subject: '[THE AI INSIGHT] ' + subject,
+      from: { email: cfg.senderEmail, name: 'AX DesK' },
+      subject: subject,
       content: [{ type: 'text/html', value: htmlContent }]
     })
   });
@@ -935,7 +970,7 @@ function sendWelcomeEmail(email, name) {
   if (provider === 'gmail' || CONFIG.INTERNAL_EMAILS.includes(email.toLowerCase())) {
     GmailApp.sendEmail(email, '[THE AI INSIGHT] 구독을 환영합니다!', '', {
       htmlBody: html,
-      name: 'THE AI INSIGHT'
+      name: 'AX DesK'
     });
   } else {
     sendExternalEmail(email, '구독을 환영합니다!', html);
@@ -948,15 +983,18 @@ function sendWelcomeEmail(email, name) {
 var ADMIN_EMAIL = '110316@seoyoneh.com';
 
 /**
- * 인증 함수 — Brute-force 방어 포함
- * 5회 연속 실패 시 계정 잠금 + 관리자에게 비밀번호 재설정 인증 메일 발송
+ * 인증 함수 — Brute-force 방어 포함 (IP별 잠금)
+ * 같은 IP에서 5회 연속 실패 시 해당 IP만 잠금 + 관리자에게 비밀번호 재설정 인증 메일 발송.
+ * IP는 CURRENT_REQUEST_IP (Worker가 body._clientIp로 주입)에서 가져옴.
+ * Why IP별: 전역 락은 공격자 1명이 관리자 계정을 잠그는 DoS 벡터였음.
  */
 function authenticate(password) {
   var cache = CacheService.getScriptCache();
-  var failKey = 'auth_fail_count';
-  var lockKey = 'auth_locked';
+  var ipSuffix = ipKeySuffix(CURRENT_REQUEST_IP);
+  var failKey = 'auth_fail_count_' + ipSuffix;
+  var lockKey = 'auth_locked_' + ipSuffix;
 
-  // 잠금 확인 — 5회 실패 후에는 인증 메일로만 해제 가능
+  // 잠금 확인 — 해당 IP만. 다른 IP(정상 관리자)는 영향 없음.
   if (cache.get(lockKey) === 'true') {
     return { success: false, locked: true, message: '계정이 잠겼습니다. 인증 메일을 확인해주세요.' };
   }
@@ -966,7 +1004,7 @@ function authenticate(password) {
     return { success: true };
   }
 
-  // 실패 카운터
+  // 실패 카운터 (IP별)
   var failCount = parseInt(cache.get(failKey) || '0') + 1;
   cache.put(failKey, String(failCount), 3600); // 1시간 유지
 
@@ -974,14 +1012,17 @@ function authenticate(password) {
     cache.put(lockKey, 'true', 3600); // 1시간 잠금 (인증 메일로 즉시 해제 가능)
     cache.remove(failKey);
 
+    // 잠긴 IP 목록 갱신 — resetPassword가 일괄 해제할 수 있도록
+    trackLockedIp(ipSuffix);
+
     // 관리자에게 비밀번호 재설정 인증 메일 발송
     sendPasswordResetEmail();
 
-    addLog('AUTH_LOCKED', '5회 실패 → 계정 잠금 + 인증 메일 발송');
+    addLog('AUTH_LOCKED', '5회 실패 → IP 잠금 (ip=' + ipSuffix + ') + 인증 메일 발송');
     return { success: false, locked: true, message: '5회 인증 실패. ' + ADMIN_EMAIL + '로 비밀번호 재설정 메일을 발송했습니다.' };
   }
 
-  addLog('AUTH_FAIL', '인증 실패 (' + failCount + '/5)');
+  addLog('AUTH_FAIL', '인증 실패 (' + failCount + '/5, ip=' + ipSuffix + ')');
   return { success: false, message: '비밀번호가 올바르지 않습니다. (' + failCount + '/5)' };
 }
 
@@ -1023,7 +1064,7 @@ function sendPasswordResetEmail() {
 
   GmailApp.sendEmail(ADMIN_EMAIL, '[THE AI INSIGHT] 관리자 비밀번호 재설정 인증 코드', '', {
     htmlBody: html,
-    name: 'THE AI INSIGHT 보안'
+    name: 'AX DesK 보안'
   });
 }
 
@@ -1070,10 +1111,9 @@ function resetPassword(token, newPassword) {
   // 비밀번호 변경
   PropertiesService.getScriptProperties().setProperty('ADMIN_PASSWORD', newPassword);
 
-  // 잠금 해제 + 토큰 삭제
+  // 잠금 해제 + 토큰 삭제 (모든 IP 잠금 일괄 해제)
   cache.remove('reset_token');
-  cache.remove('auth_locked');
-  cache.remove('auth_fail_count');
+  clearAllIpLocks();
 
   addLog('PWD_RESET_SUCCESS', '비밀번호 변경 완료');
 
@@ -1086,7 +1126,7 @@ function resetPassword(token, newPassword) {
         '변경 시각: ' + Utilities.formatDate(new Date(), 'Asia/Seoul', 'yyyy-MM-dd HH:mm:ss') + '<br><br>' +
         '본인이 변경하지 않았다면 즉시 Apps Script에서 setupSecureProperties를 실행하여 비밀번호를 재설정하세요.' +
       '</p></div>',
-    name: 'THE AI INSIGHT 보안'
+    name: 'AX DesK 보안'
   });
 
   return { success: true, message: '비밀번호가 변경되었습니다. 새 비밀번호로 로그인하세요.' };
@@ -1470,9 +1510,9 @@ function testSendNewsletter() {
 
   // 내부 이메일(테스트: 110316@seoyoneh.com)에게만 발송
   CONFIG.INTERNAL_EMAILS.forEach(function(email) {
-    GmailApp.sendEmail(email, '[THE AI INSIGHT] ' + subject, '', {
+    GmailApp.sendEmail(email, subject, '', {
       htmlBody: html,
-      name: 'THE AI INSIGHT - AX추진팀'
+      name: 'AX DesK'
     });
   });
 
@@ -1594,7 +1634,7 @@ function onAdminFormSubmit(e) {
           try {
             GmailApp.sendEmail(targetEmail, '[THE AI INSIGHT-테스트] ' + nlSubject, '', {
               htmlBody: nlContent || '<p>' + nlSubject + '</p>',
-              name: 'THE AI INSIGHT - AX추진팀'
+              name: 'AX DesK'
             });
             addLog('ADMIN_TEST_SEND', '테스트 발송 → ' + targetEmail + ' / ' + nlSubject);
           } catch (err2) {
@@ -2010,7 +2050,7 @@ function sendReEngagementEmail(email, name) {
   try {
     GmailApp.sendEmail(email, subject, '뉴스레터 구독이 해제되었습니다. 다시 구독하려면 사이트를 방문해주세요.', {
       htmlBody: htmlBody,
-      name: 'THE AI INSIGHT'
+      name: 'AX DesK'
     });
     addLog('RE_ENGAGE_SENT', email);
   } catch (e) {

@@ -859,59 +859,38 @@
       || (window.ADMIN_CONFIG && window.ADMIN_CONFIG.ADMIN_PW_HASH)
       || '';
 
-    // ─── Apps Script WEBAPP 호출 (프록시 경유 우선, 회사망 차단 우회) ─────
-    // PROXY_URL이 설정되어 있으면: Cloudflare Worker 경유 (CORS 지원 fetch)
-    // 없으면: script.google.com 직접 JSONP 호출
+    // ─── Apps Script WEBAPP 호출 (Cloudflare Worker 프록시 경유, POST body) ─────
+    // [보안] 비밀번호 등 민감 파라미터가 URL/Referer/서버 로그에 노출되지 않도록
+    //        항상 POST body(JSON)로 전송. JSONP·GET 쿼리 경로 사용 금지.
     function fetchViaWebApp(action, extraParams) {
       return new Promise(function(resolve) {
         var proxy = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.PROXY_URL) || '';
-        if (!WEBAPP_URL && !proxy) { resolve({success:false, data:[]}); return; }
-
-        var qs = 'action=' + encodeURIComponent(action);
-        if (extraParams) {
-          for (var k in extraParams) {
-            if (extraParams[k] != null) qs += '&' + k + '=' + encodeURIComponent(extraParams[k]);
-          }
-        }
-
-        // ── Case 1: PROXY_URL 사용 (fetch + CORS, 회사 네트워크 호환) ──
-        if (proxy) {
-          var proxyUrl = proxy.replace(/\/$/, '') + '/?' + qs;
-          fetch(proxyUrl, { method: 'GET', mode: 'cors' })
-            .then(function(res) { return res.text(); })
-            .then(function(txt) {
-              try { resolve(JSON.parse(txt)); }
-              catch (e) { resolve({success:false, data:[], raw:txt}); }
-            })
-            .catch(function() { resolve({success:false, data:[]}); });
+        if (!proxy) {
+          resolve({ success: false, data: [], message: 'PROXY_URL이 설정되지 않았습니다. config.js를 확인하세요.' });
           return;
         }
 
-        // ── Case 2: JSONP (직접 호출, 회사 차단 시 실패) ──
-        var cbName = 'wa_' + Date.now() + '_' + Math.random().toString(36).substr(2,5);
-        var s = document.createElement('script');
-        var done = false;
-        window[cbName] = function(response) {
-          done = true;
-          delete window[cbName];
-          if (s.parentNode) s.remove();
-          resolve(response || {success:false, data:[]});
-        };
-        s.src = WEBAPP_URL + '?' + qs + '&callback=' + cbName;
-        s.onerror = function() {
-          if (done) return;
-          delete window[cbName];
-          if (s.parentNode) s.remove();
-          resolve({success:false, data:[]});
-        };
-        document.head.appendChild(s);
-        setTimeout(function() {
-          if (window[cbName]) {
-            delete window[cbName];
-            if (s.parentNode) s.remove();
-            resolve({success:false, data:[], timeout:true});
+        var payload = { action: action };
+        if (extraParams) {
+          for (var k in extraParams) {
+            if (extraParams[k] != null) payload[k] = extraParams[k];
           }
-        }, 10000);
+        }
+
+        fetch(proxy.replace(/\/$/, '') + '/', {
+          method: 'POST',
+          mode: 'cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        })
+          .then(function(res) { return res.text(); })
+          .then(function(txt) {
+            try { resolve(JSON.parse(txt)); }
+            catch (e) { resolve({ success: false, data: [], raw: txt }); }
+          })
+          .catch(function() {
+            resolve({ success: false, data: [], message: '네트워크 오류 (프록시 응답 없음)' });
+          });
       });
     }
 
@@ -1018,9 +997,9 @@
       }
     }
 
-    // 서버에 재설정 메일 요청 (응답 불필요 — no-cors)
+    // 서버에 재설정 메일 요청 (프록시 POST 경유, 응답은 fire-and-forget)
     function requestResetEmail() {
-      fetch(WEBAPP_URL + '?action=requestPasswordReset', { mode: 'no-cors' }).catch(function() {});
+      fetchViaWebApp('requestPasswordReset');
     }
 
     function showDashboard() {
@@ -1686,15 +1665,12 @@
         return;
       }
 
-      // 서버에 resetPassword 호출 (no-cors fetch — 응답 불필요)
+      // [보안] 새 비밀번호가 URL에 노출되지 않도록 프록시 POST body로 전송
       var resetBtn = document.getElementById('resetBtn');
       resetBtn.disabled = true;
       resetBtn.textContent = '변경 중...';
 
-      var resetUrl = WEBAPP_URL + '?action=resetPassword&token=' + encodeURIComponent(token) +
-        '&newPassword=' + encodeURIComponent(newPw);
-
-      fetch(resetUrl, { mode: 'no-cors' }).catch(function() {});
+      fetchViaWebApp('resetPassword', { token: token, newPassword: newPw });
 
       // 서버 처리 대기 후 로컬 해시 업데이트
       setTimeout(async function() {

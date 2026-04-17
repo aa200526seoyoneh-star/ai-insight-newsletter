@@ -17,110 +17,302 @@
     .archive-header p { opacity: 0.85; font-size: 15px; }
 
     .archive-container {
-      max-width: 800px;
+      max-width: 960px;
       margin: -20px auto 60px;
       padding: 0 24px;
       position: relative;
       z-index: 10;
     }
 
-    .search-box {
+    /* ── Controls Bar ── */
+    .controls-bar {
       background: var(--surface);
-      border-radius: 12px;
+      border-radius: 14px;
       padding: 16px 20px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
       box-shadow: 0 8px 24px rgba(0,0,0,0.06);
-      margin-bottom: 32px;
+      margin-bottom: 28px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
     }
-    .search-box svg { color: var(--text-secondary); flex-shrink: 0; }
-    .search-box input {
+    .search-input {
       flex: 1;
-      border: none;
-      font-size: 15px;
+      min-width: 180px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 14px 10px 38px;
+      font-size: 14px;
       font-family: inherit;
       outline: none;
+      background: #f8fafc url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%239ca3af' stroke-width='2' viewBox='0 0 24 24'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") no-repeat 12px center;
       color: var(--text);
     }
-    .search-box input::placeholder { color: #d1d5db; }
+    .search-input:focus { border-color: var(--primary); background-color: #fff; }
+    .search-input::placeholder { color: #cbd5e1; }
 
-    .newsletter-list { display: flex; flex-direction: column; gap: 16px; }
-
-    .newsletter-item {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 28px;
-      transition: all 0.2s;
-      cursor: default;
-    }
-    .newsletter-item:hover {
-      border-color: var(--primary-light);
-      box-shadow: 0 4px 16px rgba(6,95,70,0.06);
-      transform: translateY(-1px);
-    }
-
-    .nl-meta {
+    /* ── Day Filter Tabs ── */
+    .day-filters {
       display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 12px;
+      gap: 4px;
     }
-    .nl-number {
-      background: var(--primary-50);
-      color: var(--primary);
-      font-size: 12px;
+    .day-tab {
+      padding: 7px 12px;
+      border-radius: 8px;
+      border: 1.5px solid var(--border);
+      background: #fff;
+      font-size: 11px;
       font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 6px;
+      font-family: inherit;
+      cursor: pointer;
+      letter-spacing: 0.3px;
+      transition: all 0.15s;
+      color: #94a3b8;
     }
-    .nl-date {
-      color: var(--text-secondary);
+    .day-tab:hover { border-color: #cbd5e1; background: #f8fafc; }
+    .day-tab.active { color: #fff; }
+    .day-tab.all { border-color: var(--primary); }
+    .day-tab.all.active { background: var(--primary); border-color: var(--primary); }
+    .day-tab.mon.active { background: #b45309; border-color: #b45309; }
+    .day-tab.tue.active { background: #991b1b; border-color: #991b1b; }
+    .day-tab.wed.active { background: #9f1239; border-color: #9f1239; }
+    .day-tab.thu.active { background: #065f46; border-color: #065f46; }
+    .day-tab.fri.active { background: #92400e; border-color: #92400e; }
+
+    /* ── Stats Strip ── */
+    .stats-strip {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .strip-item {
       font-size: 13px;
-    }
-    .nl-title {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 8px;
-      line-height: 1.5;
-    }
-    .nl-summary {
-      font-size: 14px;
       color: var(--text-secondary);
-      line-height: 1.7;
     }
-    .nl-footer {
+    .strip-item strong {
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    /* ── Section Group (Recent / Weekly / Monthly) ── */
+    .section-group {
+      margin-bottom: 32px;
+    }
+    .section-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-top: 16px;
-      padding-top: 16px;
-      border-top: 1px solid var(--border);
+      padding: 12px 0;
+      margin-bottom: 16px;
+      border-bottom: 2px solid var(--border);
+      cursor: pointer;
+      user-select: none;
     }
-    .nl-readers {
+    .section-header:hover { border-bottom-color: var(--primary-light); }
+    .section-header.recent-header { cursor: default; pointer-events: none; }
+    .section-label {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .section-count {
       font-size: 12px;
       color: var(--text-secondary);
+      background: #f1f5f9;
+      padding: 3px 10px;
+      border-radius: 10px;
+      font-weight: 600;
     }
-    .nl-readers strong { color: var(--primary); }
+    .section-toggle {
+      font-size: 12px;
+      color: var(--text-secondary);
+      transition: transform 0.2s;
+    }
+    .section-group.collapsed .section-toggle { transform: rotate(-90deg); }
+    .section-group.collapsed .section-cards { display: none; }
+    .section-group.collapsed .section-header { margin-bottom: 0; border-bottom-color: var(--border); }
 
+    /* ── Card Grid ── */
+    .section-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .nl-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      transition: all 0.2s;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+    .nl-card:hover {
+      border-color: var(--primary-light);
+      box-shadow: 0 4px 16px rgba(6,95,70,0.08);
+      transform: translateY(-2px);
+    }
+
+    .nl-card-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .nl-day-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.3px;
+      color: #fff;
+    }
+    .badge-mon { background: #f59e0b; }
+    .badge-tue { background: #e74c3c; }
+    .badge-wed { background: #dc2626; }
+    .badge-thu { background: #065f46; }
+    .badge-fri { background: #c97a4a; }
+    .badge-etc { background: #64748b; }
+
+    .nl-card-date {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+
+    .nl-card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.5;
+      margin-bottom: 8px;
+      flex: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .nl-card-summary {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .nl-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 10px;
+      border-top: 1px solid #f1f5f9;
+      font-size: 12px;
+    }
+    .nl-card-readers { color: var(--text-secondary); }
+    .nl-card-readers strong { color: var(--primary); }
+
+    /* ── Modal/Popup ── */
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.2s;
+      pointer-events: none;
+    }
+    .modal-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-panel {
+      background: #fff;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 720px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      transform: scale(0.95);
+      transition: transform 0.2s;
+    }
+    .modal-backdrop.active .modal-panel {
+      transform: scale(1);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .modal-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0;
+    }
+    .modal-close {
+      width: 32px;
+      height: 32px;
+      border: none;
+      background: transparent;
+      font-size: 24px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.15s;
+    }
+    .modal-close:hover { color: var(--text); }
+
+    .modal-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    .modal-body iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 8px;
+    }
+
+    .modal-summary {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    /* ── Loading & Empty ── */
     .empty-state {
       text-align: center;
       padding: 60px 20px;
       color: var(--text-secondary);
     }
-    .empty-state svg { margin-bottom: 16px; opacity: 0.4; }
     .empty-state p { font-size: 15px; }
-
-    .loading {
-      text-align: center;
-      padding: 60px;
-      color: var(--text-secondary);
-    }
+    .loading { text-align: center; padding: 60px; color: var(--text-secondary); }
     .loading-spinner {
-      width: 32px;
-      height: 32px;
+      width: 32px; height: 32px;
       border: 3px solid var(--border);
       border-top-color: var(--primary);
       border-radius: 50%;
@@ -129,16 +321,17 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* Sample content badge */
-    .sample-badge {
-      display: inline-block;
-      background: #fef3c7;
-      color: #92400e;
-      font-size: 11px;
-      font-weight: 600;
-      padding: 2px 8px;
-      border-radius: 4px;
-      margin-left: 8px;
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .section-cards { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 600px) {
+      .section-cards { grid-template-columns: 1fr; }
+      .controls-bar { flex-direction: column; }
+      .day-filters { flex-wrap: wrap; }
+      .search-input { min-width: 100%; }
+      .modal-panel { width: 95%; max-height: 90vh; }
     }
   </style>
   <script src="config.js"></script>
@@ -165,20 +358,40 @@
 
   <!-- Content -->
   <div class="archive-container">
-    <!-- Search -->
-    <div class="search-box">
-      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-      </svg>
-      <input type="text" id="searchInput" placeholder="뉴스레터 검색..." oninput="filterNewsletters()">
+
+    <!-- Controls -->
+    <div class="controls-bar">
+      <input type="text" class="search-input" id="searchInput" placeholder="뉴스레터 검색..." oninput="applyFilters()">
+      <div class="day-filters" id="dayFilters">
+        <button class="day-tab all active" data-day="all" onclick="setDayFilter('all', this)">전체</button>
+        <button class="day-tab mon" data-day="mon" onclick="setDayFilter('mon', this)">MON</button>
+        <button class="day-tab tue" data-day="tue" onclick="setDayFilter('tue', this)">TUE</button>
+        <button class="day-tab wed" data-day="wed" onclick="setDayFilter('wed', this)">WED</button>
+        <button class="day-tab thu" data-day="thu" onclick="setDayFilter('thu', this)">THU</button>
+        <button class="day-tab fri" data-day="fri" onclick="setDayFilter('fri', this)">FRI</button>
+      </div>
     </div>
 
+    <!-- Stats -->
+    <div class="stats-strip" id="statsStrip"></div>
+
     <!-- Newsletter List -->
-    <div id="newsletterList" class="newsletter-list">
+    <div id="newsletterList">
       <div class="loading">
         <div class="loading-spinner"></div>
         <p>뉴스레터를 불러오는 중...</p>
       </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-backdrop" id="modalBackdrop" onclick="closeModal(event)">
+    <div class="modal-panel" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTitle"></h2>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
     </div>
   </div>
 
@@ -192,34 +405,143 @@
   </footer>
 
   <script>
-    const SHEET_ID = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.SHEET_ID) || '';
-    let allNewsletters = [];
+    const SHEET_ID = (window.ADMIN_CONFIG && (window.ADMIN_CONFIG.PUBLIC_SHEET_ID || window.ADMIN_CONFIG.SHEET_ID)) || '';
+    const TODAY = new Date();
+    const THREE_MONTHS_AGO = new Date(TODAY.getFullYear(), TODAY.getMonth() - 3, TODAY.getDate());
 
-    // ─── Google Sheets gviz API로 데이터 읽기 ─────────────
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+    }
+
+    let allNewsletters = [];
+    let currentDayFilter = 'all';
+
+    // ─── 요일 판별 ─────────────────────────────────
+    const DAY_NAMES = ['sun','mon','tue','wed','thu','fri','sat'];
+    const DAY_LABELS = { mon:'MON', tue:'TUE', wed:'WED', thu:'THU', fri:'FRI' };
+    const BADGE_CLASS = { mon:'badge-mon', tue:'badge-tue', wed:'badge-wed', thu:'badge-thu', fri:'badge-fri' };
+
+    // gviz는 날짜를 Date 객체 · "Date(y,m,d)" 문자열 · "YYYY-MM-DD" 등 여러 포맷으로 반환
+    // 통일된 Date 객체로 변환
+    function parseAnyDate(v) {
+      if (!v) return null;
+      if (v instanceof Date) return isNaN(v.getTime()) ? null : v;
+      if (typeof v === 'string') {
+        // "Date(2026,2,15)" 형태 처리
+        var m = v.match(/^Date\((\d+),(\d+),(\d+)(?:,(\d+),(\d+),(\d+))?\)$/);
+        if (m) {
+          return new Date(+m[1], +m[2], +m[3], +(m[4]||0), +(m[5]||0), +(m[6]||0));
+        }
+        var d = new Date(v);
+        return isNaN(d.getTime()) ? null : d;
+      }
+      return null;
+    }
+
+    function getDayOfWeek(dateStr) {
+      var d = parseAnyDate(dateStr);
+      if (!d) return 'etc';
+      var day = DAY_NAMES[d.getDay()];
+      return DAY_LABELS[day] ? day : 'etc';
+    }
+
+    function getISOWeek(dateStr) {
+      var d = parseAnyDate(dateStr);
+      if (!d) return null;
+      var start = new Date(d.getFullYear(), 0, 1);
+      var diff = d - start;
+      var oneDay = 1000 * 60 * 60 * 24;
+      var week = Math.floor(diff / oneDay / 7) + 1;
+      return { year: d.getFullYear(), week: week, month: d.getMonth() + 1 };
+    }
+
+    function getWeekLabel(isoWeek) {
+      if (!isoWeek) return '미분류';
+      return isoWeek.month + '월 ' + isoWeek.week + '주차';
+    }
+
+    function getMonthKey(dateStr) {
+      var d = parseAnyDate(dateStr);
+      if (!d) return '날짜 미상';
+      return d.getFullYear() + '년 ' + (d.getMonth() + 1) + '월';
+    }
+
+    function getMonthSortKey(dateStr) {
+      var d = parseAnyDate(dateStr);
+      if (!d) return '0000-00';
+      return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+    }
+
+    function getDaysDifference(dateStr) {
+      var d = parseAnyDate(dateStr);
+      if (!d) return Infinity;
+      var diff = TODAY - d;
+      return Math.floor(diff / (1000 * 60 * 60 * 24));
+    }
+
+    function isWithinThreeMonths(dateStr) {
+      var d = parseAnyDate(dateStr);
+      if (!d) return false;
+      return d >= THREE_MONTHS_AGO;
+    }
+
+    // ─── Google Sheets gviz API ─────────────────────
+    var LAST_FETCH_ERROR = '';
     function fetchSheetData(sheetName) {
-      return new Promise(function(resolve, reject) {
-        var cbName = 'gviz_' + Date.now();
+      return new Promise(function(resolve) {
+        if (!SHEET_ID) {
+          LAST_FETCH_ERROR = 'SHEET_ID가 설정되지 않음 (config.js 확인)';
+          console.error('[archive]', LAST_FETCH_ERROR);
+          resolve([]); return;
+        }
+        var cbName = 'gviz_' + Date.now() + '_' + Math.random().toString(36).substr(2,5);
         var url = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID +
           '/gviz/tq?tqx=out:json;responseHandler:' + cbName + '&sheet=' + encodeURIComponent(sheetName);
-
+        console.log('[archive] gviz 요청:', url);
+        var timeoutId = setTimeout(function() {
+          if (window[cbName]) {
+            LAST_FETCH_ERROR = '응답 시간 초과 (10초) — 시트 권한 또는 네트워크 문제 가능';
+            console.error('[archive]', LAST_FETCH_ERROR);
+            delete window[cbName];
+            if (s && s.parentNode) s.remove();
+            resolve([]);
+          }
+        }, 10000);
         window[cbName] = function(response) {
+          clearTimeout(timeoutId);
           delete window[cbName];
           if (s.parentNode) s.remove();
-          if (response && response.table) {
+          console.log('[archive] gviz 응답:', response);
+          if (!response) {
+            LAST_FETCH_ERROR = 'gviz 응답이 비어있음';
+            resolve([]); return;
+          }
+          if (response.status === 'error') {
+            LAST_FETCH_ERROR = 'gviz 에러: ' + (response.errors && response.errors[0] && response.errors[0].detailed_message || '알 수 없음');
+            console.error('[archive]', LAST_FETCH_ERROR, response);
+            resolve([]); return;
+          }
+          if (response.table && response.table.rows) {
             var rows = response.table.rows.map(function(row) {
               return row.c.map(function(cell) {
-                return cell ? (cell.v !== null ? cell.v : '') : '';
+                return cell ? (cell.v !== null && cell.v !== undefined ? cell.v : '') : '';
               });
             });
+            console.log('[archive] 파싱된 rows:', rows.length + '건', rows);
             resolve(rows);
           } else {
+            LAST_FETCH_ERROR = 'gviz 응답에 table/rows 없음 — 시트가 비어있거나 구조 오류';
+            console.error('[archive]', LAST_FETCH_ERROR);
             resolve([]);
           }
         };
-
         var s = document.createElement('script');
         s.src = url;
         s.onerror = function() {
+          clearTimeout(timeoutId);
+          LAST_FETCH_ERROR = 'gviz 스크립트 로드 실패 — 시트가 비공개이거나 시트/탭 이름 불일치 가능';
+          console.error('[archive]', LAST_FETCH_ERROR);
           delete window[cbName];
           if (s.parentNode) s.remove();
           resolve([]);
@@ -228,80 +550,273 @@
       });
     }
 
+    // ─── 데이터 로드 ──────────────────────────────────
     async function loadNewsletters() {
-      const container = document.getElementById('newsletterList');
-
       try {
         var rows = await fetchSheetData('newsletters');
+        console.log('[archive] 원본 rows:', rows);
 
-        if (rows.length > 0) {
-          allNewsletters = rows.map(function(r) {
-            return {
-              id: r[0] || '',
-              title: r[1] || '',
-              date: r[2] || '',
-              summary: r[3] || '',
-              contentUrl: r[4] || '',
-              sentCount: r[5] || 0
-            };
-          });
-          renderNewsletters(allNewsletters, false);
-        } else {
-          container.innerHTML = '<div class="empty-state"><p>등록된 뉴스레터가 없습니다.</p></div>';
+        if (rows.length === 0) {
+          var msg = LAST_FETCH_ERROR || '공개 시트의 newsletters 탭이 비어있습니다';
+          document.getElementById('newsletterList').innerHTML =
+            '<div class="empty-state"><p><strong>뉴스레터를 불러올 수 없습니다</strong></p>' +
+            '<p style="margin-top:8px;font-size:13px;color:#94a3b8;">원인: ' + escapeHtml(msg) + '</p>' +
+            '<p style="margin-top:12px;font-size:12px;color:#94a3b8;">브라우저 콘솔(F12)을 확인하세요</p></div>';
+          return;
         }
-      } catch (error) {
-        container.innerHTML = '<div class="empty-state"><p>데이터를 불러올 수 없습니다.</p></div>';
+
+        var beforeFilter = rows.map(function(r) {
+          return {
+            id: r[0] || '',
+            title: r[1] || '',
+            date: r[2] || '',
+            summary: r[3] || '',
+            contentUrl: r[4] || '',
+            sentCount: r[5] || 0
+          };
+        });
+        console.log('[archive] 매핑 후:', beforeFilter);
+
+        allNewsletters = beforeFilter.filter(function(nl) {
+          var pass = isWithinThreeMonths(nl.date);
+          if (!pass) console.log('[archive] 3개월 필터 제외:', nl.id, nl.date);
+          return pass;
+        });
+        console.log('[archive] 필터 후:', allNewsletters.length + '건');
+
+        if (allNewsletters.length === 0) {
+          document.getElementById('newsletterList').innerHTML =
+            '<div class="empty-state"><p><strong>최근 3개월 내 뉴스레터가 없습니다</strong></p>' +
+            '<p style="margin-top:8px;font-size:13px;color:#94a3b8;">총 ' + beforeFilter.length + '건이 시트에 있지만 모두 3개월 이전이거나 날짜 형식 오류</p>' +
+            '<p style="margin-top:8px;font-size:12px;color:#94a3b8;">브라우저 콘솔(F12)에서 날짜 값을 확인하세요</p></div>';
+          return;
+        }
+
+        // 최신순 정렬
+        allNewsletters.sort(function(a, b) {
+          var da = parseAnyDate(a.date), db = parseAnyDate(b.date);
+          return (db ? db.getTime() : 0) - (da ? da.getTime() : 0);
+        });
+        applyFilters();
+      } catch (e) {
+        console.error('[archive] loadNewsletters 예외:', e);
+        document.getElementById('newsletterList').innerHTML =
+          '<div class="empty-state"><p><strong>데이터를 불러올 수 없습니다</strong></p>' +
+          '<p style="margin-top:8px;font-size:13px;color:#94a3b8;">' + escapeHtml(e.message || '알 수 없는 오류') + '</p></div>';
       }
     }
 
-    function renderNewsletters(newsletters, isSample) {
-      const container = document.getElementById('newsletterList');
+    // ─── 필터 적용 ──────────────────────────────────
+    function setDayFilter(day, btn) {
+      currentDayFilter = day;
+      document.querySelectorAll('.day-tab').forEach(function(t) { t.classList.remove('active'); });
+      btn.classList.add('active');
+      applyFilters();
+    }
+
+    function applyFilters() {
+      var query = document.getElementById('searchInput').value.toLowerCase().trim();
+      var filtered = allNewsletters;
+
+      // 요일 필터
+      if (currentDayFilter !== 'all') {
+        filtered = filtered.filter(function(nl) {
+          return getDayOfWeek(nl.date) === currentDayFilter;
+        });
+      }
+
+      // 검색 필터
+      if (query) {
+        filtered = filtered.filter(function(nl) {
+          return nl.title.toLowerCase().indexOf(query) > -1 ||
+                 nl.summary.toLowerCase().indexOf(query) > -1 ||
+                 nl.id.toLowerCase().indexOf(query) > -1;
+        });
+      }
+
+      renderStats(filtered);
+      renderGrouped(filtered);
+    }
+
+    // ─── 통계 ──────────────────────────────────
+    function renderStats(newsletters) {
+      var strip = document.getElementById('statsStrip');
+      var total = newsletters.length;
+      var totalReaders = 0;
+      newsletters.forEach(function(nl) { totalReaders += parseInt(nl.sentCount) || 0; });
+      strip.innerHTML =
+        '<span class="strip-item">총 <strong>' + total + '</strong>편</span>' +
+        '<span class="strip-item">누적 발송 <strong>' + totalReaders.toLocaleString() + '</strong>회</span>';
+    }
+
+    // ─── 섹션별 그룹 렌더링 ──────────────────────────
+    function renderGrouped(newsletters) {
+      var container = document.getElementById('newsletterList');
 
       if (newsletters.length === 0) {
-        container.innerHTML = `
-          <div class="empty-state">
-            <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-              <path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V9a2 2 0 012-2h2a2 2 0 012 2v9a2 2 0 01-2 2h-2z"/>
-            </svg>
-            <p>검색 결과가 없습니다.</p>
-          </div>
-        `;
+        container.innerHTML = '<div class="empty-state"><p>검색 결과가 없습니다.</p></div>';
         return;
       }
 
-      container.innerHTML = newsletters.map(nl => `
-        <article class="newsletter-item">
-          <div class="nl-meta">
-            <span class="nl-number">${nl.id}</span>
-            <span class="nl-date">${formatDate(nl.date)}</span>
-            ${isSample ? '<span class="sample-badge">샘플</span>' : ''}
-          </div>
-          <h3 class="nl-title">${nl.title}</h3>
-          <p class="nl-summary">${nl.summary}</p>
-          <div class="nl-footer">
-            <span class="nl-readers"><strong>${nl.sentCount || 0}</strong>명에게 발송됨</span>
-            ${nl.contentUrl ? `<a href="${nl.contentUrl}" class="btn btn-outline" style="padding:6px 14px;font-size:13px;">전문 보기</a>` : ''}
-          </div>
-        </article>
-      `).join('');
+      // 최근 10일, 이전 주차, 이전 달로 분류
+      var recent = [];
+      var weekly = {};
+      var monthly = {};
+      var weeklyOrder = [];
+      var monthlyOrder = [];
+
+      newsletters.forEach(function(nl) {
+        var days = getDaysDifference(nl.date);
+        if (days <= 10) {
+          recent.push(nl);
+        } else {
+          var d = new Date(nl.date);
+          var monthStart = new Date(TODAY.getFullYear(), TODAY.getMonth(), 1);
+          if (d >= monthStart) {
+            // 이번 달 10일 이후
+            var isoWeek = getISOWeek(nl.date);
+            var weekKey = isoWeek.year + '-W' + String(isoWeek.week).padStart(2, '0');
+            var weekLabel = getWeekLabel(isoWeek);
+            if (!weekly[weekKey]) {
+              weekly[weekKey] = { items: [], label: weekLabel, date: nl.date };
+              weeklyOrder.push(weekKey);
+            }
+            weekly[weekKey].items.push(nl);
+          } else {
+            // 이전 달
+            var monthKey = getMonthKey(nl.date);
+            var sortKey = getMonthSortKey(nl.date);
+            if (!monthly[monthKey]) {
+              monthly[monthKey] = { items: [], sortKey: sortKey };
+              monthlyOrder.push(monthKey);
+            }
+            monthly[monthKey].items.push(nl);
+          }
+        }
+      });
+
+      // 주차 정렬 (최신순)
+      weeklyOrder.sort(function(a, b) {
+        return new Date(weekly[b].date) - new Date(weekly[a].date);
+      });
+
+      // 월별 정렬 (최신순)
+      monthlyOrder.sort(function(a, b) {
+        return monthly[b].sortKey.localeCompare(monthly[a].sortKey);
+      });
+
+      var html = '';
+
+      // 최근 10일
+      if (recent.length > 0) {
+        html += '<div class="section-group">';
+        html += '<div class="section-header recent-header">';
+        html += '<div><span class="section-label">최근 뉴스레터</span> <span class="section-count">' + recent.length + '편</span></div>';
+        html += '</div>';
+        html += '<div class="section-cards">';
+        recent.forEach(function(nl) {
+          html += renderCard(nl);
+        });
+        html += '</div></div>';
+      }
+
+      // 이번 달 이전 주차
+      weeklyOrder.forEach(function(weekKey) {
+        var items = weekly[weekKey].items;
+        html += '<div class="section-group collapsed">';
+        html += '<div class="section-header" onclick="toggleSection(this)">';
+        html += '<div><span class="section-label">지난 주 - ' + escapeHtml(weekly[weekKey].label) + '</span> <span class="section-count">' + items.length + '편</span></div>';
+        html += '<span class="section-toggle">▼</span>';
+        html += '</div>';
+        html += '<div class="section-cards">';
+        items.forEach(function(nl) {
+          html += renderCard(nl);
+        });
+        html += '</div></div>';
+      });
+
+      // 이전 달
+      monthlyOrder.forEach(function(monthKey) {
+        var items = monthly[monthKey].items;
+        html += '<div class="section-group collapsed">';
+        html += '<div class="section-header" onclick="toggleSection(this)">';
+        html += '<div><span class="section-label">' + escapeHtml(monthKey) + '</span> <span class="section-count">' + items.length + '편</span></div>';
+        html += '<span class="section-toggle">▼</span>';
+        html += '</div>';
+        html += '<div class="section-cards">';
+        items.forEach(function(nl) {
+          html += renderCard(nl);
+        });
+        html += '</div></div>';
+      });
+
+      container.innerHTML = html;
     }
 
-    function filterNewsletters() {
-      const query = document.getElementById('searchInput').value.toLowerCase();
-      const filtered = allNewsletters.filter(nl =>
-        nl.title.toLowerCase().includes(query) ||
-        nl.summary.toLowerCase().includes(query) ||
-        nl.id.toLowerCase().includes(query)
-      );
-      renderNewsletters(filtered, API_URL === 'https://script.google.com/macros/s/AKfycbxX56OBdahXeBP3wACO5AqzlhmPA5m74lYTYtgTZYCsd8EWJk6R6Wla_q7Lpf9A4LkVaA/exec');
+    function renderCard(nl) {
+      var day = getDayOfWeek(nl.date);
+      var badgeClass = BADGE_CLASS[day] || 'badge-etc';
+      var dayLabel = DAY_LABELS[day] || '';
+
+      var html = '<article class="nl-card" onclick="openModal(\'' + escapeHtml(nl.id) + '\')">';
+      html += '<div class="nl-card-top">';
+      if (dayLabel) {
+        html += '<span class="nl-day-badge ' + badgeClass + '">' + dayLabel + '</span>';
+      }
+      html += '<span class="nl-card-date">' + escapeHtml(formatDate(nl.date)) + '</span>';
+      html += '</div>';
+      html += '<h3 class="nl-card-title">' + escapeHtml(nl.title) + '</h3>';
+      if (nl.summary) {
+        html += '<p class="nl-card-summary">' + escapeHtml(nl.summary) + '</p>';
+      }
+      html += '<div class="nl-card-footer">';
+      html += '<span class="nl-card-readers"><strong>' + (parseInt(nl.sentCount) || 0) + '</strong>명 발송</span>';
+      html += '</div>';
+      html += '</article>';
+      return html;
     }
+
+    function toggleSection(headerEl) {
+      var group = headerEl.parentElement;
+      group.classList.toggle('collapsed');
+    }
+
+    // ─── 모달 ──────────────────────────────────
+    function openModal(nlId) {
+      var nl = allNewsletters.find(function(n) { return n.id === nlId; });
+      if (!nl) return;
+
+      document.getElementById('modalTitle').textContent = nl.title;
+      var body = document.getElementById('modalBody');
+
+      if (nl.contentUrl) {
+        body.innerHTML = '<iframe src="' + escapeHtml(nl.contentUrl) + '"></iframe>';
+      } else {
+        body.innerHTML = '<div class="modal-summary">' + escapeHtml(nl.summary) + '</div>';
+      }
+
+      var backdrop = document.getElementById('modalBackdrop');
+      backdrop.classList.add('active');
+    }
+
+    function closeModal(event) {
+      if (event && event.target.id !== 'modalBackdrop') return;
+      document.getElementById('modalBackdrop').classList.remove('active');
+    }
+
+    // ESC 키로 모달 닫기
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeModal();
+    });
 
     function formatDate(dateStr) {
-      const d = new Date(dateStr);
-      return d.getFullYear() + '년 ' + (d.getMonth()+1) + '월 ' + d.getDate() + '일';
+      var d = parseAnyDate(dateStr);
+      if (!d) return String(dateStr || '');
+      var dayNames = ['일', '월', '화', '수', '목', '금', '토'];
+      return (d.getMonth()+1) + '/' + d.getDate() + ' (' + dayNames[d.getDay()] + ')';
     }
 
-    // 페이지 로드 시 실행
+    // 페이지 로드
     loadNewsletters();
   </script>
 </body>
