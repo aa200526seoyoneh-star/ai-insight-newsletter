@@ -29,10 +29,21 @@ const CONFIG = {
       get authkey() { return PropertiesService.getScriptProperties().getProperty('WOORIMAIL_AUTHKEY') || ''; },
       domain: 'seoyoneh.com',
       senderEmail: 'aa200526@seoyoneh.com',
-      senderName: 'THE AI INSIGHT'
+      senderName: 'AX DesK'
     }
-  }
+  },
+  // GitHub Pages 배포 URL (구독 전/후 동일 URL, 토큰 유무로 분기)
+  SITE_BASE_URL: 'https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/'
 };
+
+// 구독 후 사이트 URL 생성 (email + 5일 HMAC 토큰 포함)
+function buildSubscriberSiteUrl(email, page) {
+  var base = CONFIG.SITE_BASE_URL;
+  if (!/\/$/.test(base)) base += '/';
+  var p = page || 'index.html';
+  var token = generateSubscriberToken(email);
+  return base + p + '?email=' + encodeURIComponent(String(email).toLowerCase()) + '&t=' + encodeURIComponent(token);
+}
 
 /**
  * [최초 1회 실행] 비밀번호와 API 키를 PropertiesService에 안전하게 저장
@@ -133,11 +144,112 @@ function safeErrorMessage(error) {
   return msg;
 }
 
+// ─── HMAC 구독 토큰 (뉴스레터/환영 메일 링크용, 5일 유효) ───────
+// 형식: base64url(issuedAtMs) + "." + base64url(HMAC(email + "|" + issuedAtMs, TOKEN_SECRET))
+// TOKEN_SECRET은 PropertiesService('TOKEN_SECRET')에 저장. 없으면 자동 생성.
+var TOKEN_TTL_MS = 5 * 24 * 60 * 60 * 1000; // 5일
+
+function getTokenSecret_() {
+  var props = PropertiesService.getScriptProperties();
+  var s = props.getProperty('TOKEN_SECRET');
+  if (!s) {
+    // 최초 1회: 랜덤 시크릿 자동 생성
+    s = Utilities.getUuid() + '-' + Utilities.getUuid();
+    props.setProperty('TOKEN_SECRET', s);
+  }
+  return s;
+}
+
+function b64url_(bytes) {
+  return Utilities.base64EncodeWebSafe(bytes).replace(/=+$/, '');
+}
+
+function b64urlStr_(str) {
+  return b64url_(Utilities.newBlob(str).getBytes());
+}
+
+function b64urlDecodeStr_(s) {
+  // padding 복원
+  var pad = s.length % 4 === 0 ? '' : new Array(5 - (s.length % 4)).join('=');
+  var bytes = Utilities.base64DecodeWebSafe(s + pad);
+  return Utilities.newBlob(bytes).getDataAsString();
+}
+
+function generateSubscriberToken(email) {
+  if (!email) return '';
+  var normalized = String(email).toLowerCase();
+  var issuedAt = String(Date.now());
+  var payload = normalized + '|' + issuedAt;
+  var sig = Utilities.computeHmacSha256Signature(payload, getTokenSecret_());
+  return b64urlStr_(issuedAt) + '.' + b64url_(sig);
+}
+
+/**
+ * 토큰 검증
+ * 반환: { valid: true, expired: false } 또는 { valid: false, expired: true/false }
+ */
+function verifySubscriberToken(email, token) {
+  if (!email || !token || token.indexOf('.') === -1) {
+    return { valid: false, expired: false };
+  }
+  try {
+    var parts = token.split('.');
+    var issuedAt = parseInt(b64urlDecodeStr_(parts[0]), 10);
+    if (!issuedAt || isNaN(issuedAt)) return { valid: false, expired: false };
+
+    var normalized = String(email).toLowerCase();
+    var payload = normalized + '|' + String(issuedAt);
+    var expectedSig = b64url_(Utilities.computeHmacSha256Signature(payload, getTokenSecret_()));
+    if (expectedSig !== parts[1]) return { valid: false, expired: false };
+
+    var age = Date.now() - issuedAt;
+    if (age > TOKEN_TTL_MS) return { valid: false, expired: true };
+    return { valid: true, expired: false };
+  } catch (_) {
+    return { valid: false, expired: false };
+  }
+}
+
+// [보안] 현재 요청의 클라이언트 IP. Cloudflare Worker가 body._clientIp로 주입하며
+// doGet 시작 시 세팅됨. authenticate()가 IP별 잠금 키 생성에 사용.
+var CURRENT_REQUEST_IP = 'unknown';
+
+/** IP를 cache 키 접미사로 변환 (영숫자/언더스코어만, 길이 제한) */
+function ipKeySuffix(ip) {
+  return String(ip || 'unknown').replace(/[^a-zA-Z0-9]/g, '_').substring(0, 64);
+}
+
+/** 잠긴 IP 접미사 목록을 캐시에 누적 (resetPassword가 일괄 해제용으로 사용) */
+function trackLockedIp(ipSuffix) {
+  var cache = CacheService.getScriptCache();
+  var list = [];
+  try { list = JSON.parse(cache.get('locked_ip_list') || '[]'); } catch (_) { list = []; }
+  if (list.indexOf(ipSuffix) === -1) list.push(ipSuffix);
+  // 과도하게 커지는 것을 방지 (최근 100개만 유지)
+  if (list.length > 100) list = list.slice(-100);
+  cache.put('locked_ip_list', JSON.stringify(list), 3600);
+}
+
+/** 잠긴 모든 IP를 일괄 해제 (비밀번호 재설정 성공 시 호출) */
+function clearAllIpLocks() {
+  var cache = CacheService.getScriptCache();
+  var list = [];
+  try { list = JSON.parse(cache.get('locked_ip_list') || '[]'); } catch (_) { list = []; }
+  list.forEach(function(ipSuffix) {
+    cache.remove('auth_locked_' + ipSuffix);
+    cache.remove('auth_fail_count_' + ipSuffix);
+  });
+  cache.remove('locked_ip_list');
+}
+
 // ─── 웹 앱 엔드포인트 (JSONP 지원) ──────────────────────────
 function doGet(e) {
   const params = e.parameter || {};
   const action = params.action || '';
   const callback = params.callback || '';
+
+  // Worker가 주입한 클라이언트 IP. Worker 경유 아닌 직접 호출(cron, 스크립트 등)은 'direct'.
+  CURRENT_REQUEST_IP = String(params._clientIp || 'direct').substring(0, 64);
 
   let result;
   try {
@@ -145,9 +257,9 @@ function doGet(e) {
       case 'subscribe':
         result = subscribe(params.email, params.name, params.source || 'web');
         break;
-      case 'unsubscribe':
-        result = unsubscribe(params.email);
-        break;
+      // action=unsubscribe 엔드포인트는 의도적으로 제거. 외부 취소는 반드시
+      // requestUnsubscribe → 확인 메일 → confirmUnsubscribe 경로를 거쳐야 함.
+      // 관리자는 changeStatus/deleteSubscriber 사용.
       case 'getArchive':
         result = getArchive();
         break;
@@ -182,7 +294,16 @@ function doGet(e) {
         result = authenticate(params.password);
         break;
       case 'submitFeedback':
-        result = submitFeedback(params.email, params.rating, params.category, params.message);
+        result = submitFeedback(params.email, params.name, params.message);
+        break;
+      case 'checkSubscribed':
+        result = checkSubscribed(params.email, params.token);
+        break;
+      case 'requestUnsubscribe':
+        result = requestUnsubscribe(params.email);
+        break;
+      case 'confirmUnsubscribe':
+        result = confirmUnsubscribe(params.email, params.token);
         break;
       case 'getFeedback':
         result = getFeedback(params.password);
@@ -256,36 +377,43 @@ function subscribe(email, name, source) {
     return { success: false, message: '올바른 이메일 주소를 입력해주세요.' };
   }
 
-  // [보안] 구독 스팸 방어 — 같은 IP/세션에서 1분 내 중복 요청 차단
-  var cache = CacheService.getScriptCache();
-  var subKey = 'sub_' + email.toLowerCase().replace(/[^a-z0-9]/g, '_');
-  if (cache.get(subKey)) {
-    return { success: false, message: '잠시 후 다시 시도해주세요.' };
-  }
-  cache.put(subKey, '1', 60); // 60초간 중복 방지
-
   // 이름 살균
   name = stripHtml(name || '').substring(0, 100);
 
   const sheet = getSheet('subscribers');
   const data = sheet.getDataRange().getValues();
 
-  // 이미 구독 중인지 확인
+  // 이미 구독 중인지 먼저 확인 — rate limit보다 우선 (UX: 중복 클릭 시 "잠시 후…" 대신 정확한 메시지)
   for (let i = 1; i < data.length; i++) {
     if (data[i][0].toString().toLowerCase() === email.toLowerCase()) {
       if (data[i][3] === 'active') {
-        return { success: false, message: '이미 구독 중인 이메일입니다.' };
-      } else {
-        // 재구독
-        sheet.getRange(i + 1, 4).setValue('active');
-        sheet.getRange(i + 1, 6).setValue('');
-        addLog('RESUBSCRIBE', email);
-        return { success: true, message: '다시 구독이 시작되었습니다! 환영합니다.' };
+        return { success: false, alreadySubscribed: true, message: '이미 구독 중입니다.' };
       }
+      // 재구독 복원 경로 — rate limit 적용 (10초: 더블클릭 방어에 충분, UX 영향 최소)
+      var cache1 = CacheService.getScriptCache();
+      var subKey1 = 'sub_' + email.toLowerCase().replace(/[^a-z0-9]/g, '_');
+      if (cache1.get(subKey1)) {
+        return { success: false, message: '잠시 후 다시 시도해주세요.' };
+      }
+      cache1.put(subKey1, '1', 10);
+
+      sheet.getRange(i + 1, 4).setValue('active');
+      sheet.getRange(i + 1, 6).setValue('');
+      if (name) sheet.getRange(i + 1, 2).setValue(name);
+      addLog('RESUBSCRIBE', email);
+      try { sendWelcomeEmail(email, name || data[i][1]); } catch (e) { console.log('Welcome email failed: ' + e.message); }
+      return { success: true, resubscribed: true, message: '다시 구독이 시작되었습니다! 환영합니다.' };
     }
   }
 
-  // 신규 구독
+  // 신규 구독 경로 — rate limit 적용 (10초: 더블클릭 방어)
+  var cache2 = CacheService.getScriptCache();
+  var subKey2 = 'sub_' + email.toLowerCase().replace(/[^a-z0-9]/g, '_');
+  if (cache2.get(subKey2)) {
+    return { success: false, message: '잠시 후 다시 시도해주세요.' };
+  }
+  cache2.put(subKey2, '1', 10);
+
   sheet.appendRow([
     email.toLowerCase(),
     name || '',
@@ -321,6 +449,8 @@ function unsubscribe(email) {
         sheet.getRange(i + 1, 4).setValue('inactive');
         sheet.getRange(i + 1, 6).setValue(new Date().toISOString());
         addLog('UNSUBSCRIBE', email);
+        // "구독해주셔서 감사합니다 + 재구독 링크" 안내 메일 1회 발송
+        try { sendThankYouEmail(email, data[i][1], 'manual'); } catch (e) { console.log('Thank-you email failed: ' + e.message); }
         return { success: true, message: '구독이 취소되었습니다. 다시 돌아오실 때 언제든 환영합니다!' };
       } else {
         return { success: false, message: '이미 구독이 취소된 이메일입니다.' };
@@ -329,6 +459,140 @@ function unsubscribe(email) {
   }
 
   return { success: false, message: '등록되지 않은 이메일 주소입니다.' };
+}
+
+/**
+ * 사이트 취소 폼에서 이메일만 입력했을 때 — 본인 확인 메일 발송.
+ * 메일의 링크(5일 HMAC 토큰)를 클릭해야 실제 취소됨 (confirmUnsubscribe).
+ * 이메일 존재 여부를 유추할 수 없도록 응답은 항상 성공으로 통일.
+ */
+function requestUnsubscribe(email) {
+  if (!email || !validateEmail(email)) {
+    return { success: false, message: '올바른 이메일 주소를 입력해주세요.' };
+  }
+  // 스팸 방지: 같은 이메일 60초 내 중복 요청 차단
+  var cache = CacheService.getScriptCache();
+  var key = 'unsub_req_' + email.toLowerCase().replace(/[^a-z0-9]/g, '_');
+  if (cache.get(key)) {
+    return { success: true, message: '확인 메일은 곧 도착합니다. 잠시 기다려주세요.' };
+  }
+  cache.put(key, '1', 60);
+
+  var sheet = getSheet('subscribers');
+  var data = sheet.getDataRange().getValues();
+  var found = null;
+  for (var i = 1; i < data.length; i++) {
+    if (String(data[i][0]).toLowerCase() === email.toLowerCase()) {
+      found = { status: data[i][3], name: data[i][1] };
+      break;
+    }
+  }
+
+  // 존재/미존재 노출 방지 — 동일 메시지 반환, 존재하고 active인 경우에만 실제 발송
+  if (!found || found.status !== 'active') {
+    addLog('UNSUB_REQ_NOOP', email);
+    return { success: true, message: '입력하신 이메일로 확인 메일을 보내드렸습니다. 메일의 링크를 클릭하시면 구독이 취소됩니다.' };
+  }
+
+  var token = generateSubscriberToken(email);
+  var base = CONFIG.SITE_BASE_URL.replace(/\/$/, '');
+  var confirmUrl = base + '/index.html?action=confirmUnsub'
+    + '&email=' + encodeURIComponent(email.toLowerCase())
+    + '&t=' + encodeURIComponent(token);
+  var displayName = found.name || '구독자';
+
+  var html = '<!DOCTYPE html><html lang="ko"><body style="margin:0;padding:0;background:#f4f5f7;font-family:\'맑은 고딕\',\'Malgun Gothic\',\'Apple SD Gothic Neo\',sans-serif;word-break:keep-all;overflow-wrap:break-word;">'
+    + '<table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f5f7;padding:32px 16px;"><tr><td align="center">'
+    + '<table width="560" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:16px;overflow:hidden;">'
+    + '<tr><td style="background:#065f46;padding:32px;text-align:center;">'
+    + '<h1 style="margin:0;color:#fff;font-size:22px;font-weight:900;">구독 취소 확인</h1></td></tr>'
+    + '<tr><td style="padding:32px 28px;">'
+    + '<p style="font-size:15px;color:#374151;line-height:1.8;margin:0 0 16px;">'
+    + displayName + '님, 안녕하세요.<br><br>'
+    + 'THE AI INSIGHT 뉴스레터 구독 취소 요청을 받았습니다. 본인 확인을 위해 아래 버튼을 눌러주세요.</p>'
+    + '<table width="100%" cellpadding="0" cellspacing="0" style="margin:24px 0;"><tr><td align="center">'
+    + '<a href="' + confirmUrl + '" style="display:inline-block;background:#dc2626;color:#fff;font-weight:700;padding:13px 36px;border-radius:10px;text-decoration:none;font-size:15px;">구독 취소 확인</a>'
+    + '</td></tr></table>'
+    + '<p style="font-size:13px;color:#6b7280;line-height:1.7;margin:18px 0 0;">본인이 요청하지 않으셨다면 이 메일을 무시하시면 됩니다. 이 확인 링크는 5일간 유효합니다.</p>'
+    + '</td></tr>'
+    + '<tr><td style="background:#111827;padding:16px;text-align:center;"><p style="margin:0;font-size:12px;color:rgba(255,255,255,0.5);">THE AI INSIGHT by AX추진팀 (서연이화)</p></td></tr>'
+    + '</table></td></tr></table></body></html>';
+
+  try {
+    GmailApp.sendEmail(email, '[THE AI INSIGHT] 구독 취소 확인 요청', '구독 취소 확인을 위한 안내 메일입니다.', {
+      htmlBody: html,
+      name: 'AX DesK'
+    });
+    addLog('UNSUB_REQ', email);
+  } catch (e) {
+    addLog('UNSUB_REQ_ERR', email + ': ' + e.message);
+  }
+  return { success: true, message: '입력하신 이메일로 확인 메일을 보내드렸습니다. 메일의 링크를 클릭하시면 구독이 취소됩니다.' };
+}
+
+/**
+ * 확인 메일 링크(또는 구독 후 사이트에서 원클릭 취소) 클릭 시 호출.
+ * HMAC 토큰 검증 후 실제 unsubscribe 실행.
+ */
+function confirmUnsubscribe(email, token) {
+  if (!email || !token) {
+    return { success: false, message: '잘못된 요청입니다.' };
+  }
+  var check = verifySubscriberToken(email, token);
+  if (!check.valid) {
+    return {
+      success: false,
+      expired: !!check.expired,
+      message: check.expired
+        ? '확인 링크가 만료되었습니다. 사이트에서 다시 취소 요청을 해주세요.'
+        : '유효하지 않은 링크입니다.'
+    };
+  }
+  return unsubscribe(email);
+}
+
+/**
+ * 구독 상태 확인 (사이트 네비/재구독 배너 분기용)
+ * token이 있으면 유효성도 함께 검사.
+ * 반환: { success, status: 'active'|'inactive'|'cancelled'|'notfound', tokenValid, tokenExpired, name, freshToken? }
+ *   - tokenValid=true & status=active: 구독 후 사이트로 진입 가능
+ *   - tokenExpired=true & status=active: 서버가 새 토큰을 freshToken으로 발급 (자동 갱신)
+ *   - status=inactive/cancelled: 재구독 배너 노출
+ *   - status=notfound: 일반 방문자
+ */
+function checkSubscribed(email, token) {
+  if (!email || !validateEmail(email)) {
+    return { success: true, status: 'notfound', tokenValid: false, tokenExpired: false };
+  }
+  var normalized = email.toLowerCase();
+  var sheet = getSheet('subscribers');
+  var data = sheet.getDataRange().getValues();
+  var found = null;
+  for (var i = 1; i < data.length; i++) {
+    if (String(data[i][0]).toLowerCase() === normalized) {
+      found = { status: data[i][3], name: data[i][1] };
+      break;
+    }
+  }
+
+  if (!found) {
+    return { success: true, status: 'notfound', tokenValid: false, tokenExpired: false };
+  }
+
+  var tokenCheck = token ? verifySubscriberToken(normalized, token) : { valid: false, expired: false };
+  var result = {
+    success: true,
+    status: found.status || 'inactive',
+    name: found.name || '',
+    tokenValid: tokenCheck.valid,
+    tokenExpired: tokenCheck.expired
+  };
+
+  // active 구독자가 만료된 토큰으로 접근 → 새 토큰 자동 발급 (링크 수명 갱신)
+  if (result.status === 'active' && tokenCheck.expired) {
+    result.freshToken = generateSubscriberToken(normalized);
+  }
+  return result;
 }
 
 // ─── 아카이브 ──────────────────────────────────────────────
@@ -417,29 +681,10 @@ function getSubscribers(password) {
 
   const subscribers = [];
 
-  // 1) 내부 구독자 (CONFIG.INTERNAL_EMAILS — AX추진팀 고정 명단) 먼저 표시
-  //    sheet에 중복 존재 시 내부 표시로 덮어씀
-  const internalSet = {};
-  CONFIG.INTERNAL_EMAILS.forEach(function(email) {
-    const key = String(email).toLowerCase();
-    internalSet[key] = true;
-    subscribers.push({
-      email: email,
-      name: 'AX추진팀',
-      subscribedAt: '',
-      status: 'active',
-      source: 'internal',
-      unsubscribedAt: '',
-      isInternal: true  // UI에서 삭제 버튼 비활성화 등 구분용
-    });
-  });
-
-  // 2) 외부 구독자 (subscribers 시트)
+  // 구독자 목록 (subscribers 시트에서만 읽음 — 모든 구독자는 자발적 구독)
   for (let i = 1; i < data.length; i++) {
     const email = data[i][0];
     if (!email) continue;
-    // 내부 명단에 이미 있는 이메일은 스킵 (중복 방지)
-    if (internalSet[String(email).toLowerCase()]) continue;
     subscribers.push({
       email: email,
       name: data[i][1],
@@ -457,14 +702,6 @@ function getSubscribers(password) {
 function deleteSubscriber(password, email) {
   if (!authenticate(password).success) {
     return { success: false, message: '인증에 실패했습니다.' };
-  }
-
-  // 내부 구독자(AX추진팀 고정 명단)는 삭제 불가 — Code.gs CONFIG.INTERNAL_EMAILS 에서 직접 수정해야 함
-  const isInternal = CONFIG.INTERNAL_EMAILS.some(function(e) {
-    return String(e).toLowerCase() === String(email).toLowerCase();
-  });
-  if (isInternal) {
-    return { success: false, message: '내부 구독자는 삭제할 수 없습니다. Code.gs의 INTERNAL_EMAILS에서 수정하세요.' };
   }
 
   const sheet = getSheet('subscribers');
@@ -576,7 +813,7 @@ function sendTestNewsletter(password, subject, htmlContent, email) {
   var wrapped = wrapWithKeepAll(htmlContent || ('<p>' + subject + '</p>'));
   GmailApp.sendEmail(email, '[THE AI INSIGHT-테스트] ' + subject, '', {
     htmlBody: wrapped,
-    name: 'THE AI INSIGHT - AX추진팀'
+    name: 'AX DesK'
   });
   addLog('TEST_SEND', email);
   return { success: true, message: email + ' 테스트 발송 완료' };
@@ -599,8 +836,8 @@ function sendPromoEmails(password, emails) {
     return { success: false, message: '유효한 이메일이 없습니다.' };
   }
 
-  var webappUrl = ScriptApp.getService().getUrl();
-  var subscribeUrl = webappUrl + '?action=subscribe';
+  // GitHub Pages 구독 페이지 (index.html 의 구독 폼으로 이동)
+  var subscribeUrl = 'https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/index.html#subscribe';
 
   // 구독 요청 메일 HTML — promo_email.html 템플릿과 동일한 디자인을 코드로 구성
   var html = buildPromoEmailHtml(subscribeUrl);
@@ -611,7 +848,7 @@ function sendPromoEmails(password, emails) {
     try {
       GmailApp.sendEmail(to, subject, '', {
         htmlBody: html,
-        name: 'THE AI INSIGHT - AX추진팀'
+        name: 'AX DesK'
       });
       sent++;
     } catch (e) {
@@ -632,35 +869,134 @@ function sendPromoEmails(password, emails) {
  * 구독 안내 메일 본문 생성 (promo_email.html 템플릿과 동일 스타일)
  */
 function buildPromoEmailHtml(subscribeUrl) {
-  var archiveUrl = subscribeUrl.replace('?action=subscribe', '');
-  return ''
-    + '<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"></head>'
-    + '<body style="margin:0;padding:0;background:#f0f4f3;font-family:\'맑은 고딕\',\'Malgun Gothic\',\'Apple SD Gothic Neo\',sans-serif;word-break:keep-all;overflow-wrap:break-word;">'
-    + '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f0f4f3;padding:40px 16px;"><tr><td align="center">'
-    + '<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:20px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.06);">'
-    // 컬러 바
-    + '<tr><td style="font-size:0;line-height:0;height:5px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="table-layout:fixed;"><tr>'
-    + '<td style="height:5px;background:#f59e0b;"></td><td style="height:5px;background:#dc2626;"></td><td style="height:5px;background:#be185d;"></td>'
-    + '<td style="height:5px;background:#059669;"></td><td style="height:5px;background:#0e7490;"></td><td style="height:5px;background:#4f46e5;"></td>'
-    + '<td style="height:5px;background:#c2410c;"></td>'
-    + '</tr></table></td></tr>'
-    // 헤더
-    + '<tr><td style="padding:48px 44px 32px;text-align:center;">'
-    + '<p style="margin:0 0 12px;font-size:11px;color:#059669;font-weight:700;letter-spacing:0.5px;">서연이화 AX추진팀</p>'
-    + '<h1 style="margin:0 0 12px;font-size:34px;font-weight:900;color:#0f172a;letter-spacing:-1.5px;">THE AI INSIGHT</h1>'
-    + '<p style="margin:0;font-size:15px;color:#64748b;line-height:1.8;">매일 아침, 최신 AI 뉴스·트렌드와<br>업무 활용 가이드를 정리하여 이메일로 보내드립니다.</p>'
-    + '</td></tr>'
-    // 본문
-    + '<tr><td style="padding:24px 44px 32px;">'
-    + '<p style="font-size:15px;color:#374151;line-height:1.8;margin:0 0 20px;">안녕하세요!<br><br>AX추진팀에서 <strong style="color:#059669;">AI 뉴스레터 「THE AI INSIGHT」</strong>를 발행하고 있습니다. 월~금 매일 + 월말/연말 스페셜 에디션으로 AI 트렌드를 정리해 드립니다.</p>'
-    + '<div style="text-align:center;margin:28px 0;"><a href="' + subscribeUrl + '" style="display:inline-block;background:linear-gradient(135deg,#059669,#10b981);color:#fff;font-size:16px;font-weight:700;padding:16px 52px;border-radius:14px;text-decoration:none;">지금 구독하기</a></div>'
-    + '<p style="text-align:center;margin:0;font-size:13px;color:#94a3b8;"><a href="' + archiveUrl + '" style="color:#94a3b8;text-decoration:none;">지난 뉴스레터 보기 →</a></p>'
-    + '</td></tr>'
-    // 푸터
-    + '<tr><td style="background:#f8fafc;padding:22px 44px;text-align:center;border-top:1px solid #f1f5f9;">'
-    + '<p style="margin:0;font-size:12px;color:#94a3b8;">THE AI INSIGHT by AX추진팀 (서연이화)</p>'
-    + '</td></tr>'
-    + '</table></td></tr></table></body></html>';
+  // baseUrl = subscribeUrl 의 폴더 경로 (쿼리/프래그먼트 제거)
+  var cleaned = subscribeUrl.split('#')[0].split('?')[0];
+  var baseUrl = cleaned.replace(/\/[^\/]*$/, '/');
+  if (!/\/$/.test(baseUrl)) baseUrl += '/';
+  var archiveUrl = baseUrl + 'archive.html';
+  var feedbackUrl = baseUrl + 'feedback.html';
+
+  var h = '';
+  h += '<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>THE AI INSIGHT 뉴스레터 구독 안내</title></head>';
+  h += '<body style="margin:0;padding:0;background:#f0f4f3;font-family:\'맑은 고딕\',\'Malgun Gothic\',\'Apple SD Gothic Neo\',sans-serif;word-break:keep-all;overflow-wrap:break-word;">';
+  h += '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f0f4f3;padding:40px 16px;"><tr><td align="center">';
+  h += '<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:20px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.06);">';
+
+  // 7색 컬러 바
+  h += '<tr><td style="font-size:0;line-height:0;height:5px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="table-layout:fixed;"><tr>';
+  h += '<td style="height:5px;background:#f59e0b;" bgcolor="#f59e0b"></td>';
+  h += '<td style="height:5px;background:#dc2626;" bgcolor="#dc2626"></td>';
+  h += '<td style="height:5px;background:#be185d;" bgcolor="#be185d"></td>';
+  h += '<td style="height:5px;background:#059669;" bgcolor="#059669"></td>';
+  h += '<td style="height:5px;background:#0e7490;" bgcolor="#0e7490"></td>';
+  h += '<td style="height:5px;background:#4f46e5;" bgcolor="#4f46e5"></td>';
+  h += '<td style="height:5px;background:#c2410c;" bgcolor="#c2410c"></td>';
+  h += '</tr></table></td></tr>';
+
+  // 헤더
+  h += '<tr><td style="padding:48px 44px 32px;text-align:center;">';
+  h += '<table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 auto 20px;"><tr>';
+  h += '<td style="background:#f0fdf4;border:1px solid #d1fae5;border-radius:24px;padding:5px 16px;">';
+  h += '<p style="margin:0;font-size:11px;color:#059669;font-weight:600;letter-spacing:0.5px;">서연이화 AX추진팀</p>';
+  h += '</td></tr></table>';
+  h += '<h1 style="margin:0 0 12px;font-size:34px;font-weight:900;color:#0f172a;letter-spacing:-1.5px;line-height:1.2;">THE AI INSIGHT</h1>';
+  h += '<p style="margin:0;font-size:15px;color:#64748b;line-height:1.8;">매일 아침, 최신 AI 뉴스와 트렌드 그리고<br>업무 활용 가이드를 정리하여 이메일로 보내드립니다.</p>';
+  h += '</td></tr>';
+
+  // 구분선
+  h += '<tr><td style="padding:0 44px;"><div style="height:1px;background:#e5e7eb;"></div></td></tr>';
+
+  // 본문 시작
+  h += '<tr><td style="padding:32px 44px;">';
+  h += '<p style="font-size:15px;color:#374151;line-height:1.8;margin:0 0 28px;">안녕하세요!<br><br>AX추진팀에서 <strong style="color:#059669;">AI 트렌드 뉴스레터 「THE AI INSIGHT」</strong>를 발행하고 있습니다. 바쁜 아침, 꼭 필요한 AI 소식만 골라 전해드립니다.</p>';
+
+  // Weekly Line-up
+  h += '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:16px;"><tr>';
+  h += '<td style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#9ca3af;font-weight:700;">WEEKLY LINE-UP</td>';
+  h += '<td align="right" style="font-size:11px;color:#9ca3af;">월 ~ 금 매일 발행</td>';
+  h += '</tr></table>';
+
+  // 요일 카드 헬퍼
+  function dayCard(bg, border, badgeBg, badgeColor, label, title, desc, marginBottom) {
+    var mb = marginBottom || '8px';
+    var row = '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:' + mb + ';"><tr>';
+    row += '<td style="padding:14px 18px;background:' + bg + ';border-radius:12px;border:1px solid ' + border + ';">';
+    row += '<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>';
+    row += '<td width="52" valign="middle"><div style="width:42px;height:42px;background:' + badgeBg + ';border-radius:10px;text-align:center;line-height:42px;font-size:11px;font-weight:800;color:' + badgeColor + ';letter-spacing:-0.3px;">' + label + '</div></td>';
+    row += '<td><p style="margin:0 0 2px;font-size:14px;font-weight:700;color:#1e293b;">' + title + '</p>';
+    row += '<p style="margin:0;font-size:12px;color:#78716c;line-height:1.5;">' + desc + '</p></td>';
+    row += '</tr></table></td></tr></table>';
+    return row;
+  }
+
+  h += dayCard('#fffbeb','#fef3c7','#fef3c7','#b45309','MON','AI 트렌드 위클리','한 주의 시작을 여는 AI 업계 핵심 뉴스와 트렌드 정리');
+  h += dayCard('#fef2f2','#fecaca','#fecaca','#991b1b','TUE','딥다이브 분석','주요 AI 기술과 모델을 심층 분석하여 비즈니스 관점에서 해설');
+  h += dayCard('#fdf2f8','#fbcfe8','#fbcfe8','#9d174d','WED','AI 실전 가이드','바로 따라할 수 있는 AI 도구 활용법과 프롬프트 팁');
+  h += dayCard('#f0fdf4','#bbf7d0','#bbf7d0','#065f46','THU','자동화 레시피','반복 업무를 AI로 자동화하는 구체적인 방법과 워크플로우');
+  h += dayCard('#ecfeff','#a5f3fc','#a5f3fc','#155e75','FRI','금주의 AI 픽','한 주 마무리와 함께 놓치면 안 될 AI 서비스·도구·콘텐츠 큐레이션','28px');
+
+  // Special Edition
+  h += '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:16px;"><tr>';
+  h += '<td style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#9ca3af;font-weight:700;">SPECIAL EDITION</td>';
+  h += '<td align="right" style="font-size:11px;color:#9ca3af;">월말 &middot; 연말 발행</td>';
+  h += '</tr></table>';
+
+  // Special 카드 헬퍼 (배지 폭 더 넓음)
+  function specialCard(bg, border, badgeBg, badgeColor, label, title, desc, marginBottom) {
+    var mb = marginBottom || '8px';
+    var row = '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:' + mb + ';"><tr>';
+    row += '<td style="padding:14px 18px;background:' + bg + ';border-radius:12px;border:1px solid ' + border + ';">';
+    row += '<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>';
+    row += '<td width="72" valign="middle"><div style="width:62px;height:42px;background:' + badgeBg + ';border-radius:10px;text-align:center;line-height:42px;font-size:10px;font-weight:800;color:' + badgeColor + ';letter-spacing:-0.2px;">' + label + '</div></td>';
+    row += '<td style="padding-left:4px;"><p style="margin:0 0 2px;font-size:14px;font-weight:700;color:#1e293b;">' + title + '</p>';
+    row += '<p style="margin:0;font-size:12px;color:#78716c;line-height:1.5;">' + desc + '</p></td>';
+    row += '</tr></table></td></tr></table>';
+    return row;
+  }
+
+  h += specialCard('#eef2ff','#c7d2fe','#c7d2fe','#3730a3','MONTHLY','월말 스페셜','매월 마지막 평일. 한 달 AI 주요 이슈·트렌드를 심층 분석한 월간 리포트');
+  h += specialCard('#fff7ed','#fed7aa','#fed7aa','#7c2d12','ANNUAL','연간 결산 리포트','매년 12월 마지막 평일. 한 해의 AI 흐름을 되짚는 연말 결산 리포트','28px');
+
+  // Trust badges
+  h += '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:32px;"><tr><td align="center"><table role="presentation" cellpadding="0" cellspacing="0"><tr>';
+  h += '<td style="padding:5px 14px;background:#f8fafc;border-radius:20px;border:1px solid #e2e8f0;"><span style="font-size:12px;color:#64748b;">&#10003; 무료</span></td>';
+  h += '<td width="8"></td>';
+  h += '<td style="padding:5px 14px;background:#f8fafc;border-radius:20px;border:1px solid #e2e8f0;"><span style="font-size:12px;color:#64748b;">&#10003; 스팸 없음</span></td>';
+  h += '<td width="8"></td>';
+  h += '<td style="padding:5px 14px;background:#f8fafc;border-radius:20px;border:1px solid #e2e8f0;"><span style="font-size:12px;color:#64748b;">&#10003; 언제든 구독 취소</span></td>';
+  h += '</tr></table></td></tr></table>';
+
+  // CTA
+  h += '<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center">';
+  h += '<a href="' + subscribeUrl + '" style="display:inline-block;background:linear-gradient(135deg,#059669,#10b981);color:#ffffff;font-size:16px;font-weight:700;padding:16px 52px;border-radius:14px;text-decoration:none;box-shadow:0 4px 16px rgba(5,150,105,0.25);">지금 구독하기</a>';
+  h += '</td></tr></table>';
+
+  // Sub Links
+  h += '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:20px;"><tr><td align="center">';
+  h += '의견이 있으시면 <a href="' + feedbackUrl + '" style="font-size:13px;color:#065f46;font-weight:700;text-decoration:underline;">피드백</a>으로 알려주세요';
+  h += '</td></tr></table>';
+
+  h += '</td></tr>'; // 본문 end
+
+  // 구분선
+  h += '<tr><td style="padding:0 44px;"><div style="height:1px;background:#e5e7eb;"></div></td></tr>';
+
+  // Testimonial
+  h += '<tr><td style="padding:28px 44px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>';
+  h += '<td style="background:#f8fafc;border-radius:14px;border:1px solid #e2e8f0;padding:22px 26px;text-align:center;">';
+  h += '<p style="margin:0 0 8px;font-size:22px;">&#128172;</p>';
+  h += '<p style="margin:0 0 10px;font-size:14px;color:#475569;line-height:1.7;font-style:italic;">"아침에 메일 확인할 때 가장 먼저 읽게 됩니다.<br>AI 트렌드를 한눈에 파악할 수 있어서 업무에 큰 도움이 돼요."</p>';
+  h += '<p style="margin:0;font-size:12px;color:#94a3b8;">— 사내 구독자</p>';
+  h += '</td></tr></table></td></tr>';
+
+  // 푸터
+  h += '<tr><td style="background:#f8fafc;padding:24px 44px;text-align:center;border-top:1px solid #f1f5f9;">';
+  h += '<p style="margin:0 0 4px;font-size:12px;color:#94a3b8;">THE AI INSIGHT by AX추진팀 (서연이화)</p>';
+  h += '<p style="margin:0;font-size:11px;color:#cbd5e1;">문의: <span style="color:#059669;">aa200526@seoyoneh.com</span></p>';
+  h += '</td></tr>';
+
+  h += '</table></td></tr></table></body></html>';
+  return h;
 }
 
 // ─── 이메일 발송 ────────────────────────────────────────────
@@ -685,13 +1021,15 @@ function sendNewsletter(password, subject, htmlContent) {
   // 한국어 어절 단위 줄바꿈 래퍼 (본문에 keep-all 강제 적용)
   var wrappedContent = wrapWithKeepAll(htmlContent);
 
-  // 1) 내부 구독자 - Gmail 발송 (구독자별 추적 픽셀 삽입)
+  // 1) 내부 구독자 - Gmail 발송 (구독자별 HMAC 토큰 + 추적 픽셀 + 피드백 CTA)
   CONFIG.INTERNAL_EMAILS.forEach(email => {
     try {
-      var trackedHtml = insertTrackingPixel(wrappedContent, email, nlId);
-      GmailApp.sendEmail(email, '[THE AI INSIGHT] ' + subject, '', {
+      var trackedHtml = personalizeSiteLinks(wrappedContent, email);
+      trackedHtml = insertTrackingPixel(trackedHtml, email, nlId);
+      trackedHtml = appendFeedbackCta(trackedHtml, email);
+      GmailApp.sendEmail(email, subject, '', {
         htmlBody: trackedHtml,
-        name: 'THE AI INSIGHT - AX추진팀'
+        name: 'AX DesK'
       });
       sentCount++;
       sentEmails.push(email);
@@ -700,7 +1038,7 @@ function sendNewsletter(password, subject, htmlContent) {
     }
   });
 
-  // 2) 외부 구독자 발송 (구독자별 추적 픽셀 삽입)
+  // 2) 외부 구독자 발송 (구독자별 HMAC 토큰 + 추적 픽셀 삽입)
   const sheet = getSheet('subscribers');
   const data = sheet.getDataRange().getValues();
 
@@ -711,7 +1049,9 @@ function sendNewsletter(password, subject, htmlContent) {
       if (CONFIG.INTERNAL_EMAILS.includes(email)) continue;
 
       try {
-        var trackedHtml = insertTrackingPixel(wrappedContent, email, nlId);
+        var trackedHtml = personalizeSiteLinks(wrappedContent, email);
+        trackedHtml = insertTrackingPixel(trackedHtml, email, nlId);
+        trackedHtml = appendFeedbackCta(trackedHtml, email);
         sendExternalEmail(email, subject, trackedHtml);
         sentCount++;
         sentEmails.push(email);
@@ -745,9 +1085,9 @@ function sendExternalEmail(to, subject, htmlContent) {
   switch (provider) {
     case 'gmail':
       // Gmail로 외부도 발송 (일 100통 제한 주의)
-      GmailApp.sendEmail(to, '[THE AI INSIGHT] ' + subject, '', {
+      GmailApp.sendEmail(to, subject, '', {
         htmlBody: htmlContent,
-        name: 'THE AI INSIGHT'
+        name: 'AX DesK'
       });
       break;
 
@@ -783,7 +1123,7 @@ function sendViaWoorimail(to, subject, htmlContent) {
     receiver_email: to,
     receiver_nickname: to.split('@')[0],
     member_regdate: now,
-    title: '[THE AI INSIGHT] ' + subject,
+    title: subject,
     content: htmlContent
   };
 
@@ -809,9 +1149,9 @@ function sendViaMailgun(to, subject, htmlContent) {
         'Authorization': 'Basic ' + Utilities.base64Encode('api:' + cfg.apiKey)
       },
       payload: {
-        from: 'THE AI INSIGHT <' + cfg.senderEmail + '>',
+        from: 'AX DesK <' + cfg.senderEmail + '>',
         to: to,
-        subject: '[THE AI INSIGHT] ' + subject,
+        subject: subject,
         html: htmlContent
       }
     }
@@ -826,8 +1166,8 @@ function sendViaSendgrid(to, subject, htmlContent) {
     headers: { 'Authorization': 'Bearer ' + cfg.apiKey },
     payload: JSON.stringify({
       personalizations: [{ to: [{ email: to }] }],
-      from: { email: cfg.senderEmail, name: 'THE AI INSIGHT' },
-      subject: '[THE AI INSIGHT] ' + subject,
+      from: { email: cfg.senderEmail, name: 'AX DesK' },
+      subject: subject,
       content: [{ type: 'text/html', value: htmlContent }]
     })
   });
@@ -835,8 +1175,12 @@ function sendViaSendgrid(to, subject, htmlContent) {
 
 function sendWelcomeEmail(email, name) {
   const greeting = name ? name + '님' : '구독자님';
+  // 구독 후 사이트(아카이브/피드백 포함 네비) URL + 5일 HMAC 토큰
+  const siteUrl = buildSubscriberSiteUrl(email, 'index.html');
+  const archiveUrl = buildSubscriberSiteUrl(email, 'archive.html');
+  const feedbackUrl = buildSubscriberSiteUrl(email, 'feedback.html');
   const html = `
-    <div style="max-width:600px;margin:0 auto;font-family:'Apple SD Gothic Neo',sans-serif;word-break:keep-all;overflow-wrap:break-word;">
+    <div style="max-width:600px;margin:0 auto;font-family:'맑은 고딕','Malgun Gothic','Apple SD Gothic Neo',sans-serif;word-break:keep-all;overflow-wrap:break-word;">
       <div style="background:#065f46;padding:24px;text-align:center;">
         <h1 style="color:#fff;margin:0;font-size:22px;">THE AI INSIGHT</h1>
       </div>
@@ -847,7 +1191,17 @@ function sendWelcomeEmail(email, name) {
           서연이화 AX추진팀이 엄선한 AI 트렌드, 실전 가이드, 업무 자동화 팁을
           정기적으로 보내드리겠습니다.
         </p>
-        <p style="color:#6b7280;font-size:14px;margin-top:24px;">
+        <div style="margin:28px 0;text-align:center;">
+          <a href="${siteUrl}" style="display:inline-block;background:#065f46;color:#fff;font-weight:700;padding:12px 28px;border-radius:10px;text-decoration:none;font-size:15px;">구독자 홈 바로가기</a>
+        </div>
+        <p style="color:#374151;font-size:14px;line-height:1.8;margin:0 0 4px;">
+          · <a href="${archiveUrl}" style="color:#065f46;">지난 뉴스레터 아카이브</a><br>
+          · <a href="${feedbackUrl}" style="color:#065f46;">의견·피드백 보내기</a>
+        </p>
+        <p style="color:#9ca3af;font-size:12px;margin-top:18px;">
+          위 링크는 보안을 위해 발급 후 5일간 유효합니다. 만료 시 자동으로 갱신됩니다.
+        </p>
+        <p style="color:#6b7280;font-size:14px;margin-top:18px;">
           구독 취소를 원하시면 뉴스레터 하단의 구독취소 링크를 이용해주세요.
         </p>
       </div>
@@ -863,7 +1217,7 @@ function sendWelcomeEmail(email, name) {
   if (provider === 'gmail' || CONFIG.INTERNAL_EMAILS.includes(email.toLowerCase())) {
     GmailApp.sendEmail(email, '[THE AI INSIGHT] 구독을 환영합니다!', '', {
       htmlBody: html,
-      name: 'THE AI INSIGHT'
+      name: 'AX DesK'
     });
   } else {
     sendExternalEmail(email, '구독을 환영합니다!', html);
@@ -876,15 +1230,18 @@ function sendWelcomeEmail(email, name) {
 var ADMIN_EMAIL = '110316@seoyoneh.com';
 
 /**
- * 인증 함수 — Brute-force 방어 포함
- * 5회 연속 실패 시 계정 잠금 + 관리자에게 비밀번호 재설정 인증 메일 발송
+ * 인증 함수 — Brute-force 방어 포함 (IP별 잠금)
+ * 같은 IP에서 5회 연속 실패 시 해당 IP만 잠금 + 관리자에게 비밀번호 재설정 인증 메일 발송.
+ * IP는 CURRENT_REQUEST_IP (Worker가 body._clientIp로 주입)에서 가져옴.
+ * Why IP별: 전역 락은 공격자 1명이 관리자 계정을 잠그는 DoS 벡터였음.
  */
 function authenticate(password) {
   var cache = CacheService.getScriptCache();
-  var failKey = 'auth_fail_count';
-  var lockKey = 'auth_locked';
+  var ipSuffix = ipKeySuffix(CURRENT_REQUEST_IP);
+  var failKey = 'auth_fail_count_' + ipSuffix;
+  var lockKey = 'auth_locked_' + ipSuffix;
 
-  // 잠금 확인 — 5회 실패 후에는 인증 메일로만 해제 가능
+  // 잠금 확인 — 해당 IP만. 다른 IP(정상 관리자)는 영향 없음.
   if (cache.get(lockKey) === 'true') {
     return { success: false, locked: true, message: '계정이 잠겼습니다. 인증 메일을 확인해주세요.' };
   }
@@ -894,7 +1251,7 @@ function authenticate(password) {
     return { success: true };
   }
 
-  // 실패 카운터
+  // 실패 카운터 (IP별)
   var failCount = parseInt(cache.get(failKey) || '0') + 1;
   cache.put(failKey, String(failCount), 3600); // 1시간 유지
 
@@ -902,14 +1259,17 @@ function authenticate(password) {
     cache.put(lockKey, 'true', 3600); // 1시간 잠금 (인증 메일로 즉시 해제 가능)
     cache.remove(failKey);
 
+    // 잠긴 IP 목록 갱신 — resetPassword가 일괄 해제할 수 있도록
+    trackLockedIp(ipSuffix);
+
     // 관리자에게 비밀번호 재설정 인증 메일 발송
     sendPasswordResetEmail();
 
-    addLog('AUTH_LOCKED', '5회 실패 → 계정 잠금 + 인증 메일 발송');
+    addLog('AUTH_LOCKED', '5회 실패 → IP 잠금 (ip=' + ipSuffix + ') + 인증 메일 발송');
     return { success: false, locked: true, message: '5회 인증 실패. ' + ADMIN_EMAIL + '로 비밀번호 재설정 메일을 발송했습니다.' };
   }
 
-  addLog('AUTH_FAIL', '인증 실패 (' + failCount + '/5)');
+  addLog('AUTH_FAIL', '인증 실패 (' + failCount + '/5, ip=' + ipSuffix + ')');
   return { success: false, message: '비밀번호가 올바르지 않습니다. (' + failCount + '/5)' };
 }
 
@@ -951,7 +1311,7 @@ function sendPasswordResetEmail() {
 
   GmailApp.sendEmail(ADMIN_EMAIL, '[THE AI INSIGHT] 관리자 비밀번호 재설정 인증 코드', '', {
     htmlBody: html,
-    name: 'THE AI INSIGHT 보안'
+    name: 'AX DesK 보안'
   });
 }
 
@@ -998,10 +1358,9 @@ function resetPassword(token, newPassword) {
   // 비밀번호 변경
   PropertiesService.getScriptProperties().setProperty('ADMIN_PASSWORD', newPassword);
 
-  // 잠금 해제 + 토큰 삭제
+  // 잠금 해제 + 토큰 삭제 (모든 IP 잠금 일괄 해제)
   cache.remove('reset_token');
-  cache.remove('auth_locked');
-  cache.remove('auth_fail_count');
+  clearAllIpLocks();
 
   addLog('PWD_RESET_SUCCESS', '비밀번호 변경 완료');
 
@@ -1014,7 +1373,7 @@ function resetPassword(token, newPassword) {
         '변경 시각: ' + Utilities.formatDate(new Date(), 'Asia/Seoul', 'yyyy-MM-dd HH:mm:ss') + '<br><br>' +
         '본인이 변경하지 않았다면 즉시 Apps Script에서 setupSecureProperties를 실행하여 비밀번호를 재설정하세요.' +
       '</p></div>',
-    name: 'THE AI INSIGHT 보안'
+    name: 'AX DesK 보안'
   });
 
   return { success: true, message: '비밀번호가 변경되었습니다. 새 비밀번호로 로그인하세요.' };
@@ -1398,9 +1757,9 @@ function testSendNewsletter() {
 
   // 내부 이메일(테스트: 110316@seoyoneh.com)에게만 발송
   CONFIG.INTERNAL_EMAILS.forEach(function(email) {
-    GmailApp.sendEmail(email, '[THE AI INSIGHT] ' + subject, '', {
+    GmailApp.sendEmail(email, subject, '', {
       htmlBody: html,
-      name: 'THE AI INSIGHT - AX추진팀'
+      name: 'AX DesK'
     });
   });
 
@@ -1522,7 +1881,7 @@ function onAdminFormSubmit(e) {
           try {
             GmailApp.sendEmail(targetEmail, '[THE AI INSIGHT-테스트] ' + nlSubject, '', {
               htmlBody: nlContent || '<p>' + nlSubject + '</p>',
-              name: 'THE AI INSIGHT - AX추진팀'
+              name: 'AX DesK'
             });
             addLog('ADMIN_TEST_SEND', '테스트 발송 → ' + targetEmail + ' / ' + nlSubject);
           } catch (err2) {
@@ -1817,6 +2176,64 @@ function insertTrackingPixel(htmlContent, email, nlId) {
   return htmlContent + pixel;
 }
 
+/**
+ * 일일 뉴스레터 본문 하단에 피드백 CTA 블록을 주입.
+ * feedback 링크에 email + 5일 HMAC 토큰을 붙임 → 클릭 시 구독자 자동 식별.
+ */
+function appendFeedbackCta(htmlContent, email) {
+  var feedbackUrl = buildSubscriberSiteUrl(email || '', 'feedback.html');
+  var cta = '<div style="margin:24px 16px;padding:18px 20px;text-align:center;background:#f0fdf4;border:1px solid #d1fae5;border-radius:12px;font-family:\'맑은 고딕\',\'Malgun Gothic\',sans-serif;">' +
+    '<p style="margin:0;font-size:13px;color:#065f46;line-height:1.7;">' +
+      '이 뉴스레터가 도움이 되셨나요? ' +
+      '<a href="' + feedbackUrl + '" style="color:#059669;font-weight:700;text-decoration:underline;">피드백</a>' +
+      '으로 알려주세요' +
+    '</p></div>';
+  if (htmlContent.indexOf('</body>') > -1) {
+    return htmlContent.replace('</body>', cta + '</body>');
+  }
+  return htmlContent + cta;
+}
+
+/**
+ * 본문 내의 사이트 링크(구독 후 페이지)를 구독자별 HMAC 토큰 포함 URL로 치환.
+ * 대상: index.html / archive.html / feedback.html
+ * - 기존 `?email=xxx` 쿼리가 있으면 `&t=HMAC`만 추가
+ * - 쿼리가 없으면 `?email=xxx&t=HMAC` 추가
+ */
+function personalizeSiteLinks(htmlContent, email) {
+  if (!htmlContent || !email) return htmlContent;
+  var base = CONFIG.SITE_BASE_URL.replace(/\/$/, '');
+  var token = generateSubscriberToken(email);
+  var emailParam = 'email=' + encodeURIComponent(String(email).toLowerCase());
+  var tokenParam = 't=' + encodeURIComponent(token);
+  // 치환 대상 페이지 3종
+  var pages = ['index.html', 'archive.html', 'feedback.html'];
+  pages.forEach(function(page) {
+    // URL + (?query 있으면 유지, 없으면 새 쿼리) + 해시 분리
+    var pattern = new RegExp(
+      base.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '/' + page + '([?][^"\'\\s>]*)?(#[^"\'\\s>]*)?',
+      'g'
+    );
+    htmlContent = htmlContent.replace(pattern, function(match, query, hash) {
+      query = query || '';
+      hash = hash || '';
+      var newQuery;
+      if (!query) {
+        newQuery = '?' + emailParam + '&' + tokenParam;
+      } else {
+        // 기존 쿼리에 email/t 유무 검사
+        var hasEmail = /[?&]email=/.test(query);
+        var hasToken = /[?&]t=/.test(query);
+        newQuery = query;
+        if (!hasEmail) newQuery += '&' + emailParam;
+        if (!hasToken) newQuery += '&' + tokenParam;
+      }
+      return base + '/' + page + newQuery + hash;
+    });
+  });
+  return htmlContent;
+}
+
 // ═══════════════════════════════════════════════════════════════
 // 자동 구독취소 & 독려 메일 시스템
 // ═══════════════════════════════════════════════════════════════
@@ -1875,8 +2292,8 @@ function _doInactiveCheck() {
         Utilities.formatDate(new Date(), 'Asia/Seoul', 'yyyy-MM-dd')
       );
 
-      // 2. 재구독 독려 메일 발송
-      sendReEngagementEmail(email, name);
+      // 2. "감사 + 재구독 선택 링크" 안내 메일 1회 발송
+      sendThankYouEmail(email, name, 'auto');
 
       inactiveCount++;
       addLog('AUTO_UNSUB', email + ' (발송 ' + sent + '회, 열람 ' + opened + '회)');
@@ -1889,16 +2306,24 @@ function _doInactiveCheck() {
 }
 
 /**
- * 재구독 독려 메일 발송
+ * 구독 취소/자동 탈락 시 "감사 + 재구독 선택 링크" 안내 메일 (1회 발송)
+ * @param reason 'auto'(20일 미열람) | 'manual'(사이트에서 취소)
+ * 톤: 적극 재유도가 아닌, 감사 표현 + 원할 때 돌아올 수 있는 링크 제공.
  */
-function sendReEngagementEmail(email, name) {
+function sendThankYouEmail(email, name, reason) {
   var displayName = name || '구독자';
-  // [보안] 로컬 경로 대신 구독 페이지 상대 경로 사용
-  var subscribeUrl = ScriptApp.getService().getUrl() + '?action=subscribe';
+  // 구독 신청 페이지(구독 전 사이트) — 토큰 불필요
+  var baseUrl = CONFIG.SITE_BASE_URL;
+  if (!/\/$/.test(baseUrl)) baseUrl += '/';
+  var resubscribeUrl = baseUrl + 'index.html#subscribe';
 
-  var subject = '[THE AI INSIGHT] ' + displayName + '님, 다시 만나고 싶어요!';
+  var reasonLine = (reason === 'auto')
+    ? '한동안 뉴스레터를 확인하지 못하신 것 같아 메일함 정리를 위해 구독을 잠시 멈춰두었습니다.'
+    : '구독을 취소해주신 요청을 확인했습니다.';
 
-  var htmlBody = '<!DOCTYPE html><html><body style="margin:0;padding:0;background:#f4f5f7;font-family:sans-serif;word-break:keep-all;overflow-wrap:break-word;">'
+  var subject = '[THE AI INSIGHT] 구독해주셔서 감사합니다';
+
+  var htmlBody = '<!DOCTYPE html><html lang="ko"><body style="margin:0;padding:0;background:#f4f5f7;font-family:\'맑은 고딕\',\'Malgun Gothic\',\'Apple SD Gothic Neo\',sans-serif;word-break:keep-all;overflow-wrap:break-word;">'
     + '<table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f5f7;padding:32px 16px;"><tr><td align="center">'
     + '<table width="560" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:16px;overflow:hidden;">'
 
@@ -1910,22 +2335,20 @@ function sendReEngagementEmail(email, name) {
     // Body
     + '<tr><td style="padding:36px 32px;">'
     + '<p style="font-size:15px;color:#374151;line-height:1.8;margin:0 0 20px;">'
-    + displayName + '님, 안녕하세요.<br><br>'
-    + '한동안 뉴스레터를 읽어주시지 않으셔서, 구독이 자동으로 해제되었습니다.<br>'
-    + '혹시 바쁘셨거나 메일이 스팸함에 들어갔던 건 아닌지 걱정됩니다.</p>'
+    + displayName + '님, 그동안 THE AI INSIGHT를 구독해주셔서 진심으로 감사합니다.</p>'
 
-    + '<p style="font-size:15px;color:#374151;line-height:1.8;margin:0 0 24px;">'
-    + '최근 AI 업계에는 흥미로운 변화들이 많았습니다.<br>'
-    + '<strong style="color:#065f46;">다시 구독하시면</strong> 매일 아침 핵심 AI 인사이트를 받아보실 수 있어요!</p>'
+    + '<p style="font-size:15px;color:#374151;line-height:1.8;margin:0 0 20px;">'
+    + reasonLine + '<br>'
+    + '필요하실 때 언제든 다시 찾아주세요. 매일 아침 AI 인사이트를 다시 보내드리겠습니다.</p>'
 
-    // CTA
-    + '<table width="100%" cellpadding="0" cellspacing="0"><tr><td align="center">'
-    + '<a href="' + subscribeUrl + '" style="display:inline-block;background:#065f46;color:#fff;font-size:16px;font-weight:700;'
-    + 'padding:14px 40px;border-radius:10px;text-decoration:none;">다시 구독하기 →</a>'
+    // CTA (선택사항으로 부드럽게)
+    + '<table width="100%" cellpadding="0" cellspacing="0" style="margin-top:12px;"><tr><td align="center">'
+    + '<a href="' + resubscribeUrl + '" style="display:inline-block;background:#065f46;color:#fff;font-size:15px;font-weight:700;'
+    + 'padding:12px 32px;border-radius:10px;text-decoration:none;">나중에 다시 구독하기</a>'
     + '</td></tr></table>'
 
-    + '<p style="text-align:center;margin:20px 0 0;font-size:13px;color:#9ca3af;">'
-    + '이 메일은 자동 발송된 안내 메일입니다.</p>'
+    + '<p style="text-align:center;margin:24px 0 0;font-size:12px;color:#9ca3af;">'
+    + '이 메일은 자동 발송된 안내 메일입니다. 별도의 답장은 필요하지 않습니다.</p>'
     + '</td></tr>'
 
     // Footer
@@ -1936,13 +2359,13 @@ function sendReEngagementEmail(email, name) {
     + '</table></td></tr></table></body></html>';
 
   try {
-    GmailApp.sendEmail(email, subject, '뉴스레터 구독이 해제되었습니다. 다시 구독하려면 사이트를 방문해주세요.', {
+    GmailApp.sendEmail(email, subject, '구독해주셔서 감사합니다. 필요하실 때 다시 구독해주세요.', {
       htmlBody: htmlBody,
-      name: 'THE AI INSIGHT'
+      name: 'AX DesK'
     });
-    addLog('RE_ENGAGE_SENT', email);
+    addLog('THANKYOU_SENT', email + ' (' + reason + ')');
   } catch (e) {
-    addLog('RE_ENGAGE_ERROR', email + ': ' + e.message);
+    addLog('THANKYOU_ERROR', email + ': ' + e.message);
   }
 }
 
@@ -2003,45 +2426,59 @@ function initTrackingSheet() {
 /**
  * 피드백 저장
  */
-function submitFeedback(email, rating, category, message) {
-  if (!message) {
-    return { success: false, message: '의견을 입력해주세요.' };
+function submitFeedback(email, name, message) {
+  if (!email || !name || !message) {
+    return { success: false, message: '이메일, 이름, 의견을 모두 입력해주세요.' };
   }
 
-  // [보안] 피드백 Rate limiting — 동일 이메일/세션에서 10분 내 중복 방지
+  // [보안] 피드백 Rate limiting — 동일 이메일에서 10분 내 중복 방지
   var cache = CacheService.getScriptCache();
   var fbKey = 'fb_' + (email || 'anon').toLowerCase().replace(/[^a-z0-9]/g, '_');
   if (cache.get(fbKey)) {
     return { success: false, message: '피드백은 10분에 1회만 가능합니다.' };
   }
-  cache.put(fbKey, '1', 600); // 10분
+  cache.put(fbKey, '1', 600);
 
-  // 입력값 살균 — HTML 태그 및 스크립트 제거
-  var allowedCategories = ['content','frequency','topic','design','bug','other'];
+  // 입력값 살균
   var safeEmail = (email || '').toLowerCase().trim().substring(0, 254);
-  var safeRating = Math.min(Math.max(parseInt(rating) || 0, 0), 5);
-  var safeCategory = allowedCategories.indexOf(category) > -1 ? category : 'other';
+  var safeName = stripHtml(name || '').substring(0, 100);
   var safeMessage = stripHtml(message).substring(0, 2000);
 
   var ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
   var sheet = ss.getSheetByName('feedback');
   if (!sheet) {
     sheet = ss.insertSheet('feedback');
-    sheet.getRange(1, 1, 1, 6).setValues([['timestamp', 'email', 'rating', 'category', 'message', 'status']]);
-    sheet.getRange(1, 1, 1, 6).setFontWeight('bold');
+    sheet.getRange(1, 1, 1, 4).setValues([['timestamp', 'email', 'name', 'message']]);
+    sheet.getRange(1, 1, 1, 4).setFontWeight('bold');
     sheet.setFrozenRows(1);
   }
 
-  sheet.appendRow([
-    new Date().toISOString(),
-    safeEmail,
-    safeRating,
-    safeCategory,
-    safeMessage,
-    'new'
-  ]);
+  // 구 포맷(6컬럼)에서 새 포맷(4컬럼)으로 자동 마이그레이션되지 않음 — 기존 시트는 6컬럼 유지
+  // 새 데이터도 기존 컬럼 수에 맞춰 저장 (timestamp/email/name/message + 빈칸 2개)
+  var headerRange = sheet.getRange(1, 1, 1, sheet.getLastColumn() || 4);
+  var headers = headerRange.getValues()[0];
+  var hasOldFormat = headers.length >= 5 && (headers[2] === 'rating' || headers[3] === 'category');
 
-  addLog('FEEDBACK', maskEmail(safeEmail) + ' - ' + safeCategory + ' (⭐' + safeRating + ')');
+  if (hasOldFormat) {
+    // 기존 6컬럼 구조에 맞춰 저장 (rating=0, category='other', status='new')
+    sheet.appendRow([
+      new Date().toISOString(),
+      safeEmail,
+      0,
+      safeName,  // category 자리에 name 저장 (호환용) — 관리자 페이지는 별도로 name 컬럼 탐색
+      safeMessage,
+      'new'
+    ]);
+  } else {
+    sheet.appendRow([
+      new Date().toISOString(),
+      safeEmail,
+      safeName,
+      safeMessage
+    ]);
+  }
+
+  addLog('FEEDBACK', maskEmail(safeEmail) + ' - ' + safeName);
 
   return { success: true, message: '피드백이 접수되었습니다. 감사합니다!' };
 }
@@ -2061,16 +2498,30 @@ function getFeedback(password) {
   }
 
   var data = sheet.getDataRange().getValues();
+  if (data.length < 2) return { success: true, data: [] };
+
+  var headers = data[0];
+  var hasOldFormat = headers.length >= 5 && (headers[2] === 'rating' || headers[3] === 'category');
+
   var feedbacks = [];
   for (var i = 1; i < data.length; i++) {
-    feedbacks.push({
-      timestamp: data[i][0],
-      email: data[i][1],
-      rating: data[i][2],
-      category: data[i][3],
-      message: data[i][4],
-      status: data[i][5]
-    });
+    if (hasOldFormat) {
+      // 구 포맷: timestamp | email | rating | category/name | message | status
+      feedbacks.push({
+        timestamp: data[i][0],
+        email: data[i][1],
+        name: data[i][3],  // category 자리에 name 저장해왔음
+        message: data[i][4]
+      });
+    } else {
+      // 신 포맷: timestamp | email | name | message
+      feedbacks.push({
+        timestamp: data[i][0],
+        email: data[i][1],
+        name: data[i][2],
+        message: data[i][3]
+      });
+    }
   }
 
   // 최신순 정렬

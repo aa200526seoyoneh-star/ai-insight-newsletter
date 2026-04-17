@@ -356,15 +356,45 @@
   </div>
 </nav>
 <script>
+  // 구독자 전용 페이지. 토큰 검증 → active만 통과, 그 외는 index.html로 리디렉트.
   (function() {
+    var params = new URLSearchParams(location.search);
+    var email = params.get('email');
+    var token = params.get('t');
+
     try {
-      var p = new URLSearchParams(location.search).get('email');
-      if (p) localStorage.setItem('subscriber_email', p);
+      if (email) localStorage.setItem('subscriber_email', email);
+      if (email || localStorage.getItem('subscriber_email')) {
+        var n0 = document.getElementById('navLinks');
+        if (n0) n0.classList.add('is-subscriber');
+      }
     } catch (_) {}
-    if (localStorage.getItem('subscriber_email')) {
-      var n = document.getElementById('navLinks');
-      if (n) n.classList.add('is-subscriber');
-    }
+
+    if (!email) return;
+    var proxy = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.PROXY_URL) || '';
+    if (!proxy) return;
+
+    var qs = 'action=checkSubscribed&email=' + encodeURIComponent(email)
+      + (token ? '&token=' + encodeURIComponent(token) : '');
+    fetch(proxy.replace(/\/$/, '') + '/?' + qs, { method: 'GET', mode: 'cors' })
+      .then(function(r) { return r.json(); })
+      .then(function(r) {
+        if (!r || !r.success) return;
+        if (r.status === 'active') {
+          var n = document.getElementById('navLinks');
+          if (n) n.classList.add('is-subscriber');
+          if (r.freshToken) {
+            try {
+              params.set('t', r.freshToken);
+              history.replaceState(null, '', location.pathname + '?' + params.toString() + location.hash);
+            } catch (_) {}
+          }
+        } else {
+          try { localStorage.removeItem('subscriber_email'); } catch (_) {}
+          location.replace('index.html' + (r.status === 'inactive' || r.status === 'cancelled' ? '?email=' + encodeURIComponent(email) : ''));
+        }
+      })
+      .catch(function() {});
   })();
 </script>
 

@@ -100,9 +100,33 @@
     }
     .nav-links a:hover { background: var(--primary-50); color: var(--primary); }
     .nav-links a.active { background: var(--primary); color: #fff; }
-    /* 구독자에게만 노출되는 링크 — 기본 숨김, JS가 localStorage 보고 해제 */
+    /* 구독자에게만 노출되는 링크 — 기본 숨김, JS가 서버 검증/localStorage로 해제 */
     .nav-links a.nav-subscriber-only { display: none; }
     .nav-links.is-subscriber a.nav-subscriber-only { display: inline-flex; }
+    /* 재구독 안내 배너 (inactive/cancelled 구독자 진입 시 노출) */
+    .resub-banner {
+      display: none;
+      background: #fef3c7;
+      border-bottom: 1px solid #fcd34d;
+      color: #92400e;
+      font-size: 14px;
+      padding: 12px 20px;
+      text-align: center;
+    }
+    .resub-banner.show { display: block; }
+    .resub-banner strong { color: #78350f; }
+    .resub-banner button {
+      margin-left: 12px;
+      background: #065f46;
+      color: #fff;
+      border: 0;
+      border-radius: 8px;
+      padding: 6px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .resub-banner button:hover { background: #047857; }
 
     /* ── Hero ── */
     .hero {
@@ -1143,19 +1167,145 @@
       </div>
     </div>
   </nav>
+
+  <!-- 재구독 안내 배너 (inactive/cancelled 구독자만 노출) -->
+  <div class="resub-banner" id="resubBanner">
+    <strong>구독이 취소된 상태입니다.</strong>
+    다시 뉴스레터를 받으시려면 아래 버튼을 눌러주세요.
+    <button type="button" onclick="handleQuickResubscribe()">다시 구독하기</button>
+  </div>
+
   <script>
-    // 구독자 식별: ?email= 파라미터 또는 이전에 저장된 localStorage.
-    // 구독자로 판정되면 nav의 '아카이브'·'피드백' 노출.
+    // 구독 상태 식별:
+    //  1) URL에 ?email=&t=HMAC 토큰이 있으면 서버(checkSubscribed)로 검증
+    //  2) active → 네비에 아카이브/피드백 노출, localStorage 갱신
+    //  3) inactive/cancelled → 재구독 배너 노출
+    //  4) 만료 토큰이어도 active면 서버가 freshToken 발급 → URL 교체
+    //  5) 토큰 없으면 localStorage 폴백 (UX 힌트일 뿐 보안 경계 아님)
+    window.__AX__ = window.__AX__ || {};
     (function() {
+      var params = new URLSearchParams(location.search);
+      var email = params.get('email');
+      var token = params.get('t');
+      var action = params.get('action');
+
+      // 폴백: localStorage에 저장된 이메일로 즉시 UI 업데이트 (깜빡임 방지)
       try {
-        var p = new URLSearchParams(location.search).get('email');
-        if (p) localStorage.setItem('subscriber_email', p);
+        var cached = localStorage.getItem('subscriber_email');
+        if (email && !cached) localStorage.setItem('subscriber_email', email);
+        if (email || cached) {
+          var n = document.getElementById('navLinks');
+          if (n) n.classList.add('is-subscriber');
+        }
       } catch (_) {}
-      if (localStorage.getItem('subscriber_email')) {
-        var n = document.getElementById('navLinks');
-        if (n) n.classList.add('is-subscriber');
+
+      if (!email) return; // URL에 email 없으면 서버 검증 불필요
+
+      // config.js에서 PROXY_URL 로드 (deferred 없음 → 이미 head에 로드됨)
+      var proxy = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.PROXY_URL) || '';
+      if (!proxy) return;
+
+      // 구독 취소 확인 링크로 진입 → 서버 호출 후 UI 전환
+      if (action === 'confirmUnsub' && token) {
+        var unsubQs = 'action=confirmUnsubscribe'
+          + '&email=' + encodeURIComponent(email)
+          + '&token=' + encodeURIComponent(token);
+        fetch(proxy.replace(/\/$/, '') + '/?' + unsubQs, { method: 'GET', mode: 'cors' })
+          .then(function(res) { return res.json(); })
+          .then(function(r) {
+            if (r && r.success) {
+              // 네비 축소 + 로컬 캐시 삭제 + 재구독 배너 + 안내
+              try { localStorage.removeItem('subscriber_email'); } catch (_) {}
+              var navLinks = document.getElementById('navLinks');
+              if (navLinks) navLinks.classList.remove('is-subscriber');
+              window.__AX__.email = email;
+              window.__AX__.status = 'cancelled';
+              var banner = document.getElementById('resubBanner');
+              if (banner) banner.classList.add('show');
+              // URL 정리 (action/t 제거)
+              try {
+                var clean = location.pathname + (location.hash || '');
+                history.replaceState(null, '', clean);
+              } catch (_) {}
+              alert('구독이 취소되었습니다. 나중에 다시 찾아주세요.');
+            } else {
+              alert((r && r.message) || '구독 취소에 실패했습니다.');
+            }
+          })
+          .catch(function() { alert('네트워크 오류로 구독 취소에 실패했습니다.'); });
+        return; // 취소 플로우 탔으면 이후 checkSubscribed 스킵
       }
+
+      var qs = 'action=checkSubscribed'
+        + '&email=' + encodeURIComponent(email)
+        + (token ? '&token=' + encodeURIComponent(token) : '');
+      fetch(proxy.replace(/\/$/, '') + '/?' + qs, { method: 'GET', mode: 'cors' })
+        .then(function(res) { return res.json(); })
+        .then(function(r) {
+          if (!r || !r.success) return;
+          window.__AX__.email = email;
+          window.__AX__.status = r.status;
+          window.__AX__.name = r.name || '';
+
+          var navLinks = document.getElementById('navLinks');
+          var banner = document.getElementById('resubBanner');
+
+          if (r.status === 'active') {
+            if (navLinks) navLinks.classList.add('is-subscriber');
+            try { localStorage.setItem('subscriber_email', email); } catch (_) {}
+            // 만료 토큰이면 서버가 freshToken 발급 → URL 조용히 교체 (공유 시 유효 유지)
+            if (r.freshToken) {
+              try {
+                params.set('t', r.freshToken);
+                var newUrl = location.pathname + '?' + params.toString() + location.hash;
+                history.replaceState(null, '', newUrl);
+              } catch (_) {}
+            }
+          } else if (r.status === 'inactive' || r.status === 'cancelled') {
+            if (navLinks) navLinks.classList.remove('is-subscriber');
+            try { localStorage.removeItem('subscriber_email'); } catch (_) {}
+            if (banner) banner.classList.add('show');
+          } else {
+            // notfound — 일반 방문자 취급
+            if (navLinks) navLinks.classList.remove('is-subscriber');
+            try { localStorage.removeItem('subscriber_email'); } catch (_) {}
+          }
+        })
+        .catch(function() { /* 네트워크 실패 시 폴백 유지 */ });
     })();
+
+    // 재구독 배너의 원클릭 버튼
+    function handleQuickResubscribe() {
+      var email = window.__AX__ && window.__AX__.email;
+      var name = window.__AX__ && window.__AX__.name;
+      if (!email) {
+        // 이메일 정보가 없으면 구독 폼으로 스크롤
+        var form = document.getElementById('heroSubscribeForm');
+        if (form) form.scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+      var proxy = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.PROXY_URL) || '';
+      if (!proxy) return;
+      var qs = 'action=subscribe'
+        + '&email=' + encodeURIComponent(email)
+        + '&name=' + encodeURIComponent(name || '')
+        + '&source=' + encodeURIComponent('resub-banner');
+      fetch(proxy.replace(/\/$/, '') + '/?' + qs, { method: 'GET', mode: 'cors' })
+        .then(function(res) { return res.json(); })
+        .then(function(r) {
+          if (r && (r.success || r.resubscribed)) {
+            var banner = document.getElementById('resubBanner');
+            if (banner) banner.classList.remove('show');
+            var navLinks = document.getElementById('navLinks');
+            if (navLinks) navLinks.classList.add('is-subscriber');
+            try { localStorage.setItem('subscriber_email', email); } catch (_) {}
+            alert('다시 구독이 시작되었습니다! 환영합니다.');
+          } else {
+            alert((r && r.message) || '재구독에 실패했습니다. 잠시 후 다시 시도해주세요.');
+          }
+        })
+        .catch(function() { alert('네트워크 오류로 재구독에 실패했습니다.'); });
+    }
   </script>
 
   <!-- Hero -->
@@ -1540,6 +1690,26 @@
       }
     });
 
+    // 구독 응답 공통 처리: alreadySubscribed → 팝업, 성공 → UI 갱신
+    function handleSubscribeResponse(email, response, onSuccess, onAlready, onError) {
+      if (response && response.alreadySubscribed) {
+        alert('이미 구독 중입니다.');
+        if (typeof onAlready === 'function') onAlready();
+        return;
+      }
+      if (response && (response.success || response.resubscribed)) {
+        try { localStorage.setItem('subscriber_email', email); } catch (_) {}
+        var navLinks = document.getElementById('navLinks');
+        if (navLinks) navLinks.classList.add('is-subscriber');
+        var banner = document.getElementById('resubBanner');
+        if (banner) banner.classList.remove('show');
+        if (typeof onSuccess === 'function') onSuccess(response);
+        return;
+      }
+      // 실패 (네트워크/유효성 등)
+      if (typeof onError === 'function') onError(response);
+    }
+
     // ─── Hero 구독 처리 ─────────────────────────────────
     function handleHeroSubscribe(e) {
       e.preventDefault();
@@ -1552,21 +1722,31 @@
       btn.disabled = true;
       btn.innerHTML = '<span class="spinner"></span>';
 
-      submitToGoogleForm(email, name, 'web-hero');
-
-      setTimeout(function() {
-        msg.className = 'hero-message show success';
-        msg.textContent = '구독 완료! 내일 아침부터 AI 인사이트를 만나보세요.';
+      submitToGoogleForm(email, name, 'web-hero', function(response) {
         btn.disabled = false;
         btn.textContent = '무료 구독';
-        document.getElementById('heroSubscribeForm').reset();
-        try { localStorage.setItem('subscriber_email', email); } catch (_) {}
-        var navLinks = document.getElementById('navLinks');
-        if (navLinks) navLinks.classList.add('is-subscriber');
-        showArchiveSection();
-        loadArchiveNewsletters();
-        setTimeout(function() { msg.classList.remove('show'); }, 5000);
-      }, 1500);
+
+        handleSubscribeResponse(email, response,
+          function() { // onSuccess
+            msg.className = 'hero-message show success';
+            msg.textContent = response.resubscribed
+              ? '다시 구독이 시작되었습니다! 환영합니다.'
+              : '구독 완료! 내일 아침부터 AI 인사이트를 만나보세요.';
+            document.getElementById('heroSubscribeForm').reset();
+            showArchiveSection();
+            loadArchiveNewsletters();
+            setTimeout(function() { msg.classList.remove('show'); }, 5000);
+          },
+          function() { // onAlready (팝업 이후 — 폼만 리셋)
+            document.getElementById('heroSubscribeForm').reset();
+          },
+          function(r) { // onError
+            msg.className = 'hero-message show error';
+            msg.textContent = (r && r.message) || '구독 처리 중 오류가 발생했습니다.';
+            setTimeout(function() { msg.classList.remove('show'); }, 5000);
+          }
+        );
+      });
     }
 
     // ─── 하단 구독 처리 (Bottom Subscribe) ──────────────
@@ -1581,24 +1761,36 @@
       btn.disabled = true;
       btn.innerHTML = '<span class="spinner"></span>';
 
-      submitToGoogleForm(email, name, 'web-bottom');
-
-      setTimeout(function() {
-        msg.className = 'subscribe-message show success';
-        msg.textContent = '구독이 완료되었습니다!';
+      submitToGoogleForm(email, name, 'web-bottom', function(response) {
         btn.disabled = false;
         btn.textContent = '무료 구독';
-        document.getElementById('bottomSubscribeForm').reset();
-        try { localStorage.setItem('subscriber_email', email); } catch (_) {}
-        var navLinks = document.getElementById('navLinks');
-        if (navLinks) navLinks.classList.add('is-subscriber');
-        showArchiveSection();
-        loadArchiveNewsletters();
-        setTimeout(function() { msg.classList.remove('show'); }, 5000);
-      }, 1500);
+
+        handleSubscribeResponse(email, response,
+          function() {
+            msg.className = 'subscribe-message show success';
+            msg.textContent = response.resubscribed
+              ? '다시 구독이 시작되었습니다!'
+              : '구독이 완료되었습니다!';
+            document.getElementById('bottomSubscribeForm').reset();
+            showArchiveSection();
+            loadArchiveNewsletters();
+            setTimeout(function() { msg.classList.remove('show'); }, 5000);
+          },
+          function() {
+            document.getElementById('bottomSubscribeForm').reset();
+          },
+          function(r) {
+            msg.className = 'subscribe-message show error';
+            msg.textContent = (r && r.message) || '구독 처리 중 오류가 발생했습니다.';
+            setTimeout(function() { msg.classList.remove('show'); }, 5000);
+          }
+        );
+      });
     }
 
     // ─── 구독취소 처리 ──────────────────────────────────
+    // 보안: 이메일만 입력 시 본인 확인 메일 발송 → 메일 링크 클릭으로 실제 취소.
+    // 사유: 누구나 남의 이메일로 취소 폼 제출할 수 있으므로 2단계 인증 필수.
     function handleUnsubscribe(e) {
       e.preventDefault();
       var btn = document.getElementById('unsubBtn');
@@ -1609,13 +1801,37 @@
       btn.disabled = true;
       btn.textContent = '처리 중...';
 
-      setTimeout(function() {
-        msg.className = 'unsub-message show success';
-        msg.textContent = '구독 취소 요청이 접수되었습니다. 처리 완료 시 안내 메일을 보내드리겠습니다.';
+      var proxy = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.PROXY_URL) || '';
+      if (!proxy) {
+        msg.className = 'unsub-message show error';
+        msg.textContent = '서버 설정 오류입니다. 관리자에게 문의해주세요.';
         btn.disabled = false;
         btn.textContent = '구독 취소';
-        document.getElementById('unsubscribeForm').reset();
-      }, 1000);
+        return;
+      }
+
+      var qs = 'action=requestUnsubscribe&email=' + encodeURIComponent(email);
+      fetch(proxy.replace(/\/$/, '') + '/?' + qs, { method: 'GET', mode: 'cors' })
+        .then(function(res) { return res.json(); })
+        .then(function(r) {
+          btn.disabled = false;
+          btn.textContent = '구독 취소';
+          if (r && r.success) {
+            msg.className = 'unsub-message show success';
+            msg.textContent = r.message || '입력하신 이메일로 확인 메일을 보내드렸습니다. 메일의 링크를 클릭하시면 구독이 취소됩니다.';
+            document.getElementById('unsubscribeForm').reset();
+          } else {
+            msg.className = 'unsub-message show error';
+            msg.textContent = (r && r.message) || '처리 중 오류가 발생했습니다.';
+          }
+          setTimeout(function() { msg.classList.remove('show'); }, 8000);
+        })
+        .catch(function() {
+          btn.disabled = false;
+          btn.textContent = '구독 취소';
+          msg.className = 'unsub-message show error';
+          msg.textContent = '네트워크 오류로 요청에 실패했습니다. 잠시 후 다시 시도해주세요.';
+        });
     }
 
     // ─── Google Sheets에서 최근 뉴스레터 로드 ──────────
