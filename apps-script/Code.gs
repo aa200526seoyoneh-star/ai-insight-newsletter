@@ -744,7 +744,7 @@ function buildPromoEmailHtml(subscribeUrl) {
 
   // Sub Links
   h += '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:20px;"><tr><td align="center">';
-  h += '<a href="' + feedbackUrl + '" style="font-size:13px;color:#94a3b8;text-decoration:none;">의견 보내기 &rarr;</a>';
+  h += '의견이 있으시면 <a href="' + feedbackUrl + '" style="font-size:13px;color:#065f46;font-weight:700;text-decoration:underline;">피드백</a>으로 알려주세요';
   h += '</td></tr></table>';
 
   h += '</td></tr>'; // 본문 end
@@ -792,10 +792,11 @@ function sendNewsletter(password, subject, htmlContent) {
   // 한국어 어절 단위 줄바꿈 래퍼 (본문에 keep-all 강제 적용)
   var wrappedContent = wrapWithKeepAll(htmlContent);
 
-  // 1) 내부 구독자 - Gmail 발송 (구독자별 추적 픽셀 삽입)
+  // 1) 내부 구독자 - Gmail 발송 (구독자별 추적 픽셀 + 피드백 CTA 삽입)
   CONFIG.INTERNAL_EMAILS.forEach(email => {
     try {
       var trackedHtml = insertTrackingPixel(wrappedContent, email, nlId);
+      trackedHtml = appendFeedbackCta(trackedHtml, email);
       GmailApp.sendEmail(email, subject, '', {
         htmlBody: trackedHtml,
         name: 'AX DesK'
@@ -819,6 +820,7 @@ function sendNewsletter(password, subject, htmlContent) {
 
       try {
         var trackedHtml = insertTrackingPixel(wrappedContent, email, nlId);
+        trackedHtml = appendFeedbackCta(trackedHtml, email);
         sendExternalEmail(email, subject, trackedHtml);
         sentCount++;
         sentEmails.push(email);
@@ -1927,6 +1929,24 @@ function insertTrackingPixel(htmlContent, email, nlId) {
     return htmlContent.replace('</body>', pixel + '</body>');
   }
   return htmlContent + pixel;
+}
+
+/**
+ * 일일 뉴스레터 본문 하단에 피드백 CTA 블록을 주입.
+ * email 파라미터를 URL에 붙여서, 수신자가 링크를 클릭하면 구독자로 자동 인식되도록 함.
+ */
+function appendFeedbackCta(htmlContent, email) {
+  var feedbackUrl = 'https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/feedback.html?email=' + encodeURIComponent(email || '');
+  var cta = '<div style="margin:24px 16px;padding:18px 20px;text-align:center;background:#f0fdf4;border:1px solid #d1fae5;border-radius:12px;font-family:\'맑은 고딕\',\'Malgun Gothic\',sans-serif;">' +
+    '<p style="margin:0;font-size:13px;color:#065f46;line-height:1.7;">' +
+      '이 뉴스레터가 도움이 되셨나요? ' +
+      '<a href="' + feedbackUrl + '" style="color:#059669;font-weight:700;text-decoration:underline;">피드백</a>' +
+      '으로 알려주세요' +
+    '</p></div>';
+  if (htmlContent.indexOf('</body>') > -1) {
+    return htmlContent.replace('</body>', cta + '</body>');
+  }
+  return htmlContent + cta;
 }
 
 // ═══════════════════════════════════════════════════════════════

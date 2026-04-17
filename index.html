@@ -100,6 +100,9 @@
     }
     .nav-links a:hover { background: var(--primary-50); color: var(--primary); }
     .nav-links a.active { background: var(--primary); color: #fff; }
+    /* 구독자에게만 노출되는 링크 — 기본 숨김, JS가 localStorage 보고 해제 */
+    .nav-links a.nav-subscriber-only { display: none; }
+    .nav-links.is-subscriber a.nav-subscriber-only { display: inline-flex; }
 
     /* ── Hero ── */
     .hero {
@@ -1132,13 +1135,28 @@
         <span class="nav-logo-dot"></span>
         THE AI <span>INSIGHT</span>
       </a>
-      <div class="nav-links">
+      <div class="nav-links" id="navLinks">
         <a href="index.html" class="active">구독</a>
-        <a href="archive.html">아카이브</a>
+        <a href="archive.html" class="nav-subscriber-only">아카이브</a>
+        <a href="feedback.html" class="nav-subscriber-only">피드백</a>
         <a href="admin.html">관리자</a>
       </div>
     </div>
   </nav>
+  <script>
+    // 구독자 식별: ?email= 파라미터 또는 이전에 저장된 localStorage.
+    // 구독자로 판정되면 nav의 '아카이브'·'피드백' 노출.
+    (function() {
+      try {
+        var p = new URLSearchParams(location.search).get('email');
+        if (p) localStorage.setItem('subscriber_email', p);
+      } catch (_) {}
+      if (localStorage.getItem('subscriber_email')) {
+        var n = document.getElementById('navLinks');
+        if (n) n.classList.add('is-subscriber');
+      }
+    })();
+  </script>
 
   <!-- Hero -->
   <section class="hero">
@@ -1542,6 +1560,9 @@
         btn.disabled = false;
         btn.textContent = '무료 구독';
         document.getElementById('heroSubscribeForm').reset();
+        try { localStorage.setItem('subscriber_email', email); } catch (_) {}
+        var navLinks = document.getElementById('navLinks');
+        if (navLinks) navLinks.classList.add('is-subscriber');
         showArchiveSection();
         loadArchiveNewsletters();
         setTimeout(function() { msg.classList.remove('show'); }, 5000);
@@ -1568,6 +1589,9 @@
         btn.disabled = false;
         btn.textContent = '무료 구독';
         document.getElementById('bottomSubscribeForm').reset();
+        try { localStorage.setItem('subscriber_email', email); } catch (_) {}
+        var navLinks = document.getElementById('navLinks');
+        if (navLinks) navLinks.classList.add('is-subscriber');
         showArchiveSection();
         loadArchiveNewsletters();
         setTimeout(function() { msg.classList.remove('show'); }, 5000);

@@ -342,13 +342,26 @@
   <nav class="nav">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo">THE AI <span>INSIGHT</span></a>
-      <div class="nav-links">
+      <div class="nav-links" id="navLinks">
         <a href="index.html">구독</a>
-        <a href="archive.html" class="active">아카이브</a>
+        <a href="archive.html" class="active nav-subscriber-only">아카이브</a>
+        <a href="feedback.html" class="nav-subscriber-only">피드백</a>
         <a href="admin.html">관리자</a>
       </div>
     </div>
   </nav>
+  <script>
+    (function() {
+      try {
+        var p = new URLSearchParams(location.search).get('email');
+        if (p) localStorage.setItem('subscriber_email', p);
+      } catch (_) {}
+      if (localStorage.getItem('subscriber_email')) {
+        var n = document.getElementById('navLinks');
+        if (n) n.classList.add('is-subscriber');
+      }
+    })();
+  </script>
 
   <!-- Header -->
   <section class="archive-header">

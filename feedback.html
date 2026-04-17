@@ -31,12 +31,67 @@
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+
+    /* ── Nav (index.html과 동일 패턴) ── */
+    .nav {
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(229,231,235,0.6);
+      padding: 0 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+    .nav-logo {
+      font-weight: 900;
+      font-size: 17px;
+      color: var(--primary);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-logo-dot {
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 4px; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 7px 14px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover { background: #f0fdf4; color: var(--primary); }
+    .nav-links a.active { background: var(--primary); color: #fff; }
+    .nav-links a.nav-subscriber-only { display: none; }
+    .nav-links.is-subscriber a.nav-subscriber-only { display: inline-flex; }
+
+    .feedback-main {
+      min-height: calc(100vh - 60px);
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 24px;
-      word-break: keep-all;
-      overflow-wrap: break-word;
+      padding: 40px 24px;
     }
     p, h1, h2, h3, h4, h5, h6, li, td, th, span, div, a, button, label {
       word-break: keep-all;
@@ -286,6 +341,34 @@
 </head>
 <body>
 
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-dot"></span>
+      THE AI <span>INSIGHT</span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">구독</a>
+      <a href="archive.html" class="nav-subscriber-only">아카이브</a>
+      <a href="feedback.html" class="active nav-subscriber-only">피드백</a>
+      <a href="admin.html">관리자</a>
+    </div>
+  </div>
+</nav>
+<script>
+  (function() {
+    try {
+      var p = new URLSearchParams(location.search).get('email');
+      if (p) localStorage.setItem('subscriber_email', p);
+    } catch (_) {}
+    if (localStorage.getItem('subscriber_email')) {
+      var n = document.getElementById('navLinks');
+      if (n) n.classList.add('is-subscriber');
+    }
+  })();
+</script>
+
+<main class="feedback-main">
 <div class="feedback-card">
   <!-- Weekly color bar -->
   <div class="weekly-bar">
@@ -341,6 +424,7 @@
     <a href="index.html">← 뉴스레터 구독 페이지로 돌아가기</a>
   </div>
 </div>
+</main>
 
 <script>
   var WEBAPP_URL = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.WEBAPP_URL) || '';
@@ -355,7 +439,7 @@
     document.getElementById('ratingLabel').textContent = ratingLabels[value] || '';
   }
 
-  function submitFeedback(e) {
+  async function submitFeedback(e) {
     e.preventDefault();
     var btn = document.getElementById('fbSubmitBtn');
     var email = document.getElementById('fbEmail').value.trim();
@@ -366,35 +450,39 @@
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner"></span> 전송 중...';
 
-    var s = document.createElement('script');
-    var cbName = 'fb_' + Date.now();
-    window[cbName] = function(response) {
-      delete window[cbName];
-      if (s.parentNode) s.remove();
-      showSuccess();
-    };
+    var proxy = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.PROXY_URL) || '';
+    if (!proxy) {
+      alert('서버 설정 오류입니다. 관리자에게 문의하세요.');
+      btn.disabled = false;
+      btn.textContent = '의견 보내기';
+      return;
+    }
 
-    var params = 'action=submitFeedback'
-      + '&email=' + encodeURIComponent(email)
-      + '&name=' + encodeURIComponent(name)
-      + '&message=' + encodeURIComponent(message)
-      + '&callback=' + cbName;
-
-    s.src = WEBAPP_URL + '?' + params;
-    s.onerror = function() {
-      delete window[cbName];
-      if (s.parentNode) s.remove();
-      showSuccess();
-    };
-    document.head.appendChild(s);
-
-    setTimeout(function() {
-      if (window[cbName]) {
-        delete window[cbName];
-        if (s.parentNode) s.remove();
+    try {
+      var resp = await fetch(proxy.replace(/\/$/, '') + '/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify({
+          action: 'submitFeedback',
+          email: email,
+          name: name,
+          message: message
+        })
+      });
+      var result = await resp.json();
+      if (result && result.success) {
+        try { localStorage.setItem('subscriber_email', email); } catch (_) {}
         showSuccess();
+      } else {
+        alert((result && result.message) || '제출에 실패했습니다. 잠시 후 다시 시도해주세요.');
+        btn.disabled = false;
+        btn.textContent = '의견 보내기';
       }
-    }, 5000);
+    } catch (err) {
+      alert('네트워크 오류입니다. 잠시 후 다시 시도해주세요.');
+      btn.disabled = false;
+      btn.textContent = '의견 보내기';
+    }
   }
 
   function showSuccess() {

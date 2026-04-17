@@ -27,6 +27,14 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+/* 한국어 어절 단위 줄바꿈 (shared) */
+p, h1, h2, h3, h4, h5, h6, li, td, th, span, div, a, button, label, figcaption {
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 /* ── Navigation ── */
@@ -66,6 +74,9 @@ body {
 }
 .nav-links a:hover { background: var(--primary-50); color: var(--primary); }
 .nav-links a.active { background: var(--primary); color: #fff; }
+/* 구독자에게만 노출되는 링크 — 기본 숨김, JS가 localStorage 보고 해제 */
+.nav-links a.nav-subscriber-only { display: none; }
+.nav-links.is-subscriber a.nav-subscriber-only { display: inline-flex; }
 
 /* ── Buttons ── */
 .btn {
