@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://docs.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://ai-insight-proxy.aa200526seoyoneh.workers.dev https://docs.google.com https://script.google.com https://script.googleusercontent.com; frame-src 'self' https://docs.google.com; form-action 'self' https://docs.google.com; base-uri 'self'; object-src 'none'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>THE AI INSIGHT - AI 트렌드 뉴스레터</title>
   <meta name="description" content="서연이화 AX추진팀이 전하는 AI 트렌드, 실전 가이드, 업무 자동화 팁. 무료 구독하세요.">
@@ -106,27 +107,81 @@
     /* 재구독 안내 배너 (inactive/cancelled 구독자 진입 시 노출) */
     .resub-banner {
       display: none;
-      background: #fef3c7;
-      border-bottom: 1px solid #fcd34d;
-      color: #92400e;
+      background: linear-gradient(90deg, #fef3c7 0%, #fde68a 100%);
+      border-bottom: 2px solid #f59e0b;
+      color: #78350f;
       font-size: 14px;
-      padding: 12px 20px;
+      padding: 14px 20px;
       text-align: center;
+      box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15);
     }
-    .resub-banner.show { display: block; }
-    .resub-banner strong { color: #78350f; }
+    .resub-banner.show {
+      display: block;
+      animation: resubFadeIn 0.5s ease-out;
+    }
+    @keyframes resubFadeIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .resub-banner-icon {
+      display: inline-block;
+      font-size: 18px;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+    .resub-banner strong { color: #78350f; font-weight: 700; }
+    .resub-banner-sub { color: #92400e; margin-left: 4px; }
     .resub-banner button {
-      margin-left: 12px;
+      margin-left: 14px;
       background: #065f46;
       color: #fff;
       border: 0;
       border-radius: 8px;
-      padding: 6px 16px;
+      padding: 8px 20px;
       font-size: 13px;
       font-weight: 700;
       cursor: pointer;
+      transition: transform 0.1s, background 0.2s;
+      vertical-align: middle;
     }
-    .resub-banner button:hover { background: #047857; }
+    .resub-banner button:hover { background: #047857; transform: translateY(-1px); }
+    .resub-banner button:active { transform: translateY(0); }
+    @media (max-width: 640px) {
+      .resub-banner { padding: 12px 14px; font-size: 13px; }
+      .resub-banner button { margin-left: 0; margin-top: 8px; display: inline-block; }
+      .resub-banner-sub { display: block; margin-top: 4px; margin-left: 0; }
+    }
+    /* 구독 취소 확인 다이얼로그 */
+    .unsub-dialog-mask {
+      display: none; position: fixed; inset: 0;
+      background: rgba(15, 23, 42, 0.55); z-index: 9999;
+      justify-content: center; align-items: center; padding: 20px;
+    }
+    .unsub-dialog-mask.show { display: flex; }
+    .unsub-dialog {
+      background: #fff; border-radius: 16px; padding: 28px 28px 24px;
+      max-width: 440px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+    .unsub-dialog h3 { margin: 0 0 8px; font-size: 20px; color: #0f172a; }
+    .unsub-dialog p { margin: 0 0 18px; font-size: 14px; color: #475569; line-height: 1.6; }
+    .unsub-reasons { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
+    .unsub-reasons label {
+      display: flex; align-items: center; padding: 10px 14px;
+      border: 1px solid #e2e8f0; border-radius: 10px;
+      cursor: pointer; font-size: 14px; color: #334155;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .unsub-reasons label:hover { border-color: #065f46; background: #f0fdf4; }
+    .unsub-reasons input[type="radio"] { margin-right: 10px; }
+    .unsub-dialog-actions { display: flex; gap: 10px; justify-content: flex-end; }
+    .unsub-dialog-actions button {
+      border: 0; border-radius: 10px; padding: 10px 18px;
+      font-size: 14px; font-weight: 700; cursor: pointer;
+    }
+    .unsub-btn-cancel { background: #f1f5f9; color: #475569; }
+    .unsub-btn-cancel:hover { background: #e2e8f0; }
+    .unsub-btn-submit { background: #dc2626; color: #fff; }
+    .unsub-btn-submit:hover { background: #b91c1c; }
 
     /* ── Hero ── */
     .hero {
@@ -1168,11 +1223,31 @@
     </div>
   </nav>
 
+  <!-- 구독 취소 확인 다이얼로그 (action=confirmUnsub로 진입 시 노출) -->
+  <div class="unsub-dialog-mask" id="unsubDialogMask" role="dialog" aria-modal="true">
+    <div class="unsub-dialog">
+      <h3>구독을 취소하시겠어요?</h3>
+      <p>떠나시기 전에, 잠깐 이유를 알려주시면 앞으로의 뉴스레터를 개선하는 데 도움이 됩니다 (선택).</p>
+      <div class="unsub-reasons">
+        <label><input type="radio" name="unsubReason" value="content_not_relevant">내용이 관심사와 맞지 않음</label>
+        <label><input type="radio" name="unsubReason" value="too_frequent">발송 빈도가 너무 잦음</label>
+        <label><input type="radio" name="unsubReason" value="quality">내용 품질이 기대와 다름</label>
+        <label><input type="radio" name="unsubReason" value="other">기타</label>
+        <label><input type="radio" name="unsubReason" value="" checked>답변하지 않음</label>
+      </div>
+      <div class="unsub-dialog-actions">
+        <button type="button" class="unsub-btn-cancel" onclick="closeUnsubDialog()">취소 안 함</button>
+        <button type="button" class="unsub-btn-submit" onclick="submitUnsubConfirm()">구독 취소</button>
+      </div>
+    </div>
+  </div>
+
   <!-- 재구독 안내 배너 (inactive/cancelled 구독자만 노출) -->
-  <div class="resub-banner" id="resubBanner">
-    <strong>구독이 취소된 상태입니다.</strong>
-    다시 뉴스레터를 받으시려면 아래 버튼을 눌러주세요.
-    <button type="button" onclick="handleQuickResubscribe()">다시 구독하기</button>
+  <div class="resub-banner" id="resubBanner" role="alert" aria-live="polite">
+    <span class="resub-banner-icon" aria-hidden="true">&#128231;</span>
+    <strong>현재 구독이 취소된 상태입니다.</strong>
+    <span class="resub-banner-sub">THE AI INSIGHT를 계속 받고 싶으시면 다시 구독해주세요.</span>
+    <button type="button" onclick="handleQuickResubscribe()">다시 구독하기 &rarr;</button>
   </div>
 
   <script>
@@ -1205,35 +1280,12 @@
       var proxy = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.PROXY_URL) || '';
       if (!proxy) return;
 
-      // 구독 취소 확인 링크로 진입 → 서버 호출 후 UI 전환
+      // 구독 취소 확인 링크로 진입 → 이유 선택 다이얼로그 노출
       if (action === 'confirmUnsub' && token) {
-        var unsubQs = 'action=confirmUnsubscribe'
-          + '&email=' + encodeURIComponent(email)
-          + '&token=' + encodeURIComponent(token);
-        fetch(proxy.replace(/\/$/, '') + '/?' + unsubQs, { method: 'GET', mode: 'cors' })
-          .then(function(res) { return res.json(); })
-          .then(function(r) {
-            if (r && r.success) {
-              // 네비 축소 + 로컬 캐시 삭제 + 재구독 배너 + 안내
-              try { localStorage.removeItem('subscriber_email'); } catch (_) {}
-              var navLinks = document.getElementById('navLinks');
-              if (navLinks) navLinks.classList.remove('is-subscriber');
-              window.__AX__.email = email;
-              window.__AX__.status = 'cancelled';
-              var banner = document.getElementById('resubBanner');
-              if (banner) banner.classList.add('show');
-              // URL 정리 (action/t 제거)
-              try {
-                var clean = location.pathname + (location.hash || '');
-                history.replaceState(null, '', clean);
-              } catch (_) {}
-              alert('구독이 취소되었습니다. 나중에 다시 찾아주세요.');
-            } else {
-              alert((r && r.message) || '구독 취소에 실패했습니다.');
-            }
-          })
-          .catch(function() { alert('네트워크 오류로 구독 취소에 실패했습니다.'); });
-        return; // 취소 플로우 탔으면 이후 checkSubscribed 스킵
+        window.__AX__.pendingUnsub = { email: email, token: token };
+        var mask = document.getElementById('unsubDialogMask');
+        if (mask) mask.classList.add('show');
+        return; // checkSubscribed 스킵
       }
 
       var qs = 'action=checkSubscribed'
@@ -1273,6 +1325,52 @@
         })
         .catch(function() { /* 네트워크 실패 시 폴백 유지 */ });
     })();
+
+    // 구독 취소 다이얼로그 — 취소 안 함
+    function closeUnsubDialog() {
+      var mask = document.getElementById('unsubDialogMask');
+      if (mask) mask.classList.remove('show');
+      try {
+        // URL에서 action/t/email 제거해 새로고침해도 다시 뜨지 않게
+        var clean = location.pathname + (location.hash || '');
+        history.replaceState(null, '', clean);
+      } catch (_) {}
+    }
+
+    // 구독 취소 다이얼로그 — 제출
+    function submitUnsubConfirm() {
+      var pending = window.__AX__ && window.__AX__.pendingUnsub;
+      if (!pending) { closeUnsubDialog(); return; }
+      var proxy = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.PROXY_URL) || '';
+      if (!proxy) { alert('서버 설정 오류'); closeUnsubDialog(); return; }
+
+      var reason = '';
+      var radios = document.querySelectorAll('input[name="unsubReason"]');
+      radios.forEach(function(r) { if (r.checked) reason = r.value; });
+
+      var qs = 'action=confirmUnsubscribe'
+        + '&email=' + encodeURIComponent(pending.email)
+        + '&token=' + encodeURIComponent(pending.token)
+        + (reason ? '&reason=' + encodeURIComponent(reason) : '');
+      fetch(proxy.replace(/\/$/, '') + '/?' + qs, { method: 'GET', mode: 'cors' })
+        .then(function(res) { return res.json(); })
+        .then(function(r) {
+          closeUnsubDialog();
+          if (r && r.success) {
+            try { localStorage.removeItem('subscriber_email'); } catch (_) {}
+            var navLinks = document.getElementById('navLinks');
+            if (navLinks) navLinks.classList.remove('is-subscriber');
+            window.__AX__.email = pending.email;
+            window.__AX__.status = 'cancelled';
+            var banner = document.getElementById('resubBanner');
+            if (banner) banner.classList.add('show');
+            alert('구독이 취소되었습니다. 그동안 구독해주셔서 감사합니다.');
+          } else {
+            alert((r && r.message) || '구독 취소에 실패했습니다.');
+          }
+        })
+        .catch(function() { closeUnsubDialog(); alert('네트워크 오류로 구독 취소에 실패했습니다.'); });
+    }
 
     // 재구독 배너의 원클릭 버튼
     function handleQuickResubscribe() {
@@ -1572,18 +1670,16 @@
       document.querySelector('.unsub-section').scrollIntoView({ behavior: 'smooth' });
     }
 
-    // ─── Apps Script 웹앱 URL / 프록시 URL ────────────────
-    var WEBAPP_URL = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.WEBAPP_URL) || '';
+    // ─── 프록시 URL ─ WEBAPP_URL 직접 호출은 보안상 제거 ────
     var PROXY_URL = (window.ADMIN_CONFIG && window.ADMIN_CONFIG.PROXY_URL) || '';
 
-    // ─── 구독 제출 (프록시 우선 → Apps Script → subscribers 시트 기록) ──
+    // ─── 구독 제출 (Cloudflare Worker 프록시 경유만 사용) ──
     function submitToGoogleForm(email, name, source, onDone) {
       var qs = 'action=subscribe'
         + '&email=' + encodeURIComponent(email)
         + '&name=' + encodeURIComponent(name || '')
         + '&source=' + encodeURIComponent(source || 'web');
 
-      // 1-A) PROXY_URL 우선 사용 (회사 네트워크 호환)
       if (PROXY_URL) {
         var proxyUrl = PROXY_URL.replace(/\/$/, '') + '/?' + qs;
         fetch(proxyUrl, { method: 'GET', mode: 'cors' })
@@ -1593,33 +1689,8 @@
             catch (e) { if (typeof onDone === 'function') onDone({ok:false}); }
           })
           .catch(function() { if (typeof onDone === 'function') onDone({ok:false}); });
-      }
-      // 1-B) 프록시 없으면 Apps Script 직접 JSONP 호출
-      else if (WEBAPP_URL) {
-        var s = document.createElement('script');
-        var cbName = 'sub_' + Date.now();
-        var done = false;
-        window[cbName] = function(response) {
-          done = true;
-          delete window[cbName];
-          if (s.parentNode) s.remove();
-          if (typeof onDone === 'function') onDone(response);
-        };
-        s.src = WEBAPP_URL + '?' + qs + '&callback=' + cbName;
-        s.onerror = function() {
-          if (done) return;
-          delete window[cbName];
-          if (s.parentNode) s.remove();
-          if (typeof onDone === 'function') onDone({ok:false});
-        };
-        document.head.appendChild(s);
-        setTimeout(function() {
-          if (window[cbName]) {
-            delete window[cbName];
-            if (s.parentNode) s.remove();
-            if (typeof onDone === 'function') onDone({ok:false, timeout:true});
-          }
-        }, 6000);
+      } else {
+        if (typeof onDone === 'function') onDone({ok:false, error:'proxy_unavailable'});
       }
 
       // 2) 백업: Google Form에도 전송 (선택)

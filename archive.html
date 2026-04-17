@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://docs.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://ai-insight-proxy.aa200526seoyoneh.workers.dev https://docs.google.com https://script.google.com https://script.googleusercontent.com; frame-src 'self' https://docs.google.com; form-action 'self' https://docs.google.com; base-uri 'self'; object-src 'none'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>THE AI INSIGHT - 지난 뉴스레터</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -459,6 +460,15 @@
       if (!str) return '';
       return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
     }
+    // iframe src 등에 사용자 입력이 들어갈 때 javascript: / data:text 스킴 차단
+    function safeUrl(u) {
+      if (!u) return 'about:blank';
+      try {
+        var url = new URL(String(u), location.href);
+        if (url.protocol === 'https:' || url.protocol === 'http:') return url.href;
+      } catch (_) {}
+      return 'about:blank';
+    }
 
     let allNewsletters = [];
     let currentDayFilter = 'all';
@@ -836,7 +846,7 @@
       var body = document.getElementById('modalBody');
 
       if (nl.contentUrl) {
-        body.innerHTML = '<iframe src="' + escapeHtml(nl.contentUrl) + '"></iframe>';
+        body.innerHTML = '<iframe src="' + escapeHtml(safeUrl(nl.contentUrl)) + '"></iframe>';
       } else {
         body.innerHTML = '<div class="modal-summary">' + escapeHtml(nl.summary) + '</div>';
       }

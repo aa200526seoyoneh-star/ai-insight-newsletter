@@ -20,31 +20,68 @@ const ALLOWED_ORIGINS = [
   'http://127.0.0.1'
 ];
 
-// Rate limit: IP당 분당 10 POST.
-// Cloudflare Worker 인스턴스가 warm인 동안 유효 — 단일 공격자 대상 brute-force/DoS 차단 목적.
-// 완전한 분산 일관성이 필요하면 Durable Objects로 옮길 것.
-const RATE_LIMIT_MAX = 10;
+// Rate limit (2-tier):
+//  - 일반 액션: IP당 분당 10회
+//  - 관리자 액션(인증·시트 조회·발송): IP당 분당 3회, 실패 시 1시간 장기 ban
+// Worker 인스턴스 warm 동안 유효. 완전 분산 일관성은 Durable Objects 필요.
+const RATE_LIMIT_PUBLIC = 10;
+const RATE_LIMIT_ADMIN = 3;
 const RATE_LIMIT_WINDOW_MS = 60 * 1000;
-const rateLimitMap = new Map();
+const BAN_DURATION_MS = 60 * 60 * 1000;  // 1 hour
+const rateLimitMap = new Map();    // ip → { pubCount, adminCount, resetAt }
+const banMap = new Map();          // ip → banUntil (ms)
 
-function checkRateLimit(ip) {
+const ADMIN_ACTIONS = new Set([
+  'auth', 'getStats', 'getSubscribers', 'deleteSubscriber', 'addSubscriber',
+  'changeStatus', 'saveSchedule', 'sendNewsletter', 'testSend', 'sendPromo',
+  'getFeedback', 'requestPasswordReset', 'resetPassword'
+]);
+
+function detectAction(request, bodyText) {
+  // GET: ?action=xxx, POST: body JSON.action
+  try {
+    const u = new URL(request.url);
+    const a = u.searchParams.get('action');
+    if (a) return a;
+  } catch (_) {}
+  if (bodyText) {
+    try { return JSON.parse(bodyText).action || ''; } catch (_) {}
+  }
+  return '';
+}
+
+function checkBan(ip) {
+  const until = banMap.get(ip);
+  if (!until) return false;
+  if (Date.now() >= until) { banMap.delete(ip); return false; }
+  return true;
+}
+
+function checkRateLimit(ip, isAdmin) {
   const now = Date.now();
   let entry = rateLimitMap.get(ip);
   if (!entry || now >= entry.resetAt) {
-    entry = { count: 0, resetAt: now + RATE_LIMIT_WINDOW_MS };
+    entry = { pubCount: 0, adminCount: 0, resetAt: now + RATE_LIMIT_WINDOW_MS };
   }
-  entry.count += 1;
+  if (isAdmin) entry.adminCount += 1; else entry.pubCount += 1;
   rateLimitMap.set(ip, entry);
 
-  // 메모리 누수 방지: 맵이 커지면 만료된 항목 정리
   if (rateLimitMap.size > 5000) {
     for (const [k, v] of rateLimitMap) {
       if (now >= v.resetAt) rateLimitMap.delete(k);
     }
   }
 
+  const count = isAdmin ? entry.adminCount : entry.pubCount;
+  const max = isAdmin ? RATE_LIMIT_ADMIN : RATE_LIMIT_PUBLIC;
+
+  // 관리자 액션을 과도하게 시도하면 장기 ban
+  if (isAdmin && entry.adminCount > max * 3) {
+    banMap.set(ip, now + BAN_DURATION_MS);
+  }
+
   return {
-    allowed: entry.count <= RATE_LIMIT_MAX,
+    allowed: count <= max,
     retryAfter: Math.max(1, Math.ceil((entry.resetAt - now) / 1000))
   };
 }
@@ -78,35 +115,50 @@ export default {
 
     const clientIp = request.headers.get('cf-connecting-ip') || 'unknown';
 
-    const rl = checkRateLimit(clientIp);
-    if (!rl.allowed) {
+    if (checkBan(clientIp)) {
       return new Response(JSON.stringify({
         success: false,
-        message: '요청이 너무 많습니다. 잠시 후 다시 시도해주세요.',
-        retryAfter: rl.retryAfter
+        message: '과도한 인증 시도로 접근이 일시 차단되었습니다. 잠시 후 다시 시도해주세요.'
       }), {
         status: 429,
-        headers: {
-          ...getCorsHeaders(request),
-          'Content-Type': 'application/json',
-          'Retry-After': String(rl.retryAfter)
-        }
+        headers: { ...getCorsHeaders(request), 'Content-Type': 'application/json' }
       });
     }
 
     try {
+      let bodyText = null;
+      if (request.method === 'POST') {
+        bodyText = await request.text();
+      }
+      const action = detectAction(request, bodyText);
+      const isAdmin = ADMIN_ACTIONS.has(action);
+
+      const rl = checkRateLimit(clientIp, isAdmin);
+      if (!rl.allowed) {
+        return new Response(JSON.stringify({
+          success: false,
+          message: '요청이 너무 많습니다. 잠시 후 다시 시도해주세요.',
+          retryAfter: rl.retryAfter
+        }), {
+          status: 429,
+          headers: {
+            ...getCorsHeaders(request),
+            'Content-Type': 'application/json',
+            'Retry-After': String(rl.retryAfter)
+          }
+        });
+      }
+
       let appsScriptResponse;
       if (request.method === 'GET') {
-        // GET은 쿼리스트링 그대로 Apps Script에 전달 + _clientIp 주입
         const url = new URL(request.url);
         url.searchParams.set('_clientIp', clientIp);
         const forwardUrl = APPS_SCRIPT_URL + '?' + url.searchParams.toString();
         appsScriptResponse = await fetch(forwardUrl, { method: 'GET', redirect: 'follow' });
       } else {
-        const originalBody = await request.text();
-        let forwardBody = originalBody;
+        let forwardBody = bodyText || '';
         try {
-          const parsed = JSON.parse(originalBody);
+          const parsed = JSON.parse(bodyText);
           parsed._clientIp = clientIp;
           forwardBody = JSON.stringify(parsed);
         } catch (_) {}
