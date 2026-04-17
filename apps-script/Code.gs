@@ -464,7 +464,9 @@ function unsubscribe(email) {
 /**
  * 사이트 취소 폼에서 이메일만 입력했을 때 — 본인 확인 메일 발송.
  * 메일의 링크(5일 HMAC 토큰)를 클릭해야 실제 취소됨 (confirmUnsubscribe).
- * 이메일 존재 여부를 유추할 수 없도록 응답은 항상 성공으로 통일.
+ *
+ * UX 우선 정책(2026-04-17): 미등록/이미 취소된 이메일에도 명확한 에러를 반환.
+ * (이메일 enumeration 위험은 사내 구독자 풀 제한적이라 감수)
  */
 function requestUnsubscribe(email) {
   if (!email || !validateEmail(email)) {
@@ -474,9 +476,8 @@ function requestUnsubscribe(email) {
   var cache = CacheService.getScriptCache();
   var key = 'unsub_req_' + email.toLowerCase().replace(/[^a-z0-9]/g, '_');
   if (cache.get(key)) {
-    return { success: true, message: '확인 메일은 곧 도착합니다. 잠시 기다려주세요.' };
+    return { success: false, message: '잠시 후 다시 시도해주세요. (확인 메일은 곧 도착합니다)' };
   }
-  cache.put(key, '1', 60);
 
   var sheet = getSheet('subscribers');
   var data = sheet.getDataRange().getValues();
@@ -488,11 +489,17 @@ function requestUnsubscribe(email) {
     }
   }
 
-  // 존재/미존재 노출 방지 — 동일 메시지 반환, 존재하고 active인 경우에만 실제 발송
-  if (!found || found.status !== 'active') {
-    addLog('UNSUB_REQ_NOOP', email);
-    return { success: true, message: '입력하신 이메일로 확인 메일을 보내드렸습니다. 메일의 링크를 클릭하시면 구독이 취소됩니다.' };
+  if (!found) {
+    addLog('UNSUB_REQ_NOTFOUND', email);
+    return { success: false, message: '구독 중인 이메일이 아닙니다. 이메일 주소를 다시 확인해주세요.' };
   }
+  if (found.status !== 'active') {
+    addLog('UNSUB_REQ_INACTIVE', email);
+    return { success: false, message: '이미 구독이 취소된 이메일입니다.' };
+  }
+
+  // 여기서부터 실제 발송 — rate limit은 발송 성공 분기에만 적용
+  cache.put(key, '1', 60);
 
   var token = generateSubscriberToken(email);
   var base = CONFIG.SITE_BASE_URL.replace(/\/$/, '');

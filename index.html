@@ -1728,11 +1728,13 @@
 
         handleSubscribeResponse(email, response,
           function() { // onSuccess
-            msg.className = 'hero-message show success';
-            msg.textContent = response.resubscribed
+            var successMsg = response.resubscribed
               ? '다시 구독이 시작되었습니다! 환영합니다.'
-              : '구독 완료! 내일 아침부터 AI 인사이트를 만나보세요.';
+              : '구독 감사합니다!';
+            msg.className = 'hero-message show success';
+            msg.textContent = successMsg;
             document.getElementById('heroSubscribeForm').reset();
+            alert(successMsg);
             showArchiveSection();
             loadArchiveNewsletters();
             setTimeout(function() { msg.classList.remove('show'); }, 5000);
@@ -1767,11 +1769,13 @@
 
         handleSubscribeResponse(email, response,
           function() {
-            msg.className = 'subscribe-message show success';
-            msg.textContent = response.resubscribed
+            var successMsg = response.resubscribed
               ? '다시 구독이 시작되었습니다!'
-              : '구독이 완료되었습니다!';
+              : '구독 감사합니다!';
+            msg.className = 'subscribe-message show success';
+            msg.textContent = successMsg;
             document.getElementById('bottomSubscribeForm').reset();
+            alert(successMsg);
             showArchiveSection();
             loadArchiveNewsletters();
             setTimeout(function() { msg.classList.remove('show'); }, 5000);
@@ -1821,16 +1825,20 @@
             msg.textContent = r.message || '입력하신 이메일로 확인 메일을 보내드렸습니다. 메일의 링크를 클릭하시면 구독이 취소됩니다.';
             document.getElementById('unsubscribeForm').reset();
           } else {
+            var errMsg = (r && r.message) || '처리 중 오류가 발생했습니다.';
             msg.className = 'unsub-message show error';
-            msg.textContent = (r && r.message) || '처리 중 오류가 발생했습니다.';
+            msg.textContent = errMsg;
+            alert(errMsg);
           }
           setTimeout(function() { msg.classList.remove('show'); }, 8000);
         })
         .catch(function() {
           btn.disabled = false;
           btn.textContent = '구독 취소';
+          var errMsg = '네트워크 오류로 요청에 실패했습니다. 잠시 후 다시 시도해주세요.';
           msg.className = 'unsub-message show error';
-          msg.textContent = '네트워크 오류로 요청에 실패했습니다. 잠시 후 다시 시도해주세요.';
+          msg.textContent = errMsg;
+          alert(errMsg);
         });
     }
 
