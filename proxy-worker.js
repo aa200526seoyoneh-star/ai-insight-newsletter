@@ -34,7 +34,8 @@ const banMap = new Map();          // ip → banUntil (ms)
 const ADMIN_ACTIONS = new Set([
   'auth', 'getStats', 'getSubscribers', 'deleteSubscriber', 'addSubscriber',
   'changeStatus', 'saveSchedule', 'sendNewsletter', 'testSend', 'sendPromo',
-  'getFeedback', 'requestPasswordReset', 'resetPassword'
+  'getFeedback', 'requestPasswordReset', 'resetPassword', 'notifyAdmin',
+  'testWoorimail'
 ]);
 
 function detectAction(request, bodyText) {
@@ -145,6 +146,39 @@ export default {
             ...getCorsHeaders(request),
             'Content-Type': 'application/json',
             'Retry-After': String(rl.retryAfter)
+          }
+        });
+      }
+
+      // clickTrack: 302로 즉시 redirect + 로그는 비동기 (iframe sandbox 회피)
+      // 회사망에서 googleusercontent.com까지 차단될 수 있어 Apps Script의 meta-refresh HTML에 의존하지 않음
+      if (request.method === 'GET' && action === 'clickTrack') {
+        const url = new URL(request.url);
+        const target = url.searchParams.get('url') || '';
+        if (!/^https?:\/\//i.test(target)) {
+          return new Response('invalid url', { status: 400, headers: getCorsHeaders(request) });
+        }
+        url.searchParams.set('_clientIp', clientIp);
+        const logUrl = APPS_SCRIPT_URL + '?' + url.searchParams.toString();
+        ctx.waitUntil(fetch(logUrl, { method: 'GET', redirect: 'follow' }).catch(() => {}));
+        return Response.redirect(target, 302);
+      }
+
+      // track pixel: 실제 1x1 GIF 바이트 반환 + 로그는 비동기
+      if (request.method === 'GET' && action === 'track') {
+        const url = new URL(request.url);
+        url.searchParams.set('_clientIp', clientIp);
+        const logUrl = APPS_SCRIPT_URL + '?' + url.searchParams.toString();
+        ctx.waitUntil(fetch(logUrl, { method: 'GET', redirect: 'follow' }).catch(() => {}));
+        const gifB64 = 'R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+        const bytes = Uint8Array.from(atob(gifB64), c => c.charCodeAt(0));
+        return new Response(bytes, {
+          status: 200,
+          headers: {
+            ...getCorsHeaders(request),
+            'Content-Type': 'image/gif',
+            'Cache-Control': 'no-store, no-cache, must-revalidate, private',
+            'Pragma': 'no-cache'
           }
         });
       }
