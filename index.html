@@ -629,6 +629,24 @@
       color: #fff;
       backdrop-filter: blur(4px);
     }
+    .sample-btn {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 7px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--primary);
+      background: #fff;
+      border: 1.5px solid var(--primary);
+      border-radius: 6px;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .sample-btn:hover {
+      background: var(--primary);
+      color: #fff;
+      transform: translateY(-1px);
+    }
 
     /* Special Edition grid (Monthly + Yearly) */
     .special-grid {
@@ -1410,10 +1428,10 @@
   <section class="hero">
     <div class="hero-content">
       <div class="hero-badge">서연이화 AX추진팀</div>
-      <h1>매일 아침, <em>AI 인사이트</em>를<br>가장 먼저 받아보세요</h1>
+      <h1>평일 매일 아침, <em>AI 인사이트</em>를<br>가장 먼저 받아보세요</h1>
       <p class="hero-desc">
         업계를 선도하는 AI 트렌드, 바로 적용 가능한 실전 가이드,<br>
-        업무를 바꿀 자동화 레시피를 매일 이메일로 보내드립니다.
+        업무를 바꿀 자동화 레시피를 평일 매일 이메일로 보내드립니다.
       </p>
 
       <!-- Inline Subscribe Form -->
@@ -1459,78 +1477,83 @@
   <section class="section" style="padding-top: 0;">
     <div class="section-header">
       <div class="section-label">Weekly Lineup</div>
-      <h2 class="section-title">매일 다른 주제, 매일 새로운 인사이트</h2>
+      <h2 class="section-title">평일 매일 다른 주제, 새로운 인사이트</h2>
       <p class="section-desc">월요일부터 금요일까지, 요일별 특화 콘텐츠를 받아보세요</p>
     </div>
     <div class="weekly-grid">
       <div class="weekly-card weekly-mon">
         <div class="weekly-card-top">
           <div class="day-label">MON</div>
-          <h3>AI 트렌드 위클리</h3>
+          <h3>Morning Briefing</h3>
         </div>
         <div class="weekly-card-body">
-          <p>한 주의 시작을 여는 AI 업계 핵심 뉴스와 트렌드를 정리합니다.</p>
+          <p>주간 킥오프. 주초에 알아야 할 업계 핵심 뉴스와 한 주 관전 포인트를 정리합니다.</p>
           <div class="tag-list">
-            <span class="tag">뉴스</span>
-            <span class="tag">트렌드</span>
-            <span class="tag">업계 동향</span>
+            <span class="tag">주간킥오프</span>
+            <span class="tag">뉴스요약</span>
+            <span class="tag">업계동향</span>
           </div>
+          <a class="sample-btn" href="sample_mon.html" target="_blank" rel="noopener">샘플 보기 →</a>
         </div>
       </div>
       <div class="weekly-card weekly-tue">
         <div class="weekly-card-top">
           <div class="day-label">TUE</div>
-          <h3>딥다이브 분석</h3>
+          <h3>Deep Dive</h3>
         </div>
         <div class="weekly-card-body">
-          <p>주요 AI 기술과 모델을 심층 분석하여 비즈니스 관점에서 해설합니다.</p>
+          <p>주 1회 단일 주제 심층 분석. 핵심 이슈 하나를 배경·맥락·시사점까지 깊이 다룹니다.</p>
           <div class="tag-list">
-            <span class="tag">분석</span>
-            <span class="tag">리서치</span>
-            <span class="tag">인사이트</span>
+            <span class="tag">심층분석</span>
+            <span class="tag">단일주제</span>
+            <span class="tag">시사점</span>
           </div>
+          <a class="sample-btn" href="sample_tue.html" target="_blank" rel="noopener">샘플 보기 →</a>
         </div>
       </div>
       <div class="weekly-card weekly-wed">
         <div class="weekly-card-top">
           <div class="day-label">WED</div>
-          <h3>AI 실전 가이드</h3>
+          <h3>Compact</h3>
         </div>
         <div class="weekly-card-body">
-          <p>바로 따라할 수 있는 AI 도구 활용법과 프롬프트 엔지니어링 팁을 소개합니다.</p>
+          <p>주 중반 핵심만 간결하게. 바쁜 날 짧은 시간에 주요 뉴스를 빠르게 파악할 수 있도록 압축.</p>
           <div class="tag-list">
-            <span class="tag">실전</span>
-            <span class="tag">가이드</span>
-            <span class="tag">프롬프트</span>
+            <span class="tag">핵심요약</span>
+            <span class="tag">압축</span>
+            <span class="tag">빠른파악</span>
           </div>
+          <a class="sample-btn" href="sample_wed.html" target="_blank" rel="noopener">샘플 보기 →</a>
         </div>
       </div>
       <div class="weekly-card weekly-thu">
         <div class="weekly-card-top">
           <div class="day-label">THU</div>
-          <h3>자동화 레시피</h3>
+          <h3>Field Guide</h3>
         </div>
         <div class="weekly-card-body">
-          <p>반복 업무를 AI로 자동화하는 구체적인 방법과 워크플로우를 공유합니다.</p>
+          <p>실무 가이드. 현장 적용 가능한 체크리스트와 구체적 참고 케이스를 제공합니다.</p>
           <div class="tag-list">
-            <span class="tag">자동화</span>
-            <span class="tag">워크플로우</span>
-            <span class="tag">생산성</span>
+            <span class="tag">실무가이드</span>
+            <span class="tag">체크리스트</span>
+            <span class="tag">현장적용</span>
           </div>
+          <a class="sample-btn" href="sample_thu.html" target="_blank" rel="noopener">샘플 보기 →</a>
         </div>
       </div>
       <div class="weekly-card weekly-fri">
         <div class="weekly-card-top">
           <div class="day-label">FRI</div>
-          <h3>금주의 AI 픽</h3>
+          <h3>Weekend</h3>
         </div>
         <div class="weekly-card-body">
-          <p>한 주를 마무리하며 놓치면 안 될 AI 서비스, 도구, 콘텐츠를 큐레이션합니다.</p>
+          <p>주간 종합 리뷰. 한 주의 주요 흐름과 관찰 포인트를 회고 형태로 정리합니다.</p>
           <div class="tag-list">
+            <span class="tag">주간리뷰</span>
+            <span class="tag">회고</span>
             <span class="tag">큐레이션</span>
-            <span class="tag">추천</span>
-            <span class="tag">도구</span>
           </div>
+          <a class="sample-btn" href="sample_fri.html" target="_blank" rel="noopener">샘플 보기 →</a>
         </div>
       </div>
     </div>
@@ -1552,6 +1575,7 @@
             <span class="tag">심층분석</span>
             <span class="tag">트렌드</span>
           </div>
+          <a class="sample-btn" href="sample_monthly.html" target="_blank" rel="noopener">샘플 보기 →</a>
         </div>
       </div>
       <div class="weekly-card weekly-year">
@@ -1566,6 +1590,7 @@
             <span class="tag">The Year in AI</span>
             <span class="tag">회고</span>
           </div>
+          <a class="sample-btn" href="sample_yearly.html" target="_blank" rel="noopener">샘플 보기 →</a>
         </div>
       </div>
     </div>
@@ -1588,7 +1613,7 @@
     <!-- Left Column: Subscribe -->
     <div class="subscribe-column">
       <h3>구독 신청</h3>
-      <p>매일 아침 AI 인사이트를 이메일로 받아보세요</p>
+      <p>평일 매일 아침 AI 인사이트를 이메일로 받아보세요</p>
       <form class="subscribe-form" id="bottomSubscribeForm" onsubmit="handleBottomSubscribe(event)">
         <input type="text" id="bottomName" placeholder="이름" required>
         <input type="email" id="bottomEmail" placeholder="이메일 주소" required>
