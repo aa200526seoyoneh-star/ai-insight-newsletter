@@ -403,72 +403,75 @@
     <p>THE AI INSIGHT가 전한 인사이트를 다시 만나보세요</p>
   </section>
 
-  <!-- Sample Section -->
+  <!-- Sample Section styles -->
   <style>
-    .sample-section { max-width: 1100px; margin: 32px auto 0; padding: 0 24px; }
-    .sample-section-header { border-bottom: 2px solid var(--border); padding-bottom: 12px; margin-bottom: 20px; }
-    .sample-section-header h2 { font-size: 20px; color: var(--primary-dark); margin: 0 0 6px; }
-    .sample-section-header p { font-size: 13px; color: var(--text-secondary); margin: 0; }
-    .sample-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 14px; }
-    .sample-grid-extra { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
-    .sample-card { display: block; padding: 14px 14px 12px; background: #fff; border: 1px solid var(--border); border-radius: 6px; text-decoration: none; color: var(--text); transition: all 0.15s; }
-    .sample-card:hover { border-color: var(--primary); box-shadow: 0 2px 8px rgba(31,73,125,.08); }
-    .sample-card .day { font-size: 11px; font-weight: 700; color: var(--primary); letter-spacing: 1px; margin-bottom: 4px; }
-    .sample-card .name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
-    .sample-card .desc { font-size: 11px; color: var(--text-secondary); }
+    .sample-block { background: var(--surface); border-radius: 14px; padding: 20px 24px; box-shadow: 0 8px 24px rgba(0,0,0,0.06); margin-bottom: 20px; }
+    .sample-block-header { margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+    .sample-block-header h2 { font-size: 17px; color: var(--primary-dark); margin: 0 0 4px; font-weight: 700; }
+    .sample-block-header p { font-size: 12px; color: var(--text-secondary); margin: 0; }
+    .sample-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 10px; }
+    .sample-grid-extra { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .sample-card { display: block; padding: 12px 12px 10px; background: #fff; border: 1px solid var(--border); border-radius: 6px; text-decoration: none; color: var(--text); transition: all 0.15s; }
+    .sample-card:hover { border-color: var(--primary); box-shadow: 0 2px 8px rgba(31,73,125,.08); transform: translateY(-1px); }
+    .sample-card .day { font-size: 10px; font-weight: 700; color: var(--primary); letter-spacing: 1px; margin-bottom: 4px; }
+    .sample-card .name { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .sample-card .desc { font-size: 11px; color: var(--text-secondary); line-height: 1.4; }
     .sample-card.special { border-left: 3px solid var(--primary); }
     .sample-card.annual { border-left: 3px solid #E08E00; }
     .sample-card.annual .day { color: #E08E00; }
     @media (max-width: 768px) { .sample-grid { grid-template-columns: repeat(2, 1fr); } .sample-grid-extra { grid-template-columns: 1fr; } }
   </style>
-  <section class="sample-section">
-    <div class="sample-section-header">
-      <h2>에디션별 샘플 보기</h2>
-      <p>월~금 일간 5종, 월간 스페셜, 연간 결산 샘플을 바로 확인할 수 있습니다</p>
-    </div>
-    <div class="sample-grid">
-      <a class="sample-card" href="sample_mon.html" target="_blank" rel="noopener">
-        <div class="day">MON</div>
-        <div class="name">Morning Briefing</div>
-        <div class="desc">주간 킥오프</div>
-      </a>
-      <a class="sample-card" href="sample_tue.html" target="_blank" rel="noopener">
-        <div class="day">TUE</div>
-        <div class="name">Deep Dive</div>
-        <div class="desc">단일 주제 심층</div>
-      </a>
-      <a class="sample-card" href="sample_wed.html" target="_blank" rel="noopener">
-        <div class="day">WED</div>
-        <div class="name">Compact</div>
-        <div class="desc">핵심만 간결</div>
-      </a>
-      <a class="sample-card" href="sample_thu.html" target="_blank" rel="noopener">
-        <div class="day">THU</div>
-        <div class="name">Field Guide</div>
-        <div class="desc">실무 가이드</div>
-      </a>
-      <a class="sample-card" href="sample_fri.html" target="_blank" rel="noopener">
-        <div class="day">FRI</div>
-        <div class="name">Weekend</div>
-        <div class="desc">주간 종합 리뷰</div>
-      </a>
-    </div>
-    <div class="sample-grid-extra">
-      <a class="sample-card special" href="sample_monthly.html" target="_blank" rel="noopener">
-        <div class="day">MONTHLY SPECIAL</div>
-        <div class="name">월말 스페셜</div>
-        <div class="desc">한 달 AI 주요 이슈와 트렌드를 심층 정리한 월간 리포트</div>
-      </a>
-      <a class="sample-card annual" href="sample_yearly.html" target="_blank" rel="noopener">
-        <div class="day">ANNUAL EDITION</div>
-        <div class="name">연간 결산 리포트</div>
-        <div class="desc">한 해의 AI 흐름을 되짚는 연간 결산</div>
-      </a>
-    </div>
-  </section>
 
   <!-- Content -->
   <div class="archive-container">
+
+    <!-- Edition Samples -->
+    <div class="sample-block">
+      <div class="sample-block-header">
+        <h2>에디션별 샘플 보기</h2>
+        <p>월~금 일간 5종, 월간 스페셜, 연간 결산 샘플을 바로 확인할 수 있습니다</p>
+      </div>
+      <div class="sample-grid">
+        <a class="sample-card" href="sample_mon.html" target="_blank" rel="noopener">
+          <div class="day">MON</div>
+          <div class="name">Morning Briefing</div>
+          <div class="desc">주간 킥오프</div>
+        </a>
+        <a class="sample-card" href="sample_tue.html" target="_blank" rel="noopener">
+          <div class="day">TUE</div>
+          <div class="name">Deep Dive</div>
+          <div class="desc">단일 주제 심층</div>
+        </a>
+        <a class="sample-card" href="sample_wed.html" target="_blank" rel="noopener">
+          <div class="day">WED</div>
+          <div class="name">Compact</div>
+          <div class="desc">핵심만 간결</div>
+        </a>
+        <a class="sample-card" href="sample_thu.html" target="_blank" rel="noopener">
+          <div class="day">THU</div>
+          <div class="name">Field Guide</div>
+          <div class="desc">실무 가이드</div>
+        </a>
+        <a class="sample-card" href="sample_fri.html" target="_blank" rel="noopener">
+          <div class="day">FRI</div>
+          <div class="name">Weekend</div>
+          <div class="desc">주간 종합 리뷰</div>
+        </a>
+      </div>
+      <div class="sample-grid-extra">
+        <a class="sample-card special" href="sample_monthly.html" target="_blank" rel="noopener">
+          <div class="day">MONTHLY SPECIAL</div>
+          <div class="name">월말 스페셜</div>
+          <div class="desc">한 달 AI 주요 이슈와 트렌드를 심층 정리한 월간 리포트</div>
+        </a>
+        <a class="sample-card annual" href="sample_yearly.html" target="_blank" rel="noopener">
+          <div class="day">ANNUAL EDITION</div>
+          <div class="name">연간 결산 리포트</div>
+          <div class="desc">한 해의 AI 흐름을 되짚는 연간 결산</div>
+        </a>
+      </div>
+    </div>
+
 
     <!-- Controls -->
     <div class="controls-bar">
