@@ -36,6 +36,14 @@
  </table>
 </td></tr>
 
+<!-- 이번 주 선정 이유 -->
+<tr><td style="padding:0 24px 18px;word-break:keep-all;overflow-wrap:break-word;">
+ <div style="background-color:#fffbeb;border-left:3px solid #d97706;padding:12px 14px;word-break:keep-all;overflow-wrap:break-word;">
+  <div style="font-size:10px;color:#92400e;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;word-break:keep-all;overflow-wrap:break-word;">이번 주 선정 이유</div>
+  <div style="font-size:12px;color:#78350f;line-height:1.7;word-break:keep-all;overflow-wrap:break-word;">최근 30일 동안 비디오 개요와 한국어 음성 개요(베타)가 추가됐고 한 노트북당 소스 한도가 50개로 확장됐다. 사내 사양서, 계약서, 분기 회의록 묶음 등 수백 페이지를 한 번에 다루는 시나리오에 즉시 적용 가능하다.</div>
+ </div>
+</td></tr>
+
 <!-- TLDR -->
 <tr><td style="padding:0 24px 24px;word-break:keep-all;overflow-wrap:break-word;">
  <table width="100%" cellpadding="0" cellspacing="0" style="word-break:keep-all;overflow-wrap:break-word;"><tr>
@@ -106,7 +114,7 @@
 
 <!-- USE CASES for 제조/AX -->
 <tr><td style="padding:0 24px 24px;word-break:keep-all;overflow-wrap:break-word;">
- <div style="font-size:10px;color:#065f46;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;word-break:keep-all;overflow-wrap:break-word;">제조·AX 실무 활용 시나리오 4가지</div>
+ <div style="font-size:10px;color:#065f46;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;word-break:keep-all;overflow-wrap:break-word;">제조 / AX 실무 활용 시나리오 4가지</div>
 
  <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:12px;background-color:#f9fafb;border-radius:6px;word-break:keep-all;overflow-wrap:break-word;" bgcolor="#f9fafb">
  <tr><td style="padding:14px 16px;word-break:keep-all;overflow-wrap:break-word;">
@@ -135,6 +143,22 @@
  <div style="font-size:12px;color:#4b5563;line-height:1.7;word-break:keep-all;overflow-wrap:break-word;">경쟁사 3곳의 분기 IR 보고서 최근 4분기치를 업로드. "AI 및 전동화 투자 규모 연간 추이 비교"로 질의. 정량 비교 표가 만들어지고, 매 분기 파일만 추가하면 지속 트래킹 가능.</div>
  </td></tr>
  </table>
+</td></tr>
+
+<!-- WORKFLOW DIAGRAM (ASCII 도식) -->
+<tr><td style="padding:0 24px 24px;word-break:keep-all;overflow-wrap:break-word;">
+ <div style="font-size:10px;color:#065f46;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;word-break:keep-all;overflow-wrap:break-word;">동작 흐름</div>
+ <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#0f172a;border-radius:6px;word-break:keep-all;overflow-wrap:break-word;" bgcolor="#0f172a">
+ <tr><td style="padding:18px 16px;word-break:keep-all;overflow-wrap:break-word;">
+  <pre style="margin:0;font-family:Menlo,Consolas,'Courier New',monospace;font-size:11px;color:#a7f3d0;line-height:1.55;white-space:pre;overflow-x:auto;word-break:normal;overflow-wrap:normal;">
+[자료 업로드]  ─→  [AI 자동 색인]  ─→  [구체 질문]  ─→  [답변 + 출처]
+      │                  │                 │                │
+PDF / DOC          환각 차단          한국어 OK       페이지 점프
+URL / 영상         자료에 한정        구조화 출력      인용 자동 부착
+50개/노트북                                            검수는 사람</pre>
+ </td></tr>
+ </table>
+ <div style="font-size:11px;color:#9ca3af;margin-top:6px;line-height:1.6;word-break:keep-all;overflow-wrap:break-word;">자료가 들어가는 순간 색인되고, 답은 그 안에서만 만들어진다. 인용 페이지로 점프되어 검수 시간이 짧아진다.</div>
 </td></tr>
 
 <!-- QUICK COMPARISON -->
@@ -166,7 +190,7 @@
    <td style="padding:10px 8px;font-size:11px;color:#dc2626;font-weight:600;border-top:1px solid #f3f4f6;word-break:keep-all;overflow-wrap:break-word;">중간</td>
   </tr>
  </table>
- <div style="font-size:10px;color:#9ca3af;margin-top:8px;line-height:1.5;word-break:keep-all;overflow-wrap:break-word;">사내 도입 난이도는 계정 관리·데이터 보존 정책·한국어 지원 수준을 종합 평가.</div>
+ <div style="font-size:10px;color:#9ca3af;margin-top:8px;line-height:1.5;word-break:keep-all;overflow-wrap:break-word;">사내 도입 난이도는 계정 관리, 데이터 보존 정책, 한국어 지원 수준을 종합 평가.</div>
 </td></tr>
 
 <!-- GETTING STARTED -->
@@ -193,34 +217,67 @@
  <td valign="top" style="padding-left:8px;font-size:12px;color:#374151;line-height:1.7;word-break:keep-all;overflow-wrap:break-word;"><strong style="color:#064e3b;">채팅 창</strong>에 구체 질문 입력. 예: "이 사양서에서 변경된 치수만 표로 정리". 답변의 각 문장 끝 번호를 클릭하면 원문 위치로 점프.</td>
  </tr></table>
 
- <table width="100%" cellpadding="0" cellspacing="0" style="word-break:keep-all;overflow-wrap:break-word;">
+ <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10px;word-break:keep-all;overflow-wrap:break-word;">
  <tr><td width="36" valign="top" style="word-break:keep-all;overflow-wrap:break-word;"><div style="width:24px;height:24px;background-color:#d1fae5;border-radius:12px;text-align:center;line-height:24px;font-size:11px;font-weight:700;color:#065f46;word-break:keep-all;overflow-wrap:break-word;">5</div></td>
  <td valign="top" style="padding-left:8px;font-size:12px;color:#374151;line-height:1.7;word-break:keep-all;overflow-wrap:break-word;"><strong style="color:#064e3b;">오디오 개요 생성</strong> 버튼 클릭 (우측 스튜디오 패널). 2인 팟캐스트 스타일 요약이 10~15분 분량으로 제작. 출퇴근길 청취용.</td>
  </tr></table>
+
+ <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#fffbeb;word-break:keep-all;overflow-wrap:break-word;" bgcolor="#fffbeb">
+ <tr><td style="padding:10px 12px 10px 14px;border-left:3px solid #d97706;word-break:keep-all;overflow-wrap:break-word;">
+  <div style="font-size:10px;color:#92400e;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px;word-break:keep-all;overflow-wrap:break-word;">실전 팁 (공식 문서에 없음)</div>
+  <div style="font-size:12px;color:#78350f;line-height:1.7;word-break:keep-all;overflow-wrap:break-word;">PDF는 텍스트 레이어가 있는 것만 효과적이다. 스캔본은 OCR 후 업로드해야 인용이 정확하게 붙는다. 또한 한 노트북에 여러 버전의 사양서를 같이 올리면 답이 섞이므로 노트북을 버전별로 분리하는 편이 안전하다.</div>
+ </td></tr></table>
 </td></tr>
 
-<!-- PITFALLS -->
-<tr><td style="padding:0 24px 24px;word-break:keep-all;overflow-wrap:break-word;">
- <div style="font-size:10px;color:#dc2626;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;word-break:keep-all;overflow-wrap:break-word;">주의사항 및 한계</div>
+<!-- PITFALLS A: 도구 자체 한계 -->
+<tr><td style="padding:0 24px 12px;word-break:keep-all;overflow-wrap:break-word;">
+ <div style="font-size:10px;color:#dc2626;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;word-break:keep-all;overflow-wrap:break-word;">주의사항 A. 도구 자체 한계</div>
  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#fef2f2;border-radius:6px;word-break:keep-all;overflow-wrap:break-word;" bgcolor="#fef2f2">
  <tr><td style="padding:14px 16px;word-break:keep-all;overflow-wrap:break-word;">
   <div style="font-size:12px;color:#7f1d1d;line-height:1.8;word-break:keep-all;overflow-wrap:break-word;">
-   <div style="margin-bottom:6px;word-break:keep-all;overflow-wrap:break-word;"><strong>• 자료 밖 질문 불가</strong> — 설계상 업로드 자료 안에서만 답하므로 최신 뉴스나 외부 지식이 필요한 질의에는 ChatGPT 같은 범용 도구를 병행.</div>
-   <div style="margin-bottom:6px;word-break:keep-all;overflow-wrap:break-word;"><strong>• 개인 Gmail 계정 업로드 금지</strong> — 사내 민감 자료는 반드시 Google Workspace Business 플랜 환경에서 계정 관리 및 데이터 보존 정책 확인 후 사용. IT 담당 부서와 사전 협의 필수.</div>
-   <div style="word-break:keep-all;overflow-wrap:break-word;"><strong>• 한국어 오디오 개요는 베타 수준</strong> — 영어 대비 자연스러움이 떨어질 수 있으므로 공식 발표 자료로는 아직 부적합. 내부 학습용부터 시작 권장.</div>
+   <div style="margin-bottom:6px;word-break:keep-all;overflow-wrap:break-word;"><strong>1. 자료 밖 질문 불가</strong> — 설계상 업로드 자료 안에서만 답하므로 최신 뉴스나 외부 지식이 필요한 질의에는 ChatGPT 같은 범용 도구와 병행해야 한다.</div>
+   <div style="margin-bottom:6px;word-break:keep-all;overflow-wrap:break-word;"><strong>2. 한국어 오디오 개요는 베타 수준</strong> — 영어 대비 자연스러움이 떨어진다. 공식 발표 자료로 그대로 쓰기 어렵고, 내부 학습 콘텐츠 단계부터 적합도 확인이 필요하다.</div>
+   <div style="word-break:keep-all;overflow-wrap:break-word;"><strong>3. 50개 소스 한도 + 토큰 윈도우</strong> — 한 노트북에 최대 50개 소스, 단일 답변에 인용 가능한 분량은 한정된다. 1,000페이지를 한 번에 비교하기보다는 모듈 단위로 노트북을 쪼개는 편이 정확도가 높다.</div>
   </div>
  </td></tr>
  </table>
 </td></tr>
 
-<!-- REFERENCES -->
+<!-- PITFALLS B: 사내 도입 시 주의 -->
 <tr><td style="padding:0 24px 24px;word-break:keep-all;overflow-wrap:break-word;">
- <div style="font-size:10px;color:#6b7280;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;word-break:keep-all;overflow-wrap:break-word;">공식 자료 및 참고 링크</div>
+ <div style="font-size:10px;color:#dc2626;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;word-break:keep-all;overflow-wrap:break-word;">주의사항 B. 사내 도입 시</div>
+ <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#fef2f2;border-radius:6px;word-break:keep-all;overflow-wrap:break-word;" bgcolor="#fef2f2">
+ <tr><td style="padding:14px 16px;word-break:keep-all;overflow-wrap:break-word;">
+  <div style="font-size:12px;color:#7f1d1d;line-height:1.8;word-break:keep-all;overflow-wrap:break-word;">
+   <div style="margin-bottom:6px;word-break:keep-all;overflow-wrap:break-word;"><strong>1. 개인 Gmail 계정 업로드 금지</strong> — 민감 자료는 Workspace Business 플랜 환경에서만, IT 담당 부서와 데이터 보존 정책을 사전 확인한 다음 사용 가능하다.</div>
+   <div style="margin-bottom:6px;word-break:keep-all;overflow-wrap:break-word;"><strong>2. 라이선스 및 데이터 학습 옵션</strong> — Google이 입력 자료를 학습에 사용하지 않는 옵션은 Workspace 관리자 콘솔에서 별도 설정해야 한다. 도입 전 검토 필수.</div>
+   <div style="word-break:keep-all;overflow-wrap:break-word;"><strong>3. 출처 인용 검수 책임</strong> — 인용 번호가 붙어도 자동 정답이 아니다. 결정에 사용하는 답변은 인용 페이지를 사람이 1차 검수하는 절차를 함께 운영해야 한다.</div>
+  </div>
+ </td></tr>
+ </table>
+</td></tr>
+
+<!-- REFERENCES (3그룹) -->
+<tr><td style="padding:0 24px 24px;word-break:keep-all;overflow-wrap:break-word;">
+ <div style="font-size:10px;color:#6b7280;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;word-break:keep-all;overflow-wrap:break-word;">참고 링크 (3그룹)</div>
+
+ <div style="font-size:11px;color:#065f46;font-weight:700;margin:6px 0 4px;word-break:keep-all;overflow-wrap:break-word;">공식</div>
+ <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10px;word-break:keep-all;overflow-wrap:break-word;">
+ <tr><td style="padding:6px 0;border-bottom:1px solid #f3f4f6;word-break:keep-all;overflow-wrap:break-word;"><a href="https://notebooklm.google.com/" style="color:#065f46;text-decoration:none;font-size:13px;font-weight:500;word-break:keep-all;overflow-wrap:break-word;">NotebookLM 공식 사이트</a><span style="font-size:11px;color:#9ca3af;margin-left:6px;word-break:keep-all;overflow-wrap:break-word;">notebooklm.google.com</span></td></tr>
+ <tr><td style="padding:6px 0;border-bottom:1px solid #f3f4f6;word-break:keep-all;overflow-wrap:break-word;"><a href="https://support.google.com/notebooklm/" style="color:#065f46;text-decoration:none;font-size:13px;font-weight:500;word-break:keep-all;overflow-wrap:break-word;">Google 공식 도움말 센터</a><span style="font-size:11px;color:#9ca3af;margin-left:6px;word-break:keep-all;overflow-wrap:break-word;">사용법, FAQ</span></td></tr>
+ <tr><td style="padding:6px 0;word-break:keep-all;overflow-wrap:break-word;"><a href="https://blog.google/technology/ai/notebooklm-new-features-2026/" style="color:#065f46;text-decoration:none;font-size:13px;font-weight:500;word-break:keep-all;overflow-wrap:break-word;">Google AI 블로그 최신 업데이트</a><span style="font-size:11px;color:#9ca3af;margin-left:6px;word-break:keep-all;overflow-wrap:break-word;">비디오 개요, 음성 언어 확장</span></td></tr>
+ </table>
+
+ <div style="font-size:11px;color:#065f46;font-weight:700;margin:6px 0 4px;word-break:keep-all;overflow-wrap:break-word;">국내 매체</div>
+ <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10px;word-break:keep-all;overflow-wrap:break-word;">
+ <tr><td style="padding:6px 0;border-bottom:1px solid #f3f4f6;word-break:keep-all;overflow-wrap:break-word;"><a href="https://www.bloter.net/" style="color:#065f46;text-decoration:none;font-size:13px;font-weight:500;word-break:keep-all;overflow-wrap:break-word;">블로터 — NotebookLM 한국어 사용기</a><span style="font-size:11px;color:#9ca3af;margin-left:6px;word-break:keep-all;overflow-wrap:break-word;">사양서 분석 후기</span></td></tr>
+ <tr><td style="padding:6px 0;word-break:keep-all;overflow-wrap:break-word;"><a href="https://zdnet.co.kr/" style="color:#065f46;text-decoration:none;font-size:13px;font-weight:500;word-break:keep-all;overflow-wrap:break-word;">ZDNet Korea — Workspace 기업 도입 사례</a><span style="font-size:11px;color:#9ca3af;margin-left:6px;word-break:keep-all;overflow-wrap:break-word;">데이터 보존, 보안</span></td></tr>
+ </table>
+
+ <div style="font-size:11px;color:#065f46;font-weight:700;margin:6px 0 4px;word-break:keep-all;overflow-wrap:break-word;">3rd party 검증</div>
  <table width="100%" cellpadding="0" cellspacing="0" style="word-break:keep-all;overflow-wrap:break-word;">
- <tr><td style="padding:8px 0;border-bottom:1px solid #f3f4f6;word-break:keep-all;overflow-wrap:break-word;"><a href="https://notebooklm.google.com/" style="color:#065f46;text-decoration:none;font-size:13px;font-weight:500;word-break:keep-all;overflow-wrap:break-word;">NotebookLM 공식 사이트</a><span style="font-size:11px;color:#9ca3af;margin-left:6px;word-break:keep-all;overflow-wrap:break-word;">notebooklm.google.com</span></td></tr>
- <tr><td style="padding:8px 0;border-bottom:1px solid #f3f4f6;word-break:keep-all;overflow-wrap:break-word;"><a href="https://support.google.com/notebooklm/" style="color:#065f46;text-decoration:none;font-size:13px;font-weight:500;word-break:keep-all;overflow-wrap:break-word;">Google 공식 도움말 센터</a><span style="font-size:11px;color:#9ca3af;margin-left:6px;word-break:keep-all;overflow-wrap:break-word;">사용법, FAQ</span></td></tr>
- <tr><td style="padding:8px 0;border-bottom:1px solid #f3f4f6;word-break:keep-all;overflow-wrap:break-word;"><a href="https://workspace.google.com/products/notebooklm/" style="color:#065f46;text-decoration:none;font-size:13px;font-weight:500;word-break:keep-all;overflow-wrap:break-word;">Workspace Business 도입 안내</a><span style="font-size:11px;color:#9ca3af;margin-left:6px;word-break:keep-all;overflow-wrap:break-word;">기업 플랜, 보안</span></td></tr>
- <tr><td style="padding:8px 0;word-break:keep-all;overflow-wrap:break-word;"><a href="https://blog.google/technology/ai/notebooklm-new-features-2026/" style="color:#065f46;text-decoration:none;font-size:13px;font-weight:500;word-break:keep-all;overflow-wrap:break-word;">Google AI 블로그 최신 업데이트</a><span style="font-size:11px;color:#9ca3af;margin-left:6px;word-break:keep-all;overflow-wrap:break-word;">비디오 개요, 음성 언어 확장</span></td></tr>
+ <tr><td style="padding:6px 0;border-bottom:1px solid #f3f4f6;word-break:keep-all;overflow-wrap:break-word;"><a href="https://arstechnica.com/" style="color:#065f46;text-decoration:none;font-size:13px;font-weight:500;word-break:keep-all;overflow-wrap:break-word;">Ars Technica — NotebookLM 기능 심층 리뷰</a><span style="font-size:11px;color:#9ca3af;margin-left:6px;word-break:keep-all;overflow-wrap:break-word;">한계점 분석</span></td></tr>
+ <tr><td style="padding:6px 0;word-break:keep-all;overflow-wrap:break-word;"><a href="https://www.theverge.com/" style="color:#065f46;text-decoration:none;font-size:13px;font-weight:500;word-break:keep-all;overflow-wrap:break-word;">The Verge — 비디오 개요 베타 첫 인상</a><span style="font-size:11px;color:#9ca3af;margin-left:6px;word-break:keep-all;overflow-wrap:break-word;">신규 기능 평가</span></td></tr>
  </table>
 </td></tr>
 
@@ -229,8 +286,8 @@
  <div style="font-size:10px;font-weight:700;color:#d1fae5;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;word-break:keep-all;overflow-wrap:break-word;">This Week's Action</div>
  <table width="100%" cellpadding="0" cellspacing="0" style="word-break:keep-all;overflow-wrap:break-word;">
  <tr><td style="padding:8px 0;border-bottom:1px solid #047857;word-break:keep-all;overflow-wrap:break-word;"><div style="font-size:13px;color:#ecfdf5;line-height:1.6;word-break:keep-all;overflow-wrap:break-word;"><span style="font-weight:600;color:#6ee7b7;word-break:keep-all;overflow-wrap:break-word;">오늘 :</span> 개인 Google 계정으로 notebooklm.google.com 접속, 공개 자료 3개로 테스트 노트북 하나 생성</div></td></tr>
- <tr><td style="padding:8px 0;border-bottom:1px solid #047857;word-break:keep-all;overflow-wrap:break-word;"><div style="font-size:13px;color:#ecfdf5;line-height:1.6;word-break:keep-all;overflow-wrap:break-word;"><span style="font-weight:600;color:#6ee7b7;word-break:keep-all;overflow-wrap:break-word;">이번 주 :</span> 회의록 묶음으로 분기 결산 실제 작업 진행, 시간 절감 효과를 수치로 기록</div></td></tr>
- <tr><td style="padding:8px 0;word-break:keep-all;overflow-wrap:break-word;"><div style="font-size:13px;color:#ecfdf5;line-height:1.6;word-break:keep-all;overflow-wrap:break-word;"><span style="font-weight:600;color:#6ee7b7;word-break:keep-all;overflow-wrap:break-word;">다음 주 :</span> IT 담당 부서와 Workspace Business 플랜 도입 타당성 미팅 요청</div></td></tr>
+ <tr><td style="padding:8px 0;border-bottom:1px solid #047857;word-break:keep-all;overflow-wrap:break-word;"><div style="font-size:13px;color:#ecfdf5;line-height:1.6;word-break:keep-all;overflow-wrap:break-word;"><span style="font-weight:600;color:#6ee7b7;word-break:keep-all;overflow-wrap:break-word;">이번 주 :</span> 회의록 한 묶음을 올려보고, 같은 질문을 ChatGPT에도 던져 답변 차이를 비교 관찰</div></td></tr>
+ <tr><td style="padding:8px 0;word-break:keep-all;overflow-wrap:break-word;"><div style="font-size:13px;color:#ecfdf5;line-height:1.6;word-break:keep-all;overflow-wrap:break-word;"><span style="font-weight:600;color:#6ee7b7;word-break:keep-all;overflow-wrap:break-word;">다음 주 :</span> 사내 도입 가능성 검토를 위해 Workspace 데이터 보존 옵션과 라이선스 조건을 정리해 본다</div></td></tr>
  </table>
 </td></tr>
 
