@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>THE AI INSIGHT — 서연이화 AX추진팀</title>
+    <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
+    <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
+    <language>ko</language>
+    <lastBuildDate>Wed, 29 Apr 2026 07:10:49 +0900</lastBuildDate>
+    <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Compact | 현대차, 광주 E2E 자율주행 실증 &#x27;국가대표&#x27; 선정</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202604/newsletter_20260429.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202604/newsletter_20260429.html</guid>
+      <pubDate>Wed, 29 Apr 2026 06:50:00 +0900</pubDate>
+      <category>Compact</category>
+      <description>[THE AI INSIGHT] Compact | 현대차, 광주 E2E 자율주행 실증 &#x27;국가대표&#x27; 선정</description>
+    </item>
+    <item>
+      <title>[THE AI INSIGHT] Deep Dive | BMW GenAI4Q — OEM AI가 부품사 품질/구매를 재편한다</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202604/newsletter_20260428.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202604/newsletter_20260428.html</guid>
+      <pubDate>Tue, 28 Apr 2026 06:50:00 +0900</pubDate>
+      <category>Deep Dive</category>
+      <description>[THE AI INSIGHT] Deep Dive | BMW GenAI4Q — OEM AI가 부품사 품질/구매를 재편한다</description>
+    </item>
+  </channel>
+</rss>
