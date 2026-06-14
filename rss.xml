@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Fri, 12 Jun 2026 08:49:01 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 15 Jun 2026 08:28:37 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Briefing | 산업부 M.AX — 명장 암묵지가 AI로 바뀌는 현장</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260615.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260615.html</guid>
+      <pubDate>Mon, 15 Jun 2026 06:50:00 +0900</pubDate>
+      <category>Briefing</category>
+      <description>[THE AI INSIGHT] Briefing | 산업부 M.AX — 명장 암묵지가 AI로 바뀌는 현장</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Weekly | 애플-구글 시리 동맹, Claude Fable 5 공개 — AI 전략 재편의 한 주</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260612.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Wed, 06 May 2026 06:50:00 +0900</pubDate>
       <category>Compact</category>
       <description>[THE AI INSIGHT] Compact | Anthropic Claude, MS Office 직통합 + 금융 AI 에이전트 10종</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Briefing | 지멘스 Eigen — 산업 최초 AI 에이전트 상용 출시</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202605/newsletter_20260504.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202605/newsletter_20260504.html</guid>
-      <pubDate>Mon, 04 May 2026 06:50:00 +0900</pubDate>
-      <category>Briefing</category>
-      <description>[THE AI INSIGHT] Briefing | 지멘스 Eigen — 산업 최초 AI 에이전트 상용 출시</description>
     </item>
   </channel>
 </rss>
