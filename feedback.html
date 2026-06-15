@@ -470,6 +470,16 @@
     document.getElementById('ratingLabel').textContent = ratingLabels[value] || '';
   }
 
+  // 뉴스레터 1-클릭 피드백 진입(?v=up|down): 별점 자동 프리셋 + 이메일 프리필 (2026-06-15)
+  (function() {
+    var p = new URLSearchParams(location.search);
+    var v = p.get('v');
+    if (v === 'up') setRating(5);
+    else if (v === 'down') setRating(2);
+    var em = p.get('email');
+    if (em) { var f = document.getElementById('fbEmail'); if (f) f.value = em; }
+  })();
+
   async function submitFeedback(e) {
     e.preventDefault();
     var btn = document.getElementById('fbSubmitBtn');
