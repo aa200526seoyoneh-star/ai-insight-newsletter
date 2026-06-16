@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Tue, 16 Jun 2026 07:04:17 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 17 Jun 2026 07:08:48 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Compact | SK그룹 &#x27;1인 1 AI 에이전트&#x27; 전사 AX 전환 가속</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260617.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260617.html</guid>
+      <pubDate>Wed, 17 Jun 2026 06:50:00 +0900</pubDate>
+      <category>Compact</category>
+      <description>[THE AI INSIGHT] Compact | SK그룹 &#x27;1인 1 AI 에이전트&#x27; 전사 AX 전환 가속</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Deep Dive | 현대차 125조 투자 — AI 자율제조 시대, 부품사에 달라지는 것</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260616.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Fri, 08 May 2026 06:50:00 +0900</pubDate>
       <category>Weekly</category>
       <description>[THE AI INSIGHT] Weekly | 현대차 아틀라스 개발형 최초 공개, 업스테이지 다음 인수 확정</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Guide | NotebookLM — 내 문서만 학습하는 AI 리서치 파트너, 2026 대규모 업데이트 총정리</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202605/newsletter_20260507.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202605/newsletter_20260507.html</guid>
-      <pubDate>Thu, 07 May 2026 06:50:00 +0900</pubDate>
-      <category>Guide</category>
-      <description>[THE AI INSIGHT] Guide | NotebookLM — 내 문서만 학습하는 AI 리서치 파트너, 2026 대규모 업데이트 총정리</description>
     </item>
   </channel>
 </rss>
