@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Wed, 17 Jun 2026 07:08:48 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 18 Jun 2026 07:03:57 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Guide | Cursor — 90초 코드 리뷰, 바이브코딩 시대의 AI 에이전트</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260618.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260618.html</guid>
+      <pubDate>Thu, 18 Jun 2026 06:50:00 +0900</pubDate>
+      <category>Guide</category>
+      <description>[THE AI INSIGHT] Guide | Cursor — 90초 코드 리뷰, 바이브코딩 시대의 AI 에이전트</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Compact | SK그룹 &#x27;1인 1 AI 에이전트&#x27; 전사 AX 전환 가속</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260617.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Mon, 11 May 2026 06:50:00 +0900</pubDate>
       <category>Briefing</category>
       <description>[THE AI INSIGHT] Briefing | 테슬라, 프리몬트 로봇 공장 전환 공식화</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Weekly | 현대차 아틀라스 개발형 최초 공개, 업스테이지 다음 인수 확정</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202605/newsletter_20260508.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202605/newsletter_20260508.html</guid>
-      <pubDate>Fri, 08 May 2026 06:50:00 +0900</pubDate>
-      <category>Weekly</category>
-      <description>[THE AI INSIGHT] Weekly | 현대차 아틀라스 개발형 최초 공개, 업스테이지 다음 인수 확정</description>
     </item>
   </channel>
 </rss>
