@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Thu, 18 Jun 2026 07:03:57 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jun 2026 07:03:11 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Weekly | 현대차 125조 대전환, SK 에이전트, 삼성 자율공장 — 제조 AI 3사 동시 선언</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260619.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260619.html</guid>
+      <pubDate>Fri, 19 Jun 2026 06:50:00 +0900</pubDate>
+      <category>Weekly</category>
+      <description>[THE AI INSIGHT] Weekly | 현대차 125조 대전환, SK 에이전트, 삼성 자율공장 — 제조 AI 3사 동시 선언</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Guide | Cursor — 90초 코드 리뷰, 바이브코딩 시대의 AI 에이전트</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260618.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Tue, 12 May 2026 06:50:00 +0900</pubDate>
       <category>Deep Dive</category>
       <description>[THE AI INSIGHT] Deep Dive | IBM &#x27;AI 운영 모델&#x27; 발표 — 공장 AI에도 OS가 필요한 시대</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Briefing | 테슬라, 프리몬트 로봇 공장 전환 공식화</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202605/newsletter_20260511.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202605/newsletter_20260511.html</guid>
-      <pubDate>Mon, 11 May 2026 06:50:00 +0900</pubDate>
-      <category>Briefing</category>
-      <description>[THE AI INSIGHT] Briefing | 테슬라, 프리몬트 로봇 공장 전환 공식화</description>
     </item>
   </channel>
 </rss>
