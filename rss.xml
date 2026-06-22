@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Mon, 22 Jun 2026 07:07:38 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jun 2026 07:01:57 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Deep Dive | 디지털트윈+AI, 신차 개발 67% 단축 — 부품사 공급 스펙이 바뀐다</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260623.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260623.html</guid>
+      <pubDate>Tue, 23 Jun 2026 06:50:00 +0900</pubDate>
+      <category>Deep Dive</category>
+      <description>[THE AI INSIGHT] Deep Dive | 디지털트윈+AI, 신차 개발 67% 단축 — 부품사 공급 스펙이 바뀐다</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Briefing | BMW Physical AI 유럽 양산 돌입 — 라이프치히 공장 로봇 배치</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260622.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Thu, 14 May 2026 06:50:00 +0900</pubDate>
       <category>Guide</category>
       <description>[THE AI INSIGHT] Guide | Perplexity AI — 출처가 따라오는 AI 리서치 도구</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Compact | SAP &#x27;자율 기업&#x27; 선언, MS &#x27;Agent 365&#x27; 출시 — 에이전트 시대 개막</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202605/newsletter_20260513.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202605/newsletter_20260513.html</guid>
-      <pubDate>Wed, 13 May 2026 06:50:00 +0900</pubDate>
-      <category>Compact</category>
-      <description>[THE AI INSIGHT] Compact | SAP &#x27;자율 기업&#x27; 선언, MS &#x27;Agent 365&#x27; 출시 — 에이전트 시대 개막</description>
     </item>
   </channel>
 </rss>
