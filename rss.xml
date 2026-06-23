@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Tue, 23 Jun 2026 07:01:57 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jun 2026 07:07:59 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Compact | GM, EV 공장에 협동 로봇 확대 — &#x27;딤 팩토리&#x27; 전환 가속</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260624.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260624.html</guid>
+      <pubDate>Wed, 24 Jun 2026 06:50:00 +0900</pubDate>
+      <category>Compact</category>
+      <description>[THE AI INSIGHT] Compact | GM, EV 공장에 협동 로봇 확대 — &#x27;딤 팩토리&#x27; 전환 가속</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Deep Dive | 디지털트윈+AI, 신차 개발 67% 단축 — 부품사 공급 스펙이 바뀐다</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260623.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Fri, 15 May 2026 06:50:00 +0900</pubDate>
       <category>Weekly</category>
       <description>[THE AI INSIGHT] Weekly | SAP &#x27;자율 기업&#x27; 선언 — 에이전틱 AI가 바꾸는 공급망</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Guide | Perplexity AI — 출처가 따라오는 AI 리서치 도구</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202605/newsletter_20260514.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202605/newsletter_20260514.html</guid>
-      <pubDate>Thu, 14 May 2026 06:50:00 +0900</pubDate>
-      <category>Guide</category>
-      <description>[THE AI INSIGHT] Guide | Perplexity AI — 출처가 따라오는 AI 리서치 도구</description>
     </item>
   </channel>
 </rss>
