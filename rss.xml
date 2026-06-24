@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Wed, 24 Jun 2026 07:07:59 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 25 Jun 2026 07:13:27 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Guide | GitHub Copilot — 이슈를 PR로 바꾸는 자율 코딩 에이전트</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260625.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260625.html</guid>
+      <pubDate>Thu, 25 Jun 2026 06:50:00 +0900</pubDate>
+      <category>Guide</category>
+      <description>[THE AI INSIGHT] Guide | GitHub Copilot — 이슈를 PR로 바꾸는 자율 코딩 에이전트</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Compact | GM, EV 공장에 협동 로봇 확대 — &#x27;딤 팩토리&#x27; 전환 가속</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260624.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Mon, 18 May 2026 06:50:00 +0900</pubDate>
       <category>Briefing</category>
       <description>[THE AI INSIGHT] Briefing | 현대차 보스턴다이나믹스 美 상장 6월 결정 — 부품사 로봇 공급 경쟁 시작</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Weekly | SAP &#x27;자율 기업&#x27; 선언 — 에이전틱 AI가 바꾸는 공급망</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202605/newsletter_20260515.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202605/newsletter_20260515.html</guid>
-      <pubDate>Fri, 15 May 2026 06:50:00 +0900</pubDate>
-      <category>Weekly</category>
-      <description>[THE AI INSIGHT] Weekly | SAP &#x27;자율 기업&#x27; 선언 — 에이전틱 AI가 바꾸는 공급망</description>
     </item>
   </channel>
 </rss>
