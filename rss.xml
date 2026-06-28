@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Fri, 26 Jun 2026 07:05:01 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 29 Jun 2026 07:01:22 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Briefing | NVIDIA Halos, 공장 로봇 안전 표준 시대 열다</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260629.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260629.html</guid>
+      <pubDate>Mon, 29 Jun 2026 06:50:00 +0900</pubDate>
+      <category>Briefing</category>
+      <description>[THE AI INSIGHT] Briefing | NVIDIA Halos, 공장 로봇 안전 표준 시대 열다</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Weekly | 네이버클라우드-한국지멘스, 제조 AI 전환 동맹 체결</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260626.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Wed, 20 May 2026 06:50:00 +0900</pubDate>
       <category>Compact</category>
       <description>[THE AI INSIGHT] Compact | BMW 휴머노이드 3만대 실증, OEM 공장 로봇 시대 본격화</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Deep Dive | 스텔란티스-NVIDIA, 전 공장 AI 디지털 트윈 — 부품사 공급 조건 재편</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202605/newsletter_20260519.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202605/newsletter_20260519.html</guid>
-      <pubDate>Tue, 19 May 2026 06:50:00 +0900</pubDate>
-      <category>Deep Dive</category>
-      <description>[THE AI INSIGHT] Deep Dive | 스텔란티스-NVIDIA, 전 공장 AI 디지털 트윈 — 부품사 공급 조건 재편</description>
     </item>
   </channel>
 </rss>
