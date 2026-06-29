@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Mon, 29 Jun 2026 07:01:22 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 30 Jun 2026 07:02:41 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Monthly Special | NVIDIA Halos, 현대차 125조 — 피지컬 AI가 공장에 들어온 6월</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260630.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260630.html</guid>
+      <pubDate>Tue, 30 Jun 2026 06:50:00 +0900</pubDate>
+      <category>Monthly Special</category>
+      <description>[THE AI INSIGHT] Monthly Special | NVIDIA Halos, 현대차 125조 — 피지컬 AI가 공장에 들어온 6월</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Briefing | NVIDIA Halos, 공장 로봇 안전 표준 시대 열다</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260629.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Thu, 21 May 2026 06:50:00 +0900</pubDate>
       <category>Guide</category>
       <description>[THE AI INSIGHT] Guide | Google Gemini — I/O 2026 에이전틱 AI 전면 공개, 제조 현장 800+ 에이전트 배치</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Compact | BMW 휴머노이드 3만대 실증, OEM 공장 로봇 시대 본격화</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202605/newsletter_20260520.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202605/newsletter_20260520.html</guid>
-      <pubDate>Wed, 20 May 2026 06:50:00 +0900</pubDate>
-      <category>Compact</category>
-      <description>[THE AI INSIGHT] Compact | BMW 휴머노이드 3만대 실증, OEM 공장 로봇 시대 본격화</description>
     </item>
   </channel>
 </rss>
