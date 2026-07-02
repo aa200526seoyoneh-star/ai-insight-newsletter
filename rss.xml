@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Thu, 02 Jul 2026 06:59:29 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 03 Jul 2026 06:57:26 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Weekly | 삼성/SK 4,700조 메가프로젝트, AI 국가 생태계 시동</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260703.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260703.html</guid>
+      <pubDate>Fri, 03 Jul 2026 06:50:00 +0900</pubDate>
+      <category>Weekly</category>
+      <description>[THE AI INSIGHT] Weekly | 삼성/SK 4,700조 메가프로젝트, AI 국가 생태계 시동</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Guide | Cursor — 자율 코딩 에이전트 시대를 연 AI 에디터</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260702.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Tue, 26 May 2026 06:50:00 +0900</pubDate>
       <category>Deep Dive</category>
       <description>[THE AI INSIGHT] Deep Dive | 현대모비스 피지컬AI 테크기업 전환 — 부품사 역할이 바뀐다</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Briefing | SAP &#x27;자율형 기업&#x27; 선언 — Claude 탑재 에이전트 200개로 ERP 자동화</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202605/newsletter_20260525.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202605/newsletter_20260525.html</guid>
-      <pubDate>Mon, 25 May 2026 06:50:00 +0900</pubDate>
-      <category>Briefing</category>
-      <description>[THE AI INSIGHT] Briefing | SAP &#x27;자율형 기업&#x27; 선언 — Claude 탑재 에이전트 200개로 ERP 자동화</description>
     </item>
   </channel>
 </rss>
