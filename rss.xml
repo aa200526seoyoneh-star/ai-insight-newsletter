@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Tue, 07 Jul 2026 09:16:44 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 08 Jul 2026 06:57:25 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Compact | 자동차 부품업계, AI 생산성 전환 본격 논의</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260708.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260708.html</guid>
+      <pubDate>Wed, 08 Jul 2026 06:50:00 +0900</pubDate>
+      <category>Compact</category>
+      <description>[THE AI INSIGHT] Compact | 자동차 부품업계, AI 생산성 전환 본격 논의</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Deep Dive | 에이전틱 AI 공장 도입 4배 급등, Gartner &#x27;40%는 2년 내 중단&#x27; 경고</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260707.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Fri, 29 May 2026 06:50:00 +0900</pubDate>
       <category>Monthly Special</category>
       <description>[THE AI INSIGHT] Monthly Special | 에이전틱 AI가 공장에 들어온 5월 — 휴머노이드 양산, 멀티에이전트 327% 급증</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Guide | Copilot Studio, 노코드 AI 에이전트로 현장 업무 자동화</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202605/newsletter_20260528.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202605/newsletter_20260528.html</guid>
-      <pubDate>Thu, 28 May 2026 06:50:00 +0900</pubDate>
-      <category>Guide</category>
-      <description>[THE AI INSIGHT] Guide | Copilot Studio, 노코드 AI 에이전트로 현장 업무 자동화</description>
     </item>
   </channel>
 </rss>
