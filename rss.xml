@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Fri, 10 Jul 2026 06:58:06 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 13 Jul 2026 06:57:46 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Briefing | 오픈AI GPT-5.6 정식 공개 — AI 경쟁, 성능에서 효율로</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260713.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260713.html</guid>
+      <pubDate>Mon, 13 Jul 2026 06:50:00 +0900</pubDate>
+      <category>Briefing</category>
+      <description>[THE AI INSIGHT] Briefing | 오픈AI GPT-5.6 정식 공개 — AI 경쟁, 성능에서 효율로</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Weekly | SK하이닉스 나스닥 상장 — 45조원 AI 반도체 대전환</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260710.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Mon, 01 Jun 2026 06:50:00 +0900</pubDate>
       <category>Briefing</category>
       <description>[THE AI INSIGHT] Briefing | FANUC 피지컬 AI, 자연어로 산업 로봇을 움직이다</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] 2026-05-31</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202605/newsletter_20260531.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202605/newsletter_20260531.html</guid>
-      <pubDate>Sun, 31 May 2026 06:50:00 +0900</pubDate>
-      <category></category>
-      <description>[THE AI INSIGHT] 2026-05-31</description>
     </item>
   </channel>
 </rss>
