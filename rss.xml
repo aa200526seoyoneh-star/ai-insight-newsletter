@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Tue, 14 Jul 2026 07:03:01 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 15 Jul 2026 06:58:04 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Compact | 구글-삼성전자, 국내 최대 기업용 AI 도입 — 제미나이 엔터프라이즈 전사 공급</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260715.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260715.html</guid>
+      <pubDate>Wed, 15 Jul 2026 06:50:00 +0900</pubDate>
+      <category>Compact</category>
+      <description>[THE AI INSIGHT] Compact | 구글-삼성전자, 국내 최대 기업용 AI 도입 — 제미나이 엔터프라이즈 전사 공급</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Deep Dive | Mistral 첫 로보틱스 모델 — 로봇 두뇌, 공장 문턱을 넘다</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260714.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Thu, 04 Jun 2026 06:50:00 +0900</pubDate>
       <category>Guide</category>
       <description>[THE AI INSIGHT] Guide | ChatGPT GPT-5.5 — Excel 통합과 워크스페이스 에이전트</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Deep Dive | NVIDIA Vera Rubin 양산 출하 — &#x27;에이전틱 AI 팩토리&#x27; 시대 개막</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260602.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260602.html</guid>
-      <pubDate>Tue, 02 Jun 2026 06:50:00 +0900</pubDate>
-      <category>Deep Dive</category>
-      <description>[THE AI INSIGHT] Deep Dive | NVIDIA Vera Rubin 양산 출하 — &#x27;에이전틱 AI 팩토리&#x27; 시대 개막</description>
     </item>
   </channel>
 </rss>
