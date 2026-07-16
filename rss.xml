@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Thu, 16 Jul 2026 06:58:36 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 17 Jul 2026 07:00:16 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Weekly | NVIDIA-토요타 AI 동맹 확장 — 조립 라인까지 디지털 트윈</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260717.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260717.html</guid>
+      <pubDate>Fri, 17 Jul 2026 06:50:00 +0900</pubDate>
+      <category>Weekly</category>
+      <description>[THE AI INSIGHT] Weekly | NVIDIA-토요타 AI 동맹 확장 — 조립 라인까지 디지털 트윈</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Guide | n8n, 셀프호스팅으로 데이터 지키는 AI 워크플로우 자동화</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260716.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Mon, 08 Jun 2026 06:50:00 +0900</pubDate>
       <category>Briefing</category>
       <description>[THE AI INSIGHT] Briefing | MS IQ 플랫폼 — 에이전틱 AI가 기업을 읽기 시작했다</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Weekly | NVIDIA Vera Rubin 양산 출하 — 에이전틱 AI 팩토리 시대 개막</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260605.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260605.html</guid>
-      <pubDate>Fri, 05 Jun 2026 06:50:00 +0900</pubDate>
-      <category>Weekly</category>
-      <description>[THE AI INSIGHT] Weekly | NVIDIA Vera Rubin 양산 출하 — 에이전틱 AI 팩토리 시대 개막</description>
     </item>
   </channel>
 </rss>
