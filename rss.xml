@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Tue, 21 Jul 2026 07:00:34 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 22 Jul 2026 06:56:24 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Compact | 삼성전자 로봇 컨트롤타워 &#x27;RX사업추진실&#x27; 신설 — 구미 19조원 피지컬 AI 승부수</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260722.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260722.html</guid>
+      <pubDate>Wed, 22 Jul 2026 06:50:00 +0900</pubDate>
+      <category>Compact</category>
+      <description>[THE AI INSIGHT] Compact | 삼성전자 로봇 컨트롤타워 &#x27;RX사업추진실&#x27; 신설 — 구미 19조원 피지컬 AI 승부수</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Deep Dive | 현대차, 보스턴다이내믹스 100% 인수 — 휴머노이드가 공장으로 출근한다</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260721.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Thu, 11 Jun 2026 06:50:00 +0900</pubDate>
       <category>Guide</category>
       <description>[THE AI INSIGHT] Guide | Anthropic Claude Fable 5 — AI 어시스턴트 실전 가이드</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Compact | 애플 시리 AI, 구글 제미나이로 전면 재구축</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260610.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260610.html</guid>
-      <pubDate>Wed, 10 Jun 2026 06:50:00 +0900</pubDate>
-      <category>Compact</category>
-      <description>[THE AI INSIGHT] Compact | 애플 시리 AI, 구글 제미나이로 전면 재구축</description>
     </item>
   </channel>
 </rss>
