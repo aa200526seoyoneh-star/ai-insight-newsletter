@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Wed, 22 Jul 2026 06:56:24 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 23 Jul 2026 07:02:58 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Guide | Cursor — 백그라운드 에이전트로 진화한 AI 코드 에디터</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260723.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260723.html</guid>
+      <pubDate>Thu, 23 Jul 2026 06:50:00 +0900</pubDate>
+      <category>Guide</category>
+      <description>[THE AI INSIGHT] Guide | Cursor — 백그라운드 에이전트로 진화한 AI 코드 에디터</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Compact | 삼성전자 로봇 컨트롤타워 &#x27;RX사업추진실&#x27; 신설 — 구미 19조원 피지컬 AI 승부수</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260722.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Fri, 12 Jun 2026 06:50:00 +0900</pubDate>
       <category>Weekly</category>
       <description>[THE AI INSIGHT] Weekly | 애플-구글 시리 동맹, Claude Fable 5 공개 — AI 전략 재편의 한 주</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Guide | Anthropic Claude Fable 5 — AI 어시스턴트 실전 가이드</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260611.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260611.html</guid>
-      <pubDate>Thu, 11 Jun 2026 06:50:00 +0900</pubDate>
-      <category>Guide</category>
-      <description>[THE AI INSIGHT] Guide | Anthropic Claude Fable 5 — AI 어시스턴트 실전 가이드</description>
     </item>
   </channel>
 </rss>
