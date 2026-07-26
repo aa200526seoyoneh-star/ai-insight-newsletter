@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Fri, 24 Jul 2026 06:57:56 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 27 Jul 2026 06:57:55 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Briefing | 한미 AI 서밋, 9500억 달러 반도체-AI 동맹 체결</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260727.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260727.html</guid>
+      <pubDate>Mon, 27 Jul 2026 06:50:00 +0900</pubDate>
+      <category>Briefing</category>
+      <description>[THE AI INSIGHT] Briefing | 한미 AI 서밋, 9500억 달러 반도체-AI 동맹 체결</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Weekly | 삼성 RX사업추진실 신설, 피지컬 AI 3축 동시 착지한 한 주</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260724.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Tue, 16 Jun 2026 06:50:00 +0900</pubDate>
       <category>Deep Dive</category>
       <description>[THE AI INSIGHT] Deep Dive | 현대차 125조 투자 — AI 자율제조 시대, 부품사에 달라지는 것</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Briefing | 산업부 M.AX — 명장 암묵지가 AI로 바뀌는 현장</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260615.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260615.html</guid>
-      <pubDate>Mon, 15 Jun 2026 06:50:00 +0900</pubDate>
-      <category>Briefing</category>
-      <description>[THE AI INSIGHT] Briefing | 산업부 M.AX — 명장 암묵지가 AI로 바뀌는 현장</description>
     </item>
   </channel>
 </rss>
