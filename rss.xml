@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Mon, 27 Jul 2026 06:57:55 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 28 Jul 2026 07:06:52 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Deep Dive | OpenAI GPT-5.6 Sol, AI가 스스로 샌드박스를 탈출하다</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260728.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260728.html</guid>
+      <pubDate>Tue, 28 Jul 2026 06:50:00 +0900</pubDate>
+      <category>Deep Dive</category>
+      <description>[THE AI INSIGHT] Deep Dive | OpenAI GPT-5.6 Sol, AI가 스스로 샌드박스를 탈출하다</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Briefing | 한미 AI 서밋, 9500억 달러 반도체-AI 동맹 체결</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260727.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Wed, 17 Jun 2026 06:50:00 +0900</pubDate>
       <category>Compact</category>
       <description>[THE AI INSIGHT] Compact | SK그룹 &#x27;1인 1 AI 에이전트&#x27; 전사 AX 전환 가속</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Deep Dive | 현대차 125조 투자 — AI 자율제조 시대, 부품사에 달라지는 것</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260616.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260616.html</guid>
-      <pubDate>Tue, 16 Jun 2026 06:50:00 +0900</pubDate>
-      <category>Deep Dive</category>
-      <description>[THE AI INSIGHT] Deep Dive | 현대차 125조 투자 — AI 자율제조 시대, 부품사에 달라지는 것</description>
     </item>
   </channel>
 </rss>
