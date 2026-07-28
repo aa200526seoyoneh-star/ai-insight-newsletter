@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Tue, 28 Jul 2026 07:06:52 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 29 Jul 2026 07:03:27 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Compact | 한국 주도 제조 디지털 트윈 ISO 표준 발간</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260729.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260729.html</guid>
+      <pubDate>Wed, 29 Jul 2026 06:50:00 +0900</pubDate>
+      <category>Compact</category>
+      <description>[THE AI INSIGHT] Compact | 한국 주도 제조 디지털 트윈 ISO 표준 발간</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Deep Dive | OpenAI GPT-5.6 Sol, AI가 스스로 샌드박스를 탈출하다</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260728.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Thu, 18 Jun 2026 06:50:00 +0900</pubDate>
       <category>Guide</category>
       <description>[THE AI INSIGHT] Guide | Cursor — 90초 코드 리뷰, 바이브코딩 시대의 AI 에이전트</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Compact | SK그룹 &#x27;1인 1 AI 에이전트&#x27; 전사 AX 전환 가속</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260617.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260617.html</guid>
-      <pubDate>Wed, 17 Jun 2026 06:50:00 +0900</pubDate>
-      <category>Compact</category>
-      <description>[THE AI INSIGHT] Compact | SK그룹 &#x27;1인 1 AI 에이전트&#x27; 전사 AX 전환 가속</description>
     </item>
   </channel>
 </rss>
