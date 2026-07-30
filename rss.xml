@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Thu, 30 Jul 2026 06:58:22 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 31 Jul 2026 07:02:12 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Monthly Special | 한미 AI 서밋 9,500억 달러 동맹 — 7월의 AI 한 달 정리</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260731.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260731.html</guid>
+      <pubDate>Fri, 31 Jul 2026 06:50:00 +0900</pubDate>
+      <category>Monthly Special</category>
+      <description>[THE AI INSIGHT] Monthly Special | 한미 AI 서밋 9,500억 달러 동맹 — 7월의 AI 한 달 정리</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Guide | Notion AI 3.6 — 외부 에이전트 연동으로 업무 자동화 허브 완성</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260730.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Mon, 22 Jun 2026 06:50:00 +0900</pubDate>
       <category>Briefing</category>
       <description>[THE AI INSIGHT] Briefing | BMW Physical AI 유럽 양산 돌입 — 라이프치히 공장 로봇 배치</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Weekly | 현대차 125조 대전환, SK 에이전트, 삼성 자율공장 — 제조 AI 3사 동시 선언</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260619.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260619.html</guid>
-      <pubDate>Fri, 19 Jun 2026 06:50:00 +0900</pubDate>
-      <category>Weekly</category>
-      <description>[THE AI INSIGHT] Weekly | 현대차 125조 대전환, SK 에이전트, 삼성 자율공장 — 제조 AI 3사 동시 선언</description>
     </item>
   </channel>
 </rss>
