@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Fri, 31 Jul 2026 07:02:12 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 03 Aug 2026 07:28:15 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Briefing | 현대차 피지컬 AI 청사진 — 디바이스에서 도시까지</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260803.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260803.html</guid>
+      <pubDate>Mon, 03 Aug 2026 06:50:00 +0900</pubDate>
+      <category>Briefing</category>
+      <description>[THE AI INSIGHT] Briefing | 현대차 피지컬 AI 청사진 — 디바이스에서 도시까지</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Monthly Special | 한미 AI 서밋 9,500억 달러 동맹 — 7월의 AI 한 달 정리</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260731.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Tue, 23 Jun 2026 06:50:00 +0900</pubDate>
       <category>Deep Dive</category>
       <description>[THE AI INSIGHT] Deep Dive | 디지털트윈+AI, 신차 개발 67% 단축 — 부품사 공급 스펙이 바뀐다</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Briefing | BMW Physical AI 유럽 양산 돌입 — 라이프치히 공장 로봇 배치</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260622.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260622.html</guid>
-      <pubDate>Mon, 22 Jun 2026 06:50:00 +0900</pubDate>
-      <category>Briefing</category>
-      <description>[THE AI INSIGHT] Briefing | BMW Physical AI 유럽 양산 돌입 — 라이프치히 공장 로봇 배치</description>
     </item>
   </channel>
 </rss>
