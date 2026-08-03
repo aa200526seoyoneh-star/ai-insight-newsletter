@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Mon, 03 Aug 2026 07:28:15 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 04 Aug 2026 07:05:54 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Deep Dive | Physical AI 공장 진입 가속 — 자동화 격차가 거래 자격을 가른다</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260804.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260804.html</guid>
+      <pubDate>Tue, 04 Aug 2026 06:50:00 +0900</pubDate>
+      <category>Deep Dive</category>
+      <description>[THE AI INSIGHT] Deep Dive | Physical AI 공장 진입 가속 — 자동화 격차가 거래 자격을 가른다</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Briefing | 현대차 피지컬 AI 청사진 — 디바이스에서 도시까지</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260803.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Wed, 24 Jun 2026 06:50:00 +0900</pubDate>
       <category>Compact</category>
       <description>[THE AI INSIGHT] Compact | GM, EV 공장에 협동 로봇 확대 — &#x27;딤 팩토리&#x27; 전환 가속</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Deep Dive | 디지털트윈+AI, 신차 개발 67% 단축 — 부품사 공급 스펙이 바뀐다</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260623.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260623.html</guid>
-      <pubDate>Tue, 23 Jun 2026 06:50:00 +0900</pubDate>
-      <category>Deep Dive</category>
-      <description>[THE AI INSIGHT] Deep Dive | 디지털트윈+AI, 신차 개발 67% 단축 — 부품사 공급 스펙이 바뀐다</description>
     </item>
   </channel>
 </rss>
