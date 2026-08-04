@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Tue, 04 Aug 2026 07:05:54 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 05 Aug 2026 07:25:51 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Compact | 삼성전자, 차세대 3D 메모리 &#x27;zHBM&#x27; FMS 2026에서 최초 공개</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260805.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260805.html</guid>
+      <pubDate>Wed, 05 Aug 2026 06:50:00 +0900</pubDate>
+      <category>Compact</category>
+      <description>[THE AI INSIGHT] Compact | 삼성전자, 차세대 3D 메모리 &#x27;zHBM&#x27; FMS 2026에서 최초 공개</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Deep Dive | Physical AI 공장 진입 가속 — 자동화 격차가 거래 자격을 가른다</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260804.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Thu, 25 Jun 2026 06:50:00 +0900</pubDate>
       <category>Guide</category>
       <description>[THE AI INSIGHT] Guide | GitHub Copilot — 이슈를 PR로 바꾸는 자율 코딩 에이전트</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Compact | GM, EV 공장에 협동 로봇 확대 — &#x27;딤 팩토리&#x27; 전환 가속</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260624.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260624.html</guid>
-      <pubDate>Wed, 24 Jun 2026 06:50:00 +0900</pubDate>
-      <category>Compact</category>
-      <description>[THE AI INSIGHT] Compact | GM, EV 공장에 협동 로봇 확대 — &#x27;딤 팩토리&#x27; 전환 가속</description>
     </item>
   </channel>
 </rss>
