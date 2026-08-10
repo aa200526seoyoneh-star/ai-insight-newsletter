@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Mon, 10 Aug 2026 09:28:45 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 11 Aug 2026 07:22:43 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Deep Dive | Hadrian $8B — AI 자율 공장이 제조업 판도를 바꾼다</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260811.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260811.html</guid>
+      <pubDate>Tue, 11 Aug 2026 06:50:00 +0900</pubDate>
+      <category>Deep Dive</category>
+      <description>[THE AI INSIGHT] Deep Dive | Hadrian $8B — AI 자율 공장이 제조업 판도를 바꾼다</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Briefing | 구글 딥마인드 대개편 — 하사비스 물러나고 제프 딘 퇴사</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260810.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Mon, 29 Jun 2026 06:50:00 +0900</pubDate>
       <category>Briefing</category>
       <description>[THE AI INSIGHT] Briefing | NVIDIA Halos, 공장 로봇 안전 표준 시대 열다</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Weekly | 네이버클라우드-한국지멘스, 제조 AI 전환 동맹 체결</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260626.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260626.html</guid>
-      <pubDate>Fri, 26 Jun 2026 06:50:00 +0900</pubDate>
-      <category>Weekly</category>
-      <description>[THE AI INSIGHT] Weekly | 네이버클라우드-한국지멘스, 제조 AI 전환 동맹 체결</description>
     </item>
   </channel>
 </rss>
