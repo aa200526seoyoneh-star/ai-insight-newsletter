@@ -236,6 +236,7 @@
       resize: vertical;
       line-height: 1.7;
     }
+    .form-group textarea.compact { min-height: 88px; }
     .form-group input[readonly] {
       background: #f1f5f9;
       color: var(--text-secondary);
@@ -260,54 +261,133 @@
       font-weight: 400;
       margin-left: 6px;
     }
+    .is-hidden { display: none !important; }
 
-    /* 뉴스레터 👍/👎 1-클릭 평가 배너 */
-    .vote-banner {
-      display: none;
-      border-radius: 12px;
-      padding: 14px 16px;
-      font-size: 14px;
-      font-weight: 600;
-      line-height: 1.6;
-      margin-bottom: 24px;
+    /* ── 모드 히어로 (👍 도움됨 / 👎 아쉬움 진입) ── */
+    .mode-hero {
+      text-align: center;
+      padding-top: 10px;
     }
-    .vote-banner.ok { display: block; background: #ecfdf5; border: 1px solid #a7f3d0; color: #065f46; }
-    .vote-banner.err { display: block; background: #fffbeb; border: 1px solid #fde68a; color: #92400e; }
-
-    /* Rating Buttons */
-    .rating-group {
-      display: flex;
-      gap: 8px;
-      margin-top: 4px;
-    }
-    .rating-btn {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      border: 1.5px solid var(--border);
-      background: #f8fafc;
-      font-size: 22px;
-      cursor: pointer;
-      transition: all 0.2s;
+    .mode-hero .hero-icon {
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
+      margin: 0 auto 16px;
+      font-size: 30px;
+      border: 2px solid transparent;
     }
-    .rating-btn:hover {
-      border-color: #bbf7d0;
-      background: #f0fdf4;
-      transform: translateY(-2px);
+    .mode-hero h1 {
+      font-size: 21px;
+      font-weight: 900;
+      color: #0f172a;
+      letter-spacing: -0.6px;
     }
-    .rating-btn.active {
+    .mode-hero .hero-sub {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-top: 8px;
+      line-height: 1.65;
+    }
+    .mode-hero .hero-issue {
+      display: inline-block;
+      margin-top: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+    /* up */
+    .mode-up .hero-icon { background: #ecfdf5; border-color: #a7f3d0; }
+    .mode-up .hero-issue { background: #f0fdf4; border: 1px solid #d1fae5; color: var(--primary-light); }
+    /* down */
+    .mode-down .hero-icon { background: #fff7ed; border-color: #fed7aa; }
+    .mode-down .hero-issue { background: #fffbeb; border: 1px solid #fde68a; color: #b45309; }
+
+    /* 투표 반영 상태 줄 */
+    .vote-status {
+      font-size: 12.5px;
+      font-weight: 600;
+      margin-top: 14px;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+    .vote-status.ok { color: var(--primary-light); }
+    .vote-status.err { color: #b45309; }
+    .vote-status button {
+      font-family: inherit;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #b45309;
+      background: none;
+      border: none;
+      text-decoration: underline;
+      cursor: pointer;
+      padding: 0 0 0 6px;
+    }
+
+    /* ── 선택 칩 (좋았던 점 / 아쉬웠던 점) ── */
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .chip {
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      background: #f8fafc;
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 8px 14px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .chip:hover { border-color: #bbf7d0; background: #f0fdf4; color: var(--primary); }
+    .chip.on {
       border-color: var(--accent);
       background: #ecfdf5;
+      color: var(--primary);
       box-shadow: 0 2px 8px rgba(16,185,129,0.15);
-      transform: translateY(-2px);
     }
-    .rating-label {
+    .mode-down .chip:hover { border-color: #fed7aa; background: #fff7ed; color: #b45309; }
+    .mode-down .chip.on {
+      border-color: #f59e0b;
+      background: #fffbeb;
+      color: #b45309;
+      box-shadow: 0 2px 8px rgba(245,158,11,0.15);
+    }
+
+    /* ── 신원 요약 줄 (이메일 자동식별 시) ── */
+    .identity-summary {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 11px 14px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+    .identity-summary strong { color: var(--text); font-weight: 700; }
+    .identity-summary button {
+      font-family: inherit;
       font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 8px;
+      font-weight: 600;
+      color: var(--primary-light);
+      background: none;
+      border: none;
+      text-decoration: underline;
+      cursor: pointer;
+      margin-left: auto;
+      padding: 0;
     }
 
     .btn-submit {
@@ -327,6 +407,28 @@
     }
     .btn-submit:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(5,150,105,0.25); }
     .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+
+    /* 카드 하단 보조 링크 */
+    .card-foot {
+      margin-top: 18px;
+      text-align: center;
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+    .card-foot a, .card-foot button {
+      font-family: inherit;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      padding: 0;
+    }
+    .card-foot a:hover, .card-foot button:hover { color: var(--primary-light); text-decoration: underline; }
+    .card-foot .foot-sep { margin: 0 8px; color: #cbd5e1; }
 
     .success-message {
       display: none;
@@ -372,7 +474,7 @@
       .feedback-card { padding: 28px 20px; }
       .day-chips { gap: 4px; }
       .day-chip { font-size: 9px; padding: 2px 6px; }
-      .rating-btn { width: 42px; height: 42px; font-size: 18px; }
+      .chip { font-size: 12.5px; padding: 7px 12px; }
     }
   </style>
   <script src="config.js"></script>
@@ -437,7 +539,7 @@
 </script>
 
 <main class="feedback-main">
-<div class="feedback-card">
+<div class="feedback-card" id="fbCard">
   <!-- Weekly color bar -->
   <div class="weekly-bar">
     <span class="bar-mon"></span>
@@ -449,10 +551,11 @@
 
   <!-- Form -->
   <div id="feedbackForm">
-    <div class="logo">
+    <!-- (A) 문의 모드 헤더 : 파라미터 없이 들어온 경우 -->
+    <div class="logo" id="inquiryHead">
       <span class="logo-badge">THE AI INSIGHT</span>
-      <h1>의견을 보내주세요</h1>
-      <p>뉴스레터를 더 좋게 만들기 위해<br>여러분의 생각을 듣고 싶습니다.</p>
+      <h1 id="inquiryTitle">의견을 보내주세요</h1>
+      <p id="inquiryDesc">뉴스레터를 더 좋게 만들기 위해<br>여러분의 생각을 듣고 싶습니다.</p>
       <div class="day-chips">
         <span class="day-chip mon">MON</span>
         <span class="day-chip tue">TUE</span>
@@ -462,36 +565,71 @@
       </div>
     </div>
 
+    <!-- (B) 투표 모드 히어로 : ?v=up | ?v=down 으로 들어온 경우 -->
+    <div class="mode-hero is-hidden" id="modeHero">
+      <div class="hero-icon" id="heroIcon">👍</div>
+      <h1 id="heroTitle">평가해 주셔서 감사합니다</h1>
+      <p class="hero-sub" id="heroSub"></p>
+      <span class="hero-issue is-hidden" id="heroIssue"></span>
+      <div class="vote-status" id="voteStatus">평가를 반영하는 중입니다...</div>
+    </div>
+
     <div class="divider"></div>
 
-    <div id="voteBanner" class="vote-banner"></div>
-
     <form onsubmit="submitFeedback(event)">
-      <div class="form-group">
-        <label>이메일 *</label>
-        <input type="email" id="fbEmail" placeholder="example@company.com" required>
-        <div id="emailError" class="field-error">구독자 목록에서 찾을 수 없는 이메일입니다. 이메일 주소를 다시 확인해주세요.</div>
+      <!-- 선택 칩 : 좋았던 점 / 아쉬웠던 점 -->
+      <div class="form-group is-hidden" id="reasonGroup">
+        <label id="reasonLabel">어떤 점이 아쉬우셨나요?<span class="field-hint">복수 선택 가능</span></label>
+        <div class="chips" id="reasonChips"></div>
+      </div>
+
+      <!-- 문의 유형 : 문의 모드 전용 -->
+      <div class="form-group is-hidden" id="topicGroup">
+        <label>문의 유형 *</label>
+        <select id="fbTopic">
+          <option value="콘텐츠 제안">콘텐츠 제안 (다뤘으면 하는 주제)</option>
+          <option value="오류 신고">오류 신고 (내용, 링크, 표시)</option>
+          <option value="구독 관련">구독 관련 (수신, 주소 변경)</option>
+          <option value="기타 문의">기타 문의</option>
+        </select>
+      </div>
+
+      <!-- 신원 요약 : 이메일 자동식별 성공 시 -->
+      <div class="identity-summary is-hidden" id="identitySummary">
+        <span id="identityText"></span>
+        <button type="button" onclick="openIdentityFields()">변경</button>
+      </div>
+
+      <div id="identityFields">
+        <div class="form-group">
+          <label>이메일 *</label>
+          <input type="email" id="fbEmail" placeholder="example@company.com" required>
+          <div id="emailError" class="field-error">구독자 목록에서 찾을 수 없는 이메일입니다. 이메일 주소를 다시 확인해주세요.</div>
+        </div>
+
+        <div class="form-group">
+          <label>이름 *<span class="field-hint">이메일 입력 시 자동으로 표시됩니다</span></label>
+          <input type="text" id="fbName" placeholder="이메일을 먼저 입력해주세요" readonly tabindex="-1">
+        </div>
       </div>
 
       <div class="form-group">
-        <label>이름 *<span class="field-hint">이메일 입력 시 자동으로 표시됩니다</span></label>
-        <input type="text" id="fbName" placeholder="이메일을 먼저 입력해주세요" readonly tabindex="-1">
-      </div>
-
-      <div class="form-group">
-        <label>피드백 내용 *</label>
+        <label id="messageLabel">피드백 내용 *</label>
         <textarea id="fbMessage" placeholder="자유롭게 의견을 남겨주세요. 개선 사항, 칭찬, 제안 모두 환영합니다!" required></textarea>
       </div>
 
       <button type="submit" class="btn-submit" id="fbSubmitBtn">의견 보내기</button>
     </form>
+
+    <!-- 하단 보조 링크 : 모드별로 채워진다 -->
+    <div class="card-foot is-hidden" id="cardFoot"></div>
   </div>
 
   <!-- Success -->
   <div id="feedbackSuccess" class="success-message">
     <div class="check-icon">✅</div>
-    <h2>감사합니다!</h2>
-    <p>소중한 의견이 접수되었습니다.<br>더 나은 뉴스레터를 만드는 데 반영하겠습니다.</p>
+    <h2 id="successTitle">감사합니다!</h2>
+    <p id="successDesc">소중한 의견이 접수되었습니다.<br>더 나은 뉴스레터를 만드는 데 반영하겠습니다.</p>
     <a href="index.html">← 뉴스레터 구독 페이지로 돌아가기</a>
   </div>
 </div>
@@ -500,6 +638,126 @@
 <script>
   var PROXY = ((window.ADMIN_CONFIG && window.ADMIN_CONFIG.PROXY_URL) || '').replace(/\/$/, '');
 
+  // ══ 진입 모드 (2026-08-11 개편) ═════════════════════════════════════════
+  // 뉴스레터 푸터의 세 링크가 모두 같은 화면을 띄우던 문제를 해소한다.
+  //   ?v=up    → 감사 화면 + "좋았던 점" 선택(의견 작성은 선택사항)
+  //   ?v=down  → 아쉬운 이유 선택 화면(의견 작성은 선택사항)
+  //   (없음)   → 문의 폼(유형 선택 + 내용 필수)
+  // 서버(Code.gs)는 변경하지 않는다. 선택한 항목은 message 앞머리에 요약으로 붙는다.
+  var PARAMS = new URLSearchParams(location.search);
+  var MODE = (function() {
+    var v = PARAMS.get('v');
+    return (v === 'up' || v === 'down') ? v : 'inquiry';
+  })();
+  var NL_ID = PARAMS.get('nl') || '';
+
+  var UP_REASONS = ['내용이 유용함', '바로 업무에 쓸 수 있음', '분량이 적당함', '주제 선정이 좋음', '읽기 편한 구성'];
+  var DOWN_REASONS = ['관심 분야가 아님', '내용이 어려움', '이미 아는 내용', '너무 김', '업무 적용이 어려움', '읽기 불편함'];
+
+  function nlLabel() {
+    if (!/^\d{8}$/.test(NL_ID)) return '';
+    var y = +NL_ID.slice(0, 4), m = +NL_ID.slice(4, 6), d = +NL_ID.slice(6, 8);
+    var dow = ['일', '월', '화', '수', '목', '금', '토'][new Date(y, m - 1, d).getDay()];
+    return m + '월 ' + d + '일(' + dow + ') 호';
+  }
+
+  function el(id) { return document.getElementById(id); }
+  function show(id, on) { el(id).classList.toggle('is-hidden', !on); }
+
+  function buildChips(list) {
+    var box = el('reasonChips');
+    box.innerHTML = '';
+    list.forEach(function(txt) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'chip';
+      b.textContent = txt;
+      b.setAttribute('aria-pressed', 'false');
+      b.addEventListener('click', function() {
+        var on = b.classList.toggle('on');
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        syncSubmitState();
+      });
+      box.appendChild(b);
+    });
+  }
+
+  function selectedReasons() {
+    return Array.prototype.slice.call(document.querySelectorAll('#reasonChips .chip.on'))
+      .map(function(b) { return b.textContent; });
+  }
+
+  // 투표 모드에서는 칩만 골라도, 글만 써도 제출할 수 있다(둘 다 없으면 비활성).
+  function syncSubmitState() {
+    if (MODE === 'inquiry') return;
+    var hasText = el('fbMessage').value.trim().length > 0;
+    el('fbSubmitBtn').disabled = !(hasText || selectedReasons().length > 0);
+  }
+
+  function applyMode() {
+    var card = el('fbCard');
+    var issue = nlLabel();
+
+    if (MODE === 'inquiry') {
+      show('topicGroup', true);
+      el('fbSubmitBtn').textContent = '문의 보내기';
+      el('inquiryTitle').textContent = '문의하기';
+      el('inquiryDesc').innerHTML = '궁금한 점, 제안, 오류 신고를 남겨주세요.<br>담당자가 확인 후 회신드립니다.';
+      el('messageLabel').textContent = '문의 내용 *';
+      el('fbMessage').placeholder = '문의하실 내용을 자세히 적어주세요.';
+      el('cardFoot').innerHTML = '<a href="archive.html">지난 회차 아카이브</a>';
+      show('cardFoot', true);
+      return;
+    }
+
+    // ── 투표 모드 공통 ──
+    card.classList.add(MODE === 'up' ? 'mode-up' : 'mode-down');
+    show('inquiryHead', false);
+    show('modeHero', true);
+    show('reasonGroup', true);
+    el('fbMessage').classList.add('compact');
+    el('fbMessage').required = false;
+    if (issue) {
+      el('heroIssue').textContent = issue;
+      show('heroIssue', true);
+    }
+
+    if (MODE === 'up') {
+      el('heroIcon').textContent = '👍';
+      el('heroTitle').textContent = '도움이 되셨다니 기쁩니다';
+      el('heroSub').innerHTML = '평가가 기록되었습니다. 어떤 점이 좋았는지 알려주시면<br>다음 호에서 그 방향을 더 강화하겠습니다.';
+      el('reasonLabel').innerHTML = '어떤 점이 좋았나요?<span class="field-hint">복수 선택 가능, 선택사항</span>';
+      el('messageLabel').innerHTML = '더 하고 싶은 말<span class="field-hint">선택사항</span>';
+      el('fbMessage').placeholder = '앞으로 다뤘으면 하는 주제가 있다면 적어주세요.';
+      el('fbSubmitBtn').textContent = '의견 함께 보내기';
+      buildChips(UP_REASONS);
+    } else {
+      el('heroIcon').textContent = '👎';
+      el('heroTitle').textContent = '아쉬우셨군요, 알려주셔서 감사합니다';
+      el('heroSub').innerHTML = '평가가 기록되었습니다. 어떤 점이 아쉬웠는지 알려주시면<br>다음 호부터 바로 반영하겠습니다.';
+      el('reasonLabel').innerHTML = '어떤 점이 아쉬우셨나요?<span class="field-hint">복수 선택 가능, 선택사항</span>';
+      el('messageLabel').innerHTML = '더 하고 싶은 말<span class="field-hint">선택사항</span>';
+      el('fbMessage').placeholder = '구체적으로 적어주시면 개선에 큰 도움이 됩니다.';
+      el('fbSubmitBtn').textContent = '의견 함께 보내기';
+      buildChips(DOWN_REASONS);
+    }
+
+    var other = MODE === 'up' ? 'down' : 'up';
+    var otherLabel = MODE === 'up' ? '👎 아쉬움' : '👍 도움됨';
+    el('cardFoot').innerHTML =
+      '잘못 누르셨나요? <button type="button" id="switchVoteBtn">' + otherLabel + '으로 변경</button>'
+      + '<span class="foot-sep">|</span><a href="archive.html">지난 회차 아카이브</a>';
+    show('cardFoot', true);
+    el('switchVoteBtn').addEventListener('click', function() {
+      var q = 'feedback.html?v=' + other + (NL_ID ? '&nl=' + encodeURIComponent(NL_ID) : '');
+      var em = el('fbEmail').value.trim();
+      if (em) q += '&email=' + encodeURIComponent(em);
+      location.href = q;
+    });
+    el('fbSubmitBtn').disabled = true;
+    el('fbMessage').addEventListener('input', syncSubmitState);
+  }
+
   // ── 이메일 → 이름 자동매핑 (2026-07-19 개편) ──────────────────────────
   // 이름은 직접 입력 불가(readonly). checkSubscribed 로 구독자 시트에서 매핑하고,
   // 못 찾으면 "이메일이 잘못 입력된 것"으로 안내 + 제출 차단. 서버(submitFeedback)도
@@ -507,17 +765,36 @@
   var nameResolved = false;
   var lookupTimer = null;
   var lookupSeq = 0;
+  var identityOpened = false;   // 사용자가 '변경'을 눌러 입력칸을 편 상태
 
   function setEmailError(show) {
-    document.getElementById('emailError').classList.toggle('show', !!show);
+    el('emailError').classList.toggle('show', !!show);
+  }
+
+  // 자동식별에 성공하면 입력칸 두 개를 접고 한 줄 요약으로 대체한다(투표 모드 마찰 감소).
+  function refreshIdentityView() {
+    var ok = nameResolved && !identityOpened;
+    el('identityFields').classList.toggle('is-hidden', ok);
+    el('identitySummary').classList.toggle('is-hidden', !ok);
+    if (ok) {
+      el('identityText').innerHTML =
+        '<strong>' + el('fbName').value + '</strong> 님 (' + el('fbEmail').value + ') 으로 접수됩니다';
+    }
+  }
+
+  function openIdentityFields() {
+    identityOpened = true;
+    refreshIdentityView();
+    el('fbEmail').focus();
   }
 
   function lookupName() {
-    var email = document.getElementById('fbEmail').value.trim();
-    var nameEl = document.getElementById('fbName');
+    var email = el('fbEmail').value.trim();
+    var nameEl = el('fbName');
     nameResolved = false;
     setEmailError(false);
     nameEl.value = '';
+    refreshIdentityView();
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !PROXY) return;
     nameEl.placeholder = '확인 중...';
     var seq = ++lookupSeq;
@@ -532,6 +809,7 @@
         } else {
           setEmailError(true);
         }
+        refreshIdentityView();
       })
       .catch(function() {
         if (seq !== lookupSeq) return;
@@ -539,21 +817,21 @@
       });
   }
 
-  document.getElementById('fbEmail').addEventListener('input', function() {
+  el('fbEmail').addEventListener('input', function() {
     clearTimeout(lookupTimer);
     lookupTimer = setTimeout(lookupName, 500);
   });
-  document.getElementById('fbEmail').addEventListener('blur', function() {
+  el('fbEmail').addEventListener('blur', function() {
     clearTimeout(lookupTimer);
     lookupName();
   });
 
   // ── 뉴스레터 푸터 👍/👎 1-클릭 호 평가 (?v=up|down&nl=YYYYMMDD) ─────────
-  // 진입 즉시 해당 호에 대한 평가를 집계(votes 시트)하고 배너로 알린다.
-  // 폼은 그대로 남겨 추가 의견도 받을 수 있게 한다.
+  // 진입 즉시 해당 호에 대한 평가를 집계(votes 시트)하고 히어로에 상태를 표시한다.
   function recordVote(v, nl, email) {
-    var banner = document.getElementById('voteBanner');
-    var emoji = v === 'up' ? '👍 도움됨' : '👎 아쉬움';
+    var st = el('voteStatus');
+    st.className = 'vote-status';
+    st.textContent = '평가를 반영하는 중입니다...';
     var qs = 'action=vote&v=' + encodeURIComponent(v)
       + (nl ? '&nl=' + encodeURIComponent(nl) : '')
       + (email ? '&email=' + encodeURIComponent(email) : '');
@@ -561,56 +839,76 @@
       .then(function(r) { return r.json(); })
       .then(function(r) {
         if (r && r.success) {
-          banner.className = 'vote-banner ok';
-          banner.textContent = '이번 호 평가(' + emoji + ')가 반영되었습니다. 감사합니다! 남기고 싶은 의견이 있다면 아래에 작성해주세요.';
+          st.className = 'vote-status ok';
+          st.textContent = '✓ 평가가 반영되었습니다';
         } else {
-          banner.className = 'vote-banner err';
-          banner.textContent = '평가 반영에 실패했습니다. 잠시 후 다시 시도해주세요.';
+          voteFailed(v, nl, email);
         }
       })
-      .catch(function() {
-        banner.className = 'vote-banner err';
-        banner.textContent = '평가 반영에 실패했습니다. 잠시 후 다시 시도해주세요.';
-      });
+      .catch(function() { voteFailed(v, nl, email); });
   }
 
-  // ── 진입 처리: 이메일 프리필(URL → localStorage 순) + 투표 ──────────────
+  function voteFailed(v, nl, email) {
+    var st = el('voteStatus');
+    st.className = 'vote-status err';
+    st.textContent = '평가 반영에 실패했습니다.';
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.textContent = '다시 시도';
+    btn.addEventListener('click', function() { recordVote(v, nl, email); });
+    st.appendChild(btn);
+  }
+
+  // ── 진입 처리: 모드 적용 + 이메일 프리필(URL → localStorage 순) + 투표 ──
   (function() {
-    var p = new URLSearchParams(location.search);
-    var em = p.get('email') || '';
+    applyMode();
+    var em = PARAMS.get('email') || '';
     if (!em) {
       try { em = localStorage.getItem('subscriber_email') || ''; } catch (_) {}
     }
     if (em) {
-      document.getElementById('fbEmail').value = em;
+      el('fbEmail').value = em;
       lookupName();
     }
-    var v = p.get('v');
-    if ((v === 'up' || v === 'down') && PROXY) {
-      recordVote(v, p.get('nl') || '', em);
+    if (MODE !== 'inquiry') {
+      if (PROXY) recordVote(MODE, NL_ID, em);
+      else voteFailed(MODE, NL_ID, em);
     }
   })();
 
   async function submitFeedback(e) {
     e.preventDefault();
-    var btn = document.getElementById('fbSubmitBtn');
-    var email = document.getElementById('fbEmail').value.trim();
-    var name = document.getElementById('fbName').value.trim();
-    var message = document.getElementById('fbMessage').value.trim();
-    if (!email || !message) return;
-    if (!nameResolved || !name) {
-      setEmailError(true);
-      document.getElementById('fbEmail').focus();
+    var btn = el('fbSubmitBtn');
+    var email = el('fbEmail').value.trim();
+    var name = el('fbName').value.trim();
+    var text = el('fbMessage').value.trim();
+    var reasons = selectedReasons();
+
+    if (MODE === 'inquiry') {
+      if (!email || !text) return;
+    } else if (!text && !reasons.length) {
       return;
     }
+    if (!nameResolved || !name) {
+      openIdentityFields();
+      setEmailError(true);
+      el('fbEmail').focus();
+      return;
+    }
+
+    // 서버 스키마(message 단일 필드)를 그대로 쓰고, 맥락은 앞머리 요약으로 보존한다.
+    var head;
+    if (MODE === 'up') head = '[👍 도움됨' + (nlLabel() ? ' / ' + nlLabel() : '') + ']';
+    else if (MODE === 'down') head = '[👎 아쉬움' + (nlLabel() ? ' / ' + nlLabel() : '') + ']';
+    else head = '[문의 - ' + el('fbTopic').value + ']';
+    var message = head + (reasons.length ? '\n선택: ' + reasons.join(', ') : '') + (text ? '\n' + text : '');
 
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner"></span> 전송 중...';
 
     if (!PROXY) {
       alert('서버 설정 오류입니다. 관리자에게 문의하세요.');
-      btn.disabled = false;
-      btn.textContent = '의견 보내기';
+      restoreBtn();
       return;
     }
 
@@ -630,24 +928,39 @@
         try { localStorage.setItem('subscriber_email', email); } catch (_) {}
         showSuccess();
       } else if (result && result.code === 'not_subscriber') {
+        openIdentityFields();
         setEmailError(true);
-        btn.disabled = false;
-        btn.textContent = '의견 보내기';
+        restoreBtn();
       } else {
         alert((result && result.message) || '제출에 실패했습니다. 잠시 후 다시 시도해주세요.');
-        btn.disabled = false;
-        btn.textContent = '의견 보내기';
+        restoreBtn();
       }
     } catch (err) {
       alert('네트워크 오류입니다. 잠시 후 다시 시도해주세요.');
-      btn.disabled = false;
-      btn.textContent = '의견 보내기';
+      restoreBtn();
     }
   }
 
+  function restoreBtn() {
+    var btn = el('fbSubmitBtn');
+    btn.disabled = false;
+    btn.textContent = MODE === 'inquiry' ? '문의 보내기' : '의견 함께 보내기';
+    syncSubmitState();
+  }
+
   function showSuccess() {
-    document.getElementById('feedbackForm').style.display = 'none';
-    document.getElementById('feedbackSuccess').style.display = 'block';
+    if (MODE === 'up') {
+      el('successTitle').textContent = '고맙습니다!';
+      el('successDesc').innerHTML = '좋게 봐주신 점을 다음 호에서 더 살리겠습니다.';
+    } else if (MODE === 'down') {
+      el('successTitle').textContent = '알려주셔서 감사합니다';
+      el('successDesc').innerHTML = '지적해주신 점을 다음 호부터 개선하겠습니다.';
+    } else {
+      el('successTitle').textContent = '문의가 접수되었습니다';
+      el('successDesc').innerHTML = '담당자가 확인 후 회신드리겠습니다.';
+    }
+    el('feedbackForm').style.display = 'none';
+    el('feedbackSuccess').style.display = 'block';
   }
 </script>
 </body>
