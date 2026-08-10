@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Wed, 05 Aug 2026 07:25:51 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 10 Aug 2026 09:28:45 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Briefing | 구글 딥마인드 대개편 — 하사비스 물러나고 제프 딘 퇴사</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260810.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260810.html</guid>
+      <pubDate>Mon, 10 Aug 2026 06:50:00 +0900</pubDate>
+      <category>Briefing</category>
+      <description>[THE AI INSIGHT] Briefing | 구글 딥마인드 대개편 — 하사비스 물러나고 제프 딘 퇴사</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Compact | 삼성전자, 차세대 3D 메모리 &#x27;zHBM&#x27; FMS 2026에서 최초 공개</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260805.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Fri, 26 Jun 2026 06:50:00 +0900</pubDate>
       <category>Weekly</category>
       <description>[THE AI INSIGHT] Weekly | 네이버클라우드-한국지멘스, 제조 AI 전환 동맹 체결</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Guide | GitHub Copilot — 이슈를 PR로 바꾸는 자율 코딩 에이전트</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260625.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260625.html</guid>
-      <pubDate>Thu, 25 Jun 2026 06:50:00 +0900</pubDate>
-      <category>Guide</category>
-      <description>[THE AI INSIGHT] Guide | GitHub Copilot — 이슈를 PR로 바꾸는 자율 코딩 에이전트</description>
     </item>
   </channel>
 </rss>
