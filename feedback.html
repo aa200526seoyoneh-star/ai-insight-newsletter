@@ -897,10 +897,15 @@
     }
 
     // 서버 스키마(message 단일 필드)를 그대로 쓰고, 맥락은 앞머리 요약으로 보존한다.
+    // ★관리자 집계(admin.html 호별 평가)가 nl=YYYYMMDD 로 호를 되짚으므로 형식 유지.
     var head;
-    if (MODE === 'up') head = '[👍 도움됨' + (nlLabel() ? ' / ' + nlLabel() : '') + ']';
-    else if (MODE === 'down') head = '[👎 아쉬움' + (nlLabel() ? ' / ' + nlLabel() : '') + ']';
-    else head = '[문의 - ' + el('fbTopic').value + ']';
+    if (MODE === 'inquiry') {
+      head = '[문의 - ' + el('fbTopic').value + ']';
+    } else {
+      head = '[' + (MODE === 'up' ? '👍 도움됨' : '👎 아쉬움')
+        + (nlLabel() ? ' | ' + nlLabel() : '')
+        + (NL_ID ? ' | nl=' + NL_ID : '') + ']';
+    }
     var message = head + (reasons.length ? '\n선택: ' + reasons.join(', ') : '') + (text ? '\n' + text : '');
 
     btn.disabled = true;

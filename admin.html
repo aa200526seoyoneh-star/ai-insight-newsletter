@@ -637,6 +637,11 @@
               <button class="btn btn-primary" onclick="testSendNewsletter()">테스트 발송</button>
               <span id="sendStatus" style="font-size:13px;color:var(--text-secondary);"></span>
             </div>
+            <p style="margin:12px 0 0;font-size:12px;color:var(--text-secondary);line-height:1.5;">
+              &#8505;&#65039; 이 테스트는 Apps Script&middot;우리메일 경로로 발송됩니다.
+              실제 일일발송은 사내 SMTP(gw.seoyoneh.com)로 나가므로, 동일 채널로 확인하려면
+              업무 허브의 &lsquo;뉴스레터 테스트 발송&rsquo;을 사용하세요.
+            </p>
           </div>
 
           <!-- 구독 요청 메일 발송 -->
@@ -780,6 +785,34 @@
           <div style="display:flex;gap:12px;align-items:center;">
             <button class="btn btn-primary" onclick="saveSchedule()">주기 저장</button>
             <span id="scheduleStatus" style="font-size:13px;color:var(--text-secondary);"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vote stats (호별 👍/👎 집계) -->
+      <div class="send-panel" id="votePanel">
+        <div class="panel-header" onclick="toggleVotePanel()">
+          <h3>&#x1F44D; 호별 평가</h3>
+          <span id="voteToggle" style="font-size:13px;color:var(--text-secondary);">펼치기 &#x25BC;</span>
+        </div>
+        <div id="voteBody" class="send-body">
+          <div id="voteStats" class="fb-stats" style="margin-bottom:14px;"></div>
+          <div id="voteReasons" style="margin-bottom:16px;"></div>
+          <div style="overflow-x:auto;">
+            <table id="voteTable">
+              <thead>
+                <tr>
+                  <th style="width:150px;">호</th>
+                  <th style="width:80px;">&#x1F44D;</th>
+                  <th style="width:80px;">&#x1F44E;</th>
+                  <th style="width:190px;">만족률</th>
+                  <th>남긴 사유</th>
+                </tr>
+              </thead>
+              <tbody id="voteTbody">
+                <tr><td colspan="5" style="text-align:center;padding:40px;color:var(--text-secondary);">평가를 불러오는 중...</td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -1481,6 +1514,137 @@
     function getSourceLabel(source) {
       const labels = { web: '웹사이트', email: '이메일', referral: '추천', direct: '직접', internal: 'AX추진팀' };
       return labels[source] || source || '-';
+    }
+
+    // ─── 호별 평가 (votes 시트 집계 + 피드백 사유 태깅) ──────────────────
+    // votes 는 getVoteStats(호별 up/down), 사유는 feedback message 앞머리
+    // `[👎 아쉬움 | 8월 12일(수) 호 | nl=20260812]` + `선택: a, b` 를 파싱해 호별로 묶는다.
+    function toggleVotePanel() {
+      var body = document.getElementById('voteBody');
+      var toggle = document.getElementById('voteToggle');
+      var wasActive = body.classList.contains('active');
+      body.classList.toggle('active');
+      toggle.innerHTML = body.classList.contains('active') ? '접기 &#x25B2;' : '펼치기 &#x25BC;';
+      if (!wasActive && !body.dataset.loaded) loadVotes();
+    }
+
+    function parseVoteReasons(feedbackList) {
+      // { nl: { up: {사유:건수}, down: {사유:건수} } } + 전체 합계
+      var byNl = {}, allUp = {}, allDown = {};
+      (feedbackList || []).forEach(function(fb) {
+        var msg = String(fb.message || '');
+        var head = msg.match(/^\[([^\]]*)\]/);
+        if (!head) return;
+        var isUp = head[1].indexOf('도움됨') >= 0;
+        var isDown = head[1].indexOf('아쉬움') >= 0;
+        if (!isUp && !isDown) return;
+        var nlMatch = head[1].match(/nl=(\w+)/);
+        var nl = nlMatch ? nlMatch[1] : '(호 미상)';
+        var pick = msg.match(/선택:\s*(.+)/);
+        if (!pick) return;
+        if (!byNl[nl]) byNl[nl] = { up: {}, down: {} };
+        var bucket = isUp ? byNl[nl].up : byNl[nl].down;
+        var allBucket = isUp ? allUp : allDown;
+        pick[1].split(',').forEach(function(r) {
+          var t = r.trim();
+          if (!t) return;
+          bucket[t] = (bucket[t] || 0) + 1;
+          allBucket[t] = (allBucket[t] || 0) + 1;
+        });
+      });
+      return { byNl: byNl, allUp: allUp, allDown: allDown };
+    }
+
+    function topReasons(map, limit) {
+      return Object.keys(map || {})
+        .map(function(k) { return { name: k, n: map[k] }; })
+        .sort(function(a, b) { return b.n - a.n; })
+        .slice(0, limit || 5);
+    }
+
+    function formatNl(nl) {
+      var s = String(nl || '');
+      if (!/^\d{8}$/.test(s)) return escapeHtml(s || '—');
+      var y = +s.slice(0, 4), m = +s.slice(4, 6), d = +s.slice(6, 8);
+      var dow = ['일','월','화','수','목','금','토'][new Date(y, m - 1, d).getDay()];
+      return m + '/' + d + '(' + dow + ')<span style="color:var(--text-secondary);font-size:11px;margin-left:6px;">' + y + '</span>';
+    }
+
+    async function loadVotes() {
+      var body = document.getElementById('voteBody');
+      var tbody = document.getElementById('voteTbody');
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:40px;color:var(--text-secondary);">평가를 불러오는 중...</td></tr>';
+      try {
+        var pair = await Promise.all([
+          fetchViaWebApp('getVoteStats', { password: adminPassword }),
+          fetchViaWebApp('getFeedback', { password: adminPassword })
+        ]);
+        body.dataset.loaded = '1';
+        renderVotes((pair[0] && pair[0].data) || [], parseVoteReasons((pair[1] && pair[1].data) || []));
+      } catch (e) {
+        body.dataset.loaded = '1';
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:40px;color:var(--text-secondary);">평가 로드 실패. 네트워크를 확인하세요.</td></tr>';
+      }
+    }
+
+    function renderVotes(rows, reasons) {
+      var tbody = document.getElementById('voteTbody');
+      var statsEl = document.getElementById('voteStats');
+      var reasonEl = document.getElementById('voteReasons');
+
+      if (!rows.length) {
+        statsEl.innerHTML = '';
+        reasonEl.innerHTML = '';
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:40px;color:var(--text-secondary);">아직 접수된 평가가 없습니다.</td></tr>';
+        return;
+      }
+
+      var up = 0, down = 0;
+      rows.forEach(function(r) { up += r.up || 0; down += r.down || 0; });
+      var rate = (up + down) > 0 ? Math.round(up / (up + down) * 100) : 0;
+      statsEl.innerHTML =
+        '<div class="fb-stat-chip">총 ' + (up + down) + '표 / ' + rows.length + '개 호</div>' +
+        '<div class="fb-stat-chip">&#x1F44D; ' + up + '</div>' +
+        '<div class="fb-stat-chip">&#x1F44E; ' + down + '</div>' +
+        '<div class="fb-stat-chip">만족률 ' + rate + '%</div>';
+
+      // 전체 기간 사유 상위
+      var upTop = topReasons(reasons.allUp, 5), downTop = topReasons(reasons.allDown, 5);
+      function chipLine(title, list, bg, fg, bd) {
+        if (!list.length) return '';
+        return '<div style="margin-bottom:8px;font-size:13px;">'
+          + '<span style="color:var(--text-secondary);margin-right:8px;">' + title + '</span>'
+          + list.map(function(r) {
+              return '<span style="display:inline-block;background:' + bg + ';border:1px solid ' + bd + ';color:' + fg
+                + ';border-radius:14px;padding:3px 11px;font-size:12px;font-weight:600;margin:2px 6px 2px 0;">'
+                + escapeHtml(r.name) + ' ' + r.n + '</span>';
+            }).join('')
+          + '</div>';
+      }
+      reasonEl.innerHTML = chipLine('좋았던 점', upTop, '#ecfdf5', '#065f46', '#a7f3d0')
+        + chipLine('아쉬운 점', downTop, '#fffbeb', '#b45309', '#fde68a');
+
+      tbody.innerHTML = rows.map(function(r) {
+        var u = r.up || 0, d = r.down || 0, tot = u + d;
+        var pct = tot > 0 ? Math.round(u / tot * 100) : 0;
+        var nlReasons = (reasons.byNl && reasons.byNl[r.nl]) || { up: {}, down: {} };
+        var mix = topReasons(nlReasons.down, 3).map(function(x) { return '&#x1F44E; ' + escapeHtml(x.name) + (x.n > 1 ? ' ' + x.n : ''); })
+          .concat(topReasons(nlReasons.up, 3).map(function(x) { return '&#x1F44D; ' + escapeHtml(x.name) + (x.n > 1 ? ' ' + x.n : ''); }));
+        return '<tr>' +
+          '<td style="white-space:nowrap;font-size:13px;font-weight:600;">' + formatNl(r.nl) + '</td>' +
+          '<td style="font-size:13px;">' + u + '</td>' +
+          '<td style="font-size:13px;">' + d + '</td>' +
+          '<td>' +
+            '<div style="display:flex;align-items:center;gap:8px;">' +
+              '<div style="flex:1;height:8px;border-radius:4px;background:#fde68a;overflow:hidden;min-width:80px;">' +
+                '<div style="width:' + pct + '%;height:100%;background:#10b981;"></div>' +
+              '</div>' +
+              '<span style="font-size:12px;color:var(--text-secondary);white-space:nowrap;">' + pct + '%</span>' +
+            '</div>' +
+          '</td>' +
+          '<td style="font-size:12px;line-height:1.8;color:var(--text-secondary);">' + (mix.length ? mix.join(', ') : '—') + '</td>' +
+        '</tr>';
+      }).join('');
     }
 
     // ─── 피드백 관리 ───────────────────────────────────────
