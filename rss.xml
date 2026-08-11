@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Tue, 11 Aug 2026 07:22:43 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 12 Aug 2026 07:01:03 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Compact | 부품사 AI 전환, 생산성과 수익성이 핵심 — K-Mobility 세미나</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260812.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260812.html</guid>
+      <pubDate>Wed, 12 Aug 2026 06:50:00 +0900</pubDate>
+      <category>Compact</category>
+      <description>[THE AI INSIGHT] Compact | 부품사 AI 전환, 생산성과 수익성이 핵심 — K-Mobility 세미나</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Deep Dive | Hadrian $8B — AI 자율 공장이 제조업 판도를 바꾼다</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260811.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Tue, 30 Jun 2026 06:50:00 +0900</pubDate>
       <category>Monthly Special</category>
       <description>[THE AI INSIGHT] Monthly Special | NVIDIA Halos, 현대차 125조 — 피지컬 AI가 공장에 들어온 6월</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Briefing | NVIDIA Halos, 공장 로봇 안전 표준 시대 열다</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260629.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260629.html</guid>
-      <pubDate>Mon, 29 Jun 2026 06:50:00 +0900</pubDate>
-      <category>Briefing</category>
-      <description>[THE AI INSIGHT] Briefing | NVIDIA Halos, 공장 로봇 안전 표준 시대 열다</description>
     </item>
   </channel>
 </rss>
