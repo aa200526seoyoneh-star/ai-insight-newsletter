@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Wed, 12 Aug 2026 07:01:03 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 13 Aug 2026 07:00:30 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Guide | Perplexity AI — Brain 메모리로 진화한 AI 검색 에이전트</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260813.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260813.html</guid>
+      <pubDate>Thu, 13 Aug 2026 06:50:00 +0900</pubDate>
+      <category>Guide</category>
+      <description>[THE AI INSIGHT] Guide | Perplexity AI — Brain 메모리로 진화한 AI 검색 에이전트</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Compact | 부품사 AI 전환, 생산성과 수익성이 핵심 — K-Mobility 세미나</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260812.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Wed, 01 Jul 2026 06:50:00 +0900</pubDate>
       <category>Compact</category>
       <description>[THE AI INSIGHT] Compact | GPT-5.6 / Gemini 3.5 Pro 7월 대격전 — 프론티어 AI 동시 출시 임박</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Monthly Special | NVIDIA Halos, 현대차 125조 — 피지컬 AI가 공장에 들어온 6월</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260630.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202606/newsletter_20260630.html</guid>
-      <pubDate>Tue, 30 Jun 2026 06:50:00 +0900</pubDate>
-      <category>Monthly Special</category>
-      <description>[THE AI INSIGHT] Monthly Special | NVIDIA Halos, 현대차 125조 — 피지컬 AI가 공장에 들어온 6월</description>
     </item>
   </channel>
 </rss>
