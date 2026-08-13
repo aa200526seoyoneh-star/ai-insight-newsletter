@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Thu, 13 Aug 2026 07:00:30 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 14 Aug 2026 07:01:51 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Weekly | 빅테크 AI 인프라 $760B 돌파, 부품 공급망 재편 신호</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260814.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260814.html</guid>
+      <pubDate>Fri, 14 Aug 2026 06:50:00 +0900</pubDate>
+      <category>Weekly</category>
+      <description>[THE AI INSIGHT] Weekly | 빅테크 AI 인프라 $760B 돌파, 부품 공급망 재편 신호</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Guide | Perplexity AI — Brain 메모리로 진화한 AI 검색 에이전트</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260813.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Thu, 02 Jul 2026 06:50:00 +0900</pubDate>
       <category>Guide</category>
       <description>[THE AI INSIGHT] Guide | Cursor — 자율 코딩 에이전트 시대를 연 AI 에디터</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Compact | GPT-5.6 / Gemini 3.5 Pro 7월 대격전 — 프론티어 AI 동시 출시 임박</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260701.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260701.html</guid>
-      <pubDate>Wed, 01 Jul 2026 06:50:00 +0900</pubDate>
-      <category>Compact</category>
-      <description>[THE AI INSIGHT] Compact | GPT-5.6 / Gemini 3.5 Pro 7월 대격전 — 프론티어 AI 동시 출시 임박</description>
     </item>
   </channel>
 </rss>
