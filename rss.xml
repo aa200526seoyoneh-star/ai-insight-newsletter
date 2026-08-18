@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Tue, 18 Aug 2026 07:00:44 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 19 Aug 2026 07:02:43 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Compact | EU AI Act 투명성 의무 전면 시행, 범용 AI 모델 직접 규제 시대</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260819.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260819.html</guid>
+      <pubDate>Wed, 19 Aug 2026 06:50:00 +0900</pubDate>
+      <category>Compact</category>
+      <description>[THE AI INSIGHT] Compact | EU AI Act 투명성 의무 전면 시행, 범용 AI 모델 직접 규제 시대</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Deep Dive | 현대차그룹 AX 성과 발표 — OEM 70개 거점 AI 내재화가 부품사에 보내는 신호</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260818.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Mon, 06 Jul 2026 06:50:00 +0900</pubDate>
       <category>Briefing</category>
       <description>[THE AI INSIGHT] Briefing | 테슬라 옵티머스, 프리몬트 양산 임박 — 완성차 로봇 시대 개막</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Weekly | 삼성/SK 4,700조 메가프로젝트, AI 국가 생태계 시동</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260703.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260703.html</guid>
-      <pubDate>Fri, 03 Jul 2026 06:50:00 +0900</pubDate>
-      <category>Weekly</category>
-      <description>[THE AI INSIGHT] Weekly | 삼성/SK 4,700조 메가프로젝트, AI 국가 생태계 시동</description>
     </item>
   </channel>
 </rss>
