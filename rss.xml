@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Wed, 19 Aug 2026 07:02:43 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 20 Aug 2026 06:59:25 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Guide | GitHub Copilot Agent Plugins 1.0 — 코딩 에이전트 플러그인 표준 시대</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260820.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260820.html</guid>
+      <pubDate>Thu, 20 Aug 2026 06:50:00 +0900</pubDate>
+      <category>Guide</category>
+      <description>[THE AI INSIGHT] Guide | GitHub Copilot Agent Plugins 1.0 — 코딩 에이전트 플러그인 표준 시대</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Compact | EU AI Act 투명성 의무 전면 시행, 범용 AI 모델 직접 규제 시대</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260819.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Tue, 07 Jul 2026 06:50:00 +0900</pubDate>
       <category>Deep Dive</category>
       <description>[THE AI INSIGHT] Deep Dive | 에이전틱 AI 공장 도입 4배 급등, Gartner &#x27;40%는 2년 내 중단&#x27; 경고</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Briefing | 테슬라 옵티머스, 프리몬트 양산 임박 — 완성차 로봇 시대 개막</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260706.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260706.html</guid>
-      <pubDate>Mon, 06 Jul 2026 06:50:00 +0900</pubDate>
-      <category>Briefing</category>
-      <description>[THE AI INSIGHT] Briefing | 테슬라 옵티머스, 프리몬트 양산 임박 — 완성차 로봇 시대 개막</description>
     </item>
   </channel>
 </rss>
