@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Thu, 20 Aug 2026 06:59:25 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 21 Aug 2026 07:04:39 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Weekly | AI 서밋 서울 개막 — 제조 AI 실전 배치의 주간</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260821.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260821.html</guid>
+      <pubDate>Fri, 21 Aug 2026 06:50:00 +0900</pubDate>
+      <category>Weekly</category>
+      <description>[THE AI INSIGHT] Weekly | AI 서밋 서울 개막 — 제조 AI 실전 배치의 주간</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Guide | GitHub Copilot Agent Plugins 1.0 — 코딩 에이전트 플러그인 표준 시대</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260820.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Wed, 08 Jul 2026 06:50:00 +0900</pubDate>
       <category>Compact</category>
       <description>[THE AI INSIGHT] Compact | 자동차 부품업계, AI 생산성 전환 본격 논의</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Deep Dive | 에이전틱 AI 공장 도입 4배 급등, Gartner &#x27;40%는 2년 내 중단&#x27; 경고</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260707.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260707.html</guid>
-      <pubDate>Tue, 07 Jul 2026 06:50:00 +0900</pubDate>
-      <category>Deep Dive</category>
-      <description>[THE AI INSIGHT] Deep Dive | 에이전틱 AI 공장 도입 4배 급등, Gartner &#x27;40%는 2년 내 중단&#x27; 경고</description>
     </item>
   </channel>
 </rss>
