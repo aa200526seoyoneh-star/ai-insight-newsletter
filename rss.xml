@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Mon, 24 Aug 2026 06:59:28 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 25 Aug 2026 07:05:13 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Deep Dive | Forrester 진단 — 에이전틱 AI &#x27;75% 도입 선언, 양산 소수&#x27;의 현실</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260825.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260825.html</guid>
+      <pubDate>Tue, 25 Aug 2026 06:50:00 +0900</pubDate>
+      <category>Deep Dive</category>
+      <description>[THE AI INSIGHT] Deep Dive | Forrester 진단 — 에이전틱 AI &#x27;75% 도입 선언, 양산 소수&#x27;의 현실</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Briefing | Google-Marvell 122억 달러 AI 칩 딜, 추론 시대 공급망 재편</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260824.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Fri, 10 Jul 2026 06:50:00 +0900</pubDate>
       <category>Weekly</category>
       <description>[THE AI INSIGHT] Weekly | SK하이닉스 나스닥 상장 — 45조원 AI 반도체 대전환</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Guide | ElevenLabs, 음성 AI로 제조 현장 커뮤니케이션을 바꾸다</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260709.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260709.html</guid>
-      <pubDate>Thu, 09 Jul 2026 06:50:00 +0900</pubDate>
-      <category>Guide</category>
-      <description>[THE AI INSIGHT] Guide | ElevenLabs, 음성 AI로 제조 현장 커뮤니케이션을 바꾸다</description>
     </item>
   </channel>
 </rss>
