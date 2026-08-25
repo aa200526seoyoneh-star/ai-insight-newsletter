@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Tue, 25 Aug 2026 07:05:13 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 26 Aug 2026 07:02:55 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Compact | 엔비디아 AI 칩 15% 인상 예고, 칩플레이션 공급망 확산</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260826.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260826.html</guid>
+      <pubDate>Wed, 26 Aug 2026 06:50:00 +0900</pubDate>
+      <category>Compact</category>
+      <description>[THE AI INSIGHT] Compact | 엔비디아 AI 칩 15% 인상 예고, 칩플레이션 공급망 확산</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Deep Dive | Forrester 진단 — 에이전틱 AI &#x27;75% 도입 선언, 양산 소수&#x27;의 현실</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260825.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Mon, 13 Jul 2026 06:50:00 +0900</pubDate>
       <category>Briefing</category>
       <description>[THE AI INSIGHT] Briefing | 오픈AI GPT-5.6 정식 공개 — AI 경쟁, 성능에서 효율로</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Weekly | SK하이닉스 나스닥 상장 — 45조원 AI 반도체 대전환</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260710.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260710.html</guid>
-      <pubDate>Fri, 10 Jul 2026 06:50:00 +0900</pubDate>
-      <category>Weekly</category>
-      <description>[THE AI INSIGHT] Weekly | SK하이닉스 나스닥 상장 — 45조원 AI 반도체 대전환</description>
     </item>
   </channel>
 </rss>
