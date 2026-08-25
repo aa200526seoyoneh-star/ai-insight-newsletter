@@ -1528,6 +1528,16 @@
       if (!wasActive && !body.dataset.loaded) loadVotes();
     }
 
+    // getFeedback 응답 공유 캐시 — 호별 평가와 피드백 관리가 각각 부르면
+    // 프록시 관리자 호출 한도에 걸려 빈 목록처럼 보였음(260825). 한 번만 불러 공유.
+    var _feedbackFetch = null;
+    function fetchFeedbackShared() {
+      if (!_feedbackFetch) {
+        _feedbackFetch = fetchViaWebApp('getFeedback', { password: adminPassword });
+      }
+      return _feedbackFetch;
+    }
+
     function parseVoteReasons(feedbackList) {
       // { nl: { up: {사유:건수}, down: {사유:건수} } } + 전체 합계
       var byNl = {}, allUp = {}, allDown = {};
@@ -1577,9 +1587,10 @@
       try {
         var pair = await Promise.all([
           fetchViaWebApp('getVoteStats', { password: adminPassword }),
-          fetchViaWebApp('getFeedback', { password: adminPassword })
+          fetchFeedbackShared()
         ]);
         body.dataset.loaded = '1';
+        if (pair[1] && pair[1].success === false) _feedbackFetch = null; // 실패 응답은 캐시하지 않음
         renderVotes((pair[0] && pair[0].data) || [], parseVoteReasons((pair[1] && pair[1].data) || []));
       } catch (e) {
         body.dataset.loaded = '1';
@@ -1666,8 +1677,18 @@
       tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:40px;color:var(--text-secondary);">피드백을 불러오는 중...</td></tr>';
 
       try {
-        var resp = await fetchViaWebApp('getFeedback', { password: adminPassword });
+        var resp = await fetchFeedbackShared();
         body.dataset.loaded = '1';
+        // 서버/프록시가 실패를 알려온 경우(호출 한도, 세션 만료 등)는
+        // "피드백 없음"으로 위장하지 않고 사유를 그대로 보여준다.
+        if (resp && resp.success === false) {
+          _feedbackFetch = null;
+          tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:40px;color:var(--text-secondary);">' +
+            escapeHtml(resp.message || '피드백 로드에 실패했습니다.') +
+            ' <a href="#" onclick="retryFeedback();return false;" style="color:var(--primary);font-weight:600;">다시 시도</a></td></tr>';
+          document.getElementById('feedbackStats').innerHTML = '';
+          return;
+        }
         var list = (resp && resp.data) || [];
         if (list.length > 0) {
           var items = list.map(function(r) {
@@ -1691,6 +1712,11 @@
         body.dataset.loaded = '1';
         tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:40px;color:var(--text-secondary);">피드백 로드 실패. 네트워크를 확인하세요.</td></tr>';
       }
+    }
+
+    function retryFeedback() {
+      _feedbackFetch = null;
+      loadFeedback();
     }
 
     // email → name 매핑 (구독자 목록에서 lookup)
