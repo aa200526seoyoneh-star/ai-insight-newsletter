@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Thu, 27 Aug 2026 07:00:50 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 28 Aug 2026 07:02:07 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Weekly | 현대차 &#x27;피지컬 AI 기업&#x27; 선언, 엔비디아 칩값 15% 인상</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260828.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260828.html</guid>
+      <pubDate>Fri, 28 Aug 2026 06:50:00 +0900</pubDate>
+      <category>Weekly</category>
+      <description>[THE AI INSIGHT] Weekly | 현대차 &#x27;피지컬 AI 기업&#x27; 선언, 엔비디아 칩값 15% 인상</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Guide | Gemini Notebook — 3000만이 쓰는 문서 AI가 코드까지 실행한다</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260827.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Wed, 15 Jul 2026 06:50:00 +0900</pubDate>
       <category>Compact</category>
       <description>[THE AI INSIGHT] Compact | 구글-삼성전자, 국내 최대 기업용 AI 도입 — 제미나이 엔터프라이즈 전사 공급</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Deep Dive | Mistral 첫 로보틱스 모델 — 로봇 두뇌, 공장 문턱을 넘다</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260714.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260714.html</guid>
-      <pubDate>Tue, 14 Jul 2026 06:50:00 +0900</pubDate>
-      <category>Deep Dive</category>
-      <description>[THE AI INSIGHT] Deep Dive | Mistral 첫 로보틱스 모델 — 로봇 두뇌, 공장 문턱을 넘다</description>
     </item>
   </channel>
 </rss>
