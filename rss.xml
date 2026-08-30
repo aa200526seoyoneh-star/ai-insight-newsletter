@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Fri, 28 Aug 2026 07:02:07 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 31 Aug 2026 07:54:19 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Monthly Special | NVIDIA 허깅페이스 인수, 칩플레이션, 현대차 로봇 전환 — 8월의 AI</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260831.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260831.html</guid>
+      <pubDate>Mon, 31 Aug 2026 06:50:00 +0900</pubDate>
+      <category>Monthly Special</category>
+      <description>[THE AI INSIGHT] Monthly Special | NVIDIA 허깅페이스 인수, 칩플레이션, 현대차 로봇 전환 — 8월의 AI</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Weekly | 현대차 &#x27;피지컬 AI 기업&#x27; 선언, 엔비디아 칩값 15% 인상</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260828.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Thu, 16 Jul 2026 06:50:00 +0900</pubDate>
       <category>Guide</category>
       <description>[THE AI INSIGHT] Guide | n8n, 셀프호스팅으로 데이터 지키는 AI 워크플로우 자동화</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Compact | 구글-삼성전자, 국내 최대 기업용 AI 도입 — 제미나이 엔터프라이즈 전사 공급</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260715.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260715.html</guid>
-      <pubDate>Wed, 15 Jul 2026 06:50:00 +0900</pubDate>
-      <category>Compact</category>
-      <description>[THE AI INSIGHT] Compact | 구글-삼성전자, 국내 최대 기업용 AI 도입 — 제미나이 엔터프라이즈 전사 공급</description>
     </item>
   </channel>
 </rss>
