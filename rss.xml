@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Wed, 02 Sep 2026 06:59:29 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 03 Sep 2026 07:00:49 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Guide | ChatGPT Work — 답변 도구에서 업무 실행 에이전트로</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260903.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260903.html</guid>
+      <pubDate>Thu, 03 Sep 2026 06:50:00 +0900</pubDate>
+      <category>Guide</category>
+      <description>[THE AI INSIGHT] Guide | ChatGPT Work — 답변 도구에서 업무 실행 에이전트로</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Compact | 과기정통부, 2027 AI 예산 9.4조원 편성 — 2년 새 6배</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260902.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Tue, 21 Jul 2026 06:50:00 +0900</pubDate>
       <category>Deep Dive</category>
       <description>[THE AI INSIGHT] Deep Dive | 현대차, 보스턴다이내믹스 100% 인수 — 휴머노이드가 공장으로 출근한다</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Briefing | 과기정통부 AI 데이터센터 국가전략산업화 — 피지컬 AI 집중 육성</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260720.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260720.html</guid>
-      <pubDate>Mon, 20 Jul 2026 06:50:00 +0900</pubDate>
-      <category>Briefing</category>
-      <description>[THE AI INSIGHT] Briefing | 과기정통부 AI 데이터센터 국가전략산업화 — 피지컬 AI 집중 육성</description>
     </item>
   </channel>
 </rss>
