@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Thu, 03 Sep 2026 07:00:49 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 04 Sep 2026 07:02:02 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Weekly | Anthropic MHS — AI 에이전트, 공장 설비를 직접 제어한다</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260904.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260904.html</guid>
+      <pubDate>Fri, 04 Sep 2026 06:50:00 +0900</pubDate>
+      <category>Weekly</category>
+      <description>[THE AI INSIGHT] Weekly | Anthropic MHS — AI 에이전트, 공장 설비를 직접 제어한다</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Guide | ChatGPT Work — 답변 도구에서 업무 실행 에이전트로</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260903.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Wed, 22 Jul 2026 06:50:00 +0900</pubDate>
       <category>Compact</category>
       <description>[THE AI INSIGHT] Compact | 삼성전자 로봇 컨트롤타워 &#x27;RX사업추진실&#x27; 신설 — 구미 19조원 피지컬 AI 승부수</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Deep Dive | 현대차, 보스턴다이내믹스 100% 인수 — 휴머노이드가 공장으로 출근한다</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260721.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260721.html</guid>
-      <pubDate>Tue, 21 Jul 2026 06:50:00 +0900</pubDate>
-      <category>Deep Dive</category>
-      <description>[THE AI INSIGHT] Deep Dive | 현대차, 보스턴다이내믹스 100% 인수 — 휴머노이드가 공장으로 출근한다</description>
     </item>
   </channel>
 </rss>
