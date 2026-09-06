@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Fri, 04 Sep 2026 07:02:02 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 07 Sep 2026 07:03:11 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Briefing | NVIDIA, 허깅페이스 129억 달러 인수 — AI 플랫폼 수직 통합</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260907.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260907.html</guid>
+      <pubDate>Mon, 07 Sep 2026 06:50:00 +0900</pubDate>
+      <category>Briefing</category>
+      <description>[THE AI INSIGHT] Briefing | NVIDIA, 허깅페이스 129억 달러 인수 — AI 플랫폼 수직 통합</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Weekly | Anthropic MHS — AI 에이전트, 공장 설비를 직접 제어한다</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260904.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Thu, 23 Jul 2026 06:50:00 +0900</pubDate>
       <category>Guide</category>
       <description>[THE AI INSIGHT] Guide | Cursor — 백그라운드 에이전트로 진화한 AI 코드 에디터</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Compact | 삼성전자 로봇 컨트롤타워 &#x27;RX사업추진실&#x27; 신설 — 구미 19조원 피지컬 AI 승부수</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260722.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260722.html</guid>
-      <pubDate>Wed, 22 Jul 2026 06:50:00 +0900</pubDate>
-      <category>Compact</category>
-      <description>[THE AI INSIGHT] Compact | 삼성전자 로봇 컨트롤타워 &#x27;RX사업추진실&#x27; 신설 — 구미 19조원 피지컬 AI 승부수</description>
     </item>
   </channel>
 </rss>
