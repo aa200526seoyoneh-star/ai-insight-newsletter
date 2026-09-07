@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Mon, 07 Sep 2026 07:03:11 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 08 Sep 2026 07:09:16 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Deep Dive | 과기정통부/중기부 피지컬 AI 3단계 로드맵 — 중소 제조 전환 시동</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260908.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260908.html</guid>
+      <pubDate>Tue, 08 Sep 2026 06:50:00 +0900</pubDate>
+      <category>Deep Dive</category>
+      <description>[THE AI INSIGHT] Deep Dive | 과기정통부/중기부 피지컬 AI 3단계 로드맵 — 중소 제조 전환 시동</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Briefing | NVIDIA, 허깅페이스 129억 달러 인수 — AI 플랫폼 수직 통합</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260907.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Fri, 24 Jul 2026 06:50:00 +0900</pubDate>
       <category>Weekly</category>
       <description>[THE AI INSIGHT] Weekly | 삼성 RX사업추진실 신설, 피지컬 AI 3축 동시 착지한 한 주</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Guide | Cursor — 백그라운드 에이전트로 진화한 AI 코드 에디터</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260723.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260723.html</guid>
-      <pubDate>Thu, 23 Jul 2026 06:50:00 +0900</pubDate>
-      <category>Guide</category>
-      <description>[THE AI INSIGHT] Guide | Cursor — 백그라운드 에이전트로 진화한 AI 코드 에디터</description>
     </item>
   </channel>
 </rss>
