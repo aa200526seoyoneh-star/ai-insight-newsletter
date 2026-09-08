@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Tue, 08 Sep 2026 07:09:16 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 09 Sep 2026 06:59:55 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Compact | 삼성전자, Mistral AI 4.7조 투자 주도 — 반도체 특화 AI 시동</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260909.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260909.html</guid>
+      <pubDate>Wed, 09 Sep 2026 06:50:00 +0900</pubDate>
+      <category>Compact</category>
+      <description>[THE AI INSIGHT] Compact | 삼성전자, Mistral AI 4.7조 투자 주도 — 반도체 특화 AI 시동</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Deep Dive | 과기정통부/중기부 피지컬 AI 3단계 로드맵 — 중소 제조 전환 시동</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260908.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Mon, 27 Jul 2026 06:50:00 +0900</pubDate>
       <category>Briefing</category>
       <description>[THE AI INSIGHT] Briefing | 한미 AI 서밋, 9500억 달러 반도체-AI 동맹 체결</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Weekly | 삼성 RX사업추진실 신설, 피지컬 AI 3축 동시 착지한 한 주</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260724.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260724.html</guid>
-      <pubDate>Fri, 24 Jul 2026 06:50:00 +0900</pubDate>
-      <category>Weekly</category>
-      <description>[THE AI INSIGHT] Weekly | 삼성 RX사업추진실 신설, 피지컬 AI 3축 동시 착지한 한 주</description>
     </item>
   </channel>
 </rss>
