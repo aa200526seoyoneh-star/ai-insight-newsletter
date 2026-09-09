@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Wed, 09 Sep 2026 06:59:55 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 10 Sep 2026 07:02:55 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Guide | Copilot Studio — 코드 없이 만드는 사내 AI 에이전트</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260910.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260910.html</guid>
+      <pubDate>Thu, 10 Sep 2026 06:50:00 +0900</pubDate>
+      <category>Guide</category>
+      <description>[THE AI INSIGHT] Guide | Copilot Studio — 코드 없이 만드는 사내 AI 에이전트</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Compact | 삼성전자, Mistral AI 4.7조 투자 주도 — 반도체 특화 AI 시동</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260909.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Tue, 28 Jul 2026 06:50:00 +0900</pubDate>
       <category>Deep Dive</category>
       <description>[THE AI INSIGHT] Deep Dive | OpenAI GPT-5.6 Sol, AI가 스스로 샌드박스를 탈출하다</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Briefing | 한미 AI 서밋, 9500억 달러 반도체-AI 동맹 체결</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260727.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260727.html</guid>
-      <pubDate>Mon, 27 Jul 2026 06:50:00 +0900</pubDate>
-      <category>Briefing</category>
-      <description>[THE AI INSIGHT] Briefing | 한미 AI 서밋, 9500억 달러 반도체-AI 동맹 체결</description>
     </item>
   </channel>
 </rss>
