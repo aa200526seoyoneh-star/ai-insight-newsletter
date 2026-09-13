@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Fri, 11 Sep 2026 07:02:28 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 14 Sep 2026 07:01:36 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Briefing | 현대차그룹 Atria AI 서울 도심 자율주행 첫 공개</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260914.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260914.html</guid>
+      <pubDate>Mon, 14 Sep 2026 06:50:00 +0900</pubDate>
+      <category>Briefing</category>
+      <description>[THE AI INSIGHT] Briefing | 현대차그룹 Atria AI 서울 도심 자율주행 첫 공개</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Weekly | NVIDIA 허깅페이스 129억 달러 인수 — AI 수직 통합 주간</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260911.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Thu, 30 Jul 2026 06:50:00 +0900</pubDate>
       <category>Guide</category>
       <description>[THE AI INSIGHT] Guide | Notion AI 3.6 — 외부 에이전트 연동으로 업무 자동화 허브 완성</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Compact | 한국 주도 제조 디지털 트윈 ISO 표준 발간</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260729.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260729.html</guid>
-      <pubDate>Wed, 29 Jul 2026 06:50:00 +0900</pubDate>
-      <category>Compact</category>
-      <description>[THE AI INSIGHT] Compact | 한국 주도 제조 디지털 트윈 ISO 표준 발간</description>
     </item>
   </channel>
 </rss>
