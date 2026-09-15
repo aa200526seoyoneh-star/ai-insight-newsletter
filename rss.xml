@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Tue, 15 Sep 2026 07:10:34 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 16 Sep 2026 07:00:55 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Compact | LG &#x27;전문가 AI&#x27;로 자율공장 가속, Cloudflare AI 크롤러 차단 시행</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260916.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260916.html</guid>
+      <pubDate>Wed, 16 Sep 2026 06:50:00 +0900</pubDate>
+      <category>Compact</category>
+      <description>[THE AI INSIGHT] Compact | LG &#x27;전문가 AI&#x27;로 자율공장 가속, Cloudflare AI 크롤러 차단 시행</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Deep Dive | IMTS 2026 개막 — 피지컬 AI와 에이전틱 AI, 제조 현장에서 합류하다</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260915.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Mon, 03 Aug 2026 06:50:00 +0900</pubDate>
       <category>Briefing</category>
       <description>[THE AI INSIGHT] Briefing | 현대차 피지컬 AI 청사진 — 디바이스에서 도시까지</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Monthly Special | 한미 AI 서밋 9,500억 달러 동맹 — 7월의 AI 한 달 정리</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260731.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202607/newsletter_20260731.html</guid>
-      <pubDate>Fri, 31 Jul 2026 06:50:00 +0900</pubDate>
-      <category>Monthly Special</category>
-      <description>[THE AI INSIGHT] Monthly Special | 한미 AI 서밋 9,500억 달러 동맹 — 7월의 AI 한 달 정리</description>
     </item>
   </channel>
 </rss>
