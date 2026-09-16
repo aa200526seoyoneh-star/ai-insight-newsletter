@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Wed, 16 Sep 2026 07:00:55 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 17 Sep 2026 07:03:13 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Guide | Claude 43개 워크플로 업데이트, 문서 분석에서 업무 자동화까지</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260917.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260917.html</guid>
+      <pubDate>Thu, 17 Sep 2026 06:50:00 +0900</pubDate>
+      <category>Guide</category>
+      <description>[THE AI INSIGHT] Guide | Claude 43개 워크플로 업데이트, 문서 분석에서 업무 자동화까지</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Compact | LG &#x27;전문가 AI&#x27;로 자율공장 가속, Cloudflare AI 크롤러 차단 시행</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260916.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Tue, 04 Aug 2026 06:50:00 +0900</pubDate>
       <category>Deep Dive</category>
       <description>[THE AI INSIGHT] Deep Dive | Physical AI 공장 진입 가속 — 자동화 격차가 거래 자격을 가른다</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Briefing | 현대차 피지컬 AI 청사진 — 디바이스에서 도시까지</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260803.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260803.html</guid>
-      <pubDate>Mon, 03 Aug 2026 06:50:00 +0900</pubDate>
-      <category>Briefing</category>
-      <description>[THE AI INSIGHT] Briefing | 현대차 피지컬 AI 청사진 — 디바이스에서 도시까지</description>
     </item>
   </channel>
 </rss>
