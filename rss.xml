@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Thu, 17 Sep 2026 07:03:13 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 18 Sep 2026 07:11:19 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Weekly | 삼성전자 테슬라 AI5칩 2nm 시험생산, 반도체-자동차 공급망 새 국면</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260918.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260918.html</guid>
+      <pubDate>Fri, 18 Sep 2026 06:50:00 +0900</pubDate>
+      <category>Weekly</category>
+      <description>[THE AI INSIGHT] Weekly | 삼성전자 테슬라 AI5칩 2nm 시험생산, 반도체-자동차 공급망 새 국면</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Guide | Claude 43개 워크플로 업데이트, 문서 분석에서 업무 자동화까지</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260917.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Wed, 05 Aug 2026 06:50:00 +0900</pubDate>
       <category>Compact</category>
       <description>[THE AI INSIGHT] Compact | 삼성전자, 차세대 3D 메모리 &#x27;zHBM&#x27; FMS 2026에서 최초 공개</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Deep Dive | Physical AI 공장 진입 가속 — 자동화 격차가 거래 자격을 가른다</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260804.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260804.html</guid>
-      <pubDate>Tue, 04 Aug 2026 06:50:00 +0900</pubDate>
-      <category>Deep Dive</category>
-      <description>[THE AI INSIGHT] Deep Dive | Physical AI 공장 진입 가속 — 자동화 격차가 거래 자격을 가른다</description>
     </item>
   </channel>
 </rss>
