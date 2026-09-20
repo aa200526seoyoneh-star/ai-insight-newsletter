@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Fri, 18 Sep 2026 07:11:19 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 21 Sep 2026 07:02:47 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Briefing | 삼성 AI포럼, OpenAI 칩 총괄이 에이전틱 전환 기조연설</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260921.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260921.html</guid>
+      <pubDate>Mon, 21 Sep 2026 06:50:00 +0900</pubDate>
+      <category>Briefing</category>
+      <description>[THE AI INSIGHT] Briefing | 삼성 AI포럼, OpenAI 칩 총괄이 에이전틱 전환 기조연설</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Weekly | 삼성전자 테슬라 AI5칩 2nm 시험생산, 반도체-자동차 공급망 새 국면</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260918.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Mon, 10 Aug 2026 06:50:00 +0900</pubDate>
       <category>Briefing</category>
       <description>[THE AI INSIGHT] Briefing | 구글 딥마인드 대개편 — 하사비스 물러나고 제프 딘 퇴사</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Compact | 삼성전자, 차세대 3D 메모리 &#x27;zHBM&#x27; FMS 2026에서 최초 공개</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260805.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260805.html</guid>
-      <pubDate>Wed, 05 Aug 2026 06:50:00 +0900</pubDate>
-      <category>Compact</category>
-      <description>[THE AI INSIGHT] Compact | 삼성전자, 차세대 3D 메모리 &#x27;zHBM&#x27; FMS 2026에서 최초 공개</description>
     </item>
   </channel>
 </rss>
