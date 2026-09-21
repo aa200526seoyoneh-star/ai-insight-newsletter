@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Mon, 21 Sep 2026 07:02:47 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 22 Sep 2026 07:06:15 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Deep Dive | NVIDIA &quot;모든 산업 기업이 로보틱스 기업이 된다&quot; — 피지컬 AI 양산 시대와 부품사의 선택</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260922.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260922.html</guid>
+      <pubDate>Tue, 22 Sep 2026 06:50:00 +0900</pubDate>
+      <category>Deep Dive</category>
+      <description>[THE AI INSIGHT] Deep Dive | NVIDIA &quot;모든 산업 기업이 로보틱스 기업이 된다&quot; — 피지컬 AI 양산 시대와 부품사의 선택</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Briefing | 삼성 AI포럼, OpenAI 칩 총괄이 에이전틱 전환 기조연설</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260921.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Tue, 11 Aug 2026 06:50:00 +0900</pubDate>
       <category>Deep Dive</category>
       <description>[THE AI INSIGHT] Deep Dive | Hadrian $8B — AI 자율 공장이 제조업 판도를 바꾼다</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Briefing | 구글 딥마인드 대개편 — 하사비스 물러나고 제프 딘 퇴사</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260810.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260810.html</guid>
-      <pubDate>Mon, 10 Aug 2026 06:50:00 +0900</pubDate>
-      <category>Briefing</category>
-      <description>[THE AI INSIGHT] Briefing | 구글 딥마인드 대개편 — 하사비스 물러나고 제프 딘 퇴사</description>
     </item>
   </channel>
 </rss>
