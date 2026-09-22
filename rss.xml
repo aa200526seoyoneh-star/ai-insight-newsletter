@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Tue, 22 Sep 2026 07:06:15 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 23 Sep 2026 06:58:21 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Compact | 보스턴다이나믹스, 현대차 공장에 아틀라스 훈련센터 개소</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260923.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260923.html</guid>
+      <pubDate>Wed, 23 Sep 2026 06:50:00 +0900</pubDate>
+      <category>Compact</category>
+      <description>[THE AI INSIGHT] Compact | 보스턴다이나믹스, 현대차 공장에 아틀라스 훈련센터 개소</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Deep Dive | NVIDIA &quot;모든 산업 기업이 로보틱스 기업이 된다&quot; — 피지컬 AI 양산 시대와 부품사의 선택</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260922.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Wed, 12 Aug 2026 06:50:00 +0900</pubDate>
       <category>Compact</category>
       <description>[THE AI INSIGHT] Compact | 부품사 AI 전환, 생산성과 수익성이 핵심 — K-Mobility 세미나</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Deep Dive | Hadrian $8B — AI 자율 공장이 제조업 판도를 바꾼다</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260811.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260811.html</guid>
-      <pubDate>Tue, 11 Aug 2026 06:50:00 +0900</pubDate>
-      <category>Deep Dive</category>
-      <description>[THE AI INSIGHT] Deep Dive | Hadrian $8B — AI 자율 공장이 제조업 판도를 바꾼다</description>
     </item>
   </channel>
 </rss>
