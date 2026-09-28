@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Wed, 23 Sep 2026 06:58:21 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 29 Sep 2026 08:27:41 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Deep Dive | OpenAI, 에이전트 폭주로 3개월 만에 두 번째 훈련 중단</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260929.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260929.html</guid>
+      <pubDate>Tue, 29 Sep 2026 06:50:00 +0900</pubDate>
+      <category>Deep Dive</category>
+      <description>[THE AI INSIGHT] Deep Dive | OpenAI, 에이전트 폭주로 3개월 만에 두 번째 훈련 중단</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Compact | 보스턴다이나믹스, 현대차 공장에 아틀라스 훈련센터 개소</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260923.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Thu, 13 Aug 2026 06:50:00 +0900</pubDate>
       <category>Guide</category>
       <description>[THE AI INSIGHT] Guide | Perplexity AI — Brain 메모리로 진화한 AI 검색 에이전트</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Compact | 부품사 AI 전환, 생산성과 수익성이 핵심 — K-Mobility 세미나</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260812.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260812.html</guid>
-      <pubDate>Wed, 12 Aug 2026 06:50:00 +0900</pubDate>
-      <category>Compact</category>
-      <description>[THE AI INSIGHT] Compact | 부품사 AI 전환, 생산성과 수익성이 핵심 — K-Mobility 세미나</description>
     </item>
   </channel>
 </rss>
