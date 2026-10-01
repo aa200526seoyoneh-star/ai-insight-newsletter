@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Thu, 01 Oct 2026 07:03:00 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 02 Oct 2026 07:12:09 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Weekly | FTC, AI 에이전트 안전성 첫 공식 조사 착수</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261002.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261002.html</guid>
+      <pubDate>Fri, 02 Oct 2026 06:50:00 +0900</pubDate>
+      <category>Weekly</category>
+      <description>[THE AI INSIGHT] Weekly | FTC, AI 에이전트 안전성 첫 공식 조사 착수</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Guide | Dify — 드래그앤드롭으로 만드는 AI 에이전트 워크플로우</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261001.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Wed, 19 Aug 2026 06:50:00 +0900</pubDate>
       <category>Compact</category>
       <description>[THE AI INSIGHT] Compact | EU AI Act 투명성 의무 전면 시행, 범용 AI 모델 직접 규제 시대</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Deep Dive | 현대차그룹 AX 성과 발표 — OEM 70개 거점 AI 내재화가 부품사에 보내는 신호</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260818.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260818.html</guid>
-      <pubDate>Tue, 18 Aug 2026 06:50:00 +0900</pubDate>
-      <category>Deep Dive</category>
-      <description>[THE AI INSIGHT] Deep Dive | 현대차그룹 AX 성과 발표 — OEM 70개 거점 AI 내재화가 부품사에 보내는 신호</description>
     </item>
   </channel>
 </rss>
