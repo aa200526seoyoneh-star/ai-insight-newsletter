@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Fri, 02 Oct 2026 07:12:09 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 06 Oct 2026 07:07:58 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Deep Dive | 현대차 &#x27;다크 팩토리 247&#x27; 선언 — 1차 부품사의 AI 전환 기준이 달라진다</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261006.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261006.html</guid>
+      <pubDate>Tue, 06 Oct 2026 06:50:00 +0900</pubDate>
+      <category>Deep Dive</category>
+      <description>[THE AI INSIGHT] Deep Dive | 현대차 &#x27;다크 팩토리 247&#x27; 선언 — 1차 부품사의 AI 전환 기준이 달라진다</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Weekly | FTC, AI 에이전트 안전성 첫 공식 조사 착수</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261002.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Thu, 20 Aug 2026 06:50:00 +0900</pubDate>
       <category>Guide</category>
       <description>[THE AI INSIGHT] Guide | GitHub Copilot Agent Plugins 1.0 — 코딩 에이전트 플러그인 표준 시대</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Compact | EU AI Act 투명성 의무 전면 시행, 범용 AI 모델 직접 규제 시대</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260819.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260819.html</guid>
-      <pubDate>Wed, 19 Aug 2026 06:50:00 +0900</pubDate>
-      <category>Compact</category>
-      <description>[THE AI INSIGHT] Compact | EU AI Act 투명성 의무 전면 시행, 범용 AI 모델 직접 규제 시대</description>
     </item>
   </channel>
 </rss>
