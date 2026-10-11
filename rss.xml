@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Thu, 08 Oct 2026 07:04:15 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 12 Oct 2026 07:02:29 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Briefing | Google, 기업용 만능 AI 에이전트 출시 — Claude도 탑재</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261012.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261012.html</guid>
+      <pubDate>Mon, 12 Oct 2026 06:50:00 +0900</pubDate>
+      <category>Briefing</category>
+      <description>[THE AI INSIGHT] Briefing | Google, 기업용 만능 AI 에이전트 출시 — Claude도 탑재</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Guide | Google AI Studio — 프롬프트 한 줄이면 업무 앱 프로토타입</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261008.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Tue, 25 Aug 2026 06:50:00 +0900</pubDate>
       <category>Deep Dive</category>
       <description>[THE AI INSIGHT] Deep Dive | Forrester 진단 — 에이전틱 AI &#x27;75% 도입 선언, 양산 소수&#x27;의 현실</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Briefing | Google-Marvell 122억 달러 AI 칩 딜, 추론 시대 공급망 재편</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260824.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260824.html</guid>
-      <pubDate>Mon, 24 Aug 2026 06:50:00 +0900</pubDate>
-      <category>Briefing</category>
-      <description>[THE AI INSIGHT] Briefing | Google-Marvell 122억 달러 AI 칩 딜, 추론 시대 공급망 재편</description>
     </item>
   </channel>
 </rss>
