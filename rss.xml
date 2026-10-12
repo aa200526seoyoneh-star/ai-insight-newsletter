@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Mon, 12 Oct 2026 07:02:29 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 13 Oct 2026 07:06:51 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Deep Dive | 구글 제미나이 에이전트, 이메일 갖춘 &#x27;AI 동료&#x27; 시대 열다</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261013.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261013.html</guid>
+      <pubDate>Tue, 13 Oct 2026 06:50:00 +0900</pubDate>
+      <category>Deep Dive</category>
+      <description>[THE AI INSIGHT] Deep Dive | 구글 제미나이 에이전트, 이메일 갖춘 &#x27;AI 동료&#x27; 시대 열다</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Briefing | Google, 기업용 만능 AI 에이전트 출시 — Claude도 탑재</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261012.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Wed, 26 Aug 2026 06:50:00 +0900</pubDate>
       <category>Compact</category>
       <description>[THE AI INSIGHT] Compact | 엔비디아 AI 칩 15% 인상 예고, 칩플레이션 공급망 확산</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Deep Dive | Forrester 진단 — 에이전틱 AI &#x27;75% 도입 선언, 양산 소수&#x27;의 현실</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260825.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260825.html</guid>
-      <pubDate>Tue, 25 Aug 2026 06:50:00 +0900</pubDate>
-      <category>Deep Dive</category>
-      <description>[THE AI INSIGHT] Deep Dive | Forrester 진단 — 에이전틱 AI &#x27;75% 도입 선언, 양산 소수&#x27;의 현실</description>
     </item>
   </channel>
 </rss>
