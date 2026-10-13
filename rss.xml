@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Tue, 13 Oct 2026 07:06:51 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 14 Oct 2026 07:05:57 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Compact | 삼성전자 스마트공장 4.0 — 중소기업 제조AI 2028년 40% 확대</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261014.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261014.html</guid>
+      <pubDate>Wed, 14 Oct 2026 06:50:00 +0900</pubDate>
+      <category>Compact</category>
+      <description>[THE AI INSIGHT] Compact | 삼성전자 스마트공장 4.0 — 중소기업 제조AI 2028년 40% 확대</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Deep Dive | 구글 제미나이 에이전트, 이메일 갖춘 &#x27;AI 동료&#x27; 시대 열다</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261013.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Thu, 27 Aug 2026 06:50:00 +0900</pubDate>
       <category>Guide</category>
       <description>[THE AI INSIGHT] Guide | Gemini Notebook — 3000만이 쓰는 문서 AI가 코드까지 실행한다</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Compact | 엔비디아 AI 칩 15% 인상 예고, 칩플레이션 공급망 확산</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260826.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202608/newsletter_20260826.html</guid>
-      <pubDate>Wed, 26 Aug 2026 06:50:00 +0900</pubDate>
-      <category>Compact</category>
-      <description>[THE AI INSIGHT] Compact | 엔비디아 AI 칩 15% 인상 예고, 칩플레이션 공급망 확산</description>
     </item>
   </channel>
 </rss>
