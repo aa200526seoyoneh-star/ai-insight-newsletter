@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Tue, 20 Oct 2026 07:05:12 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 21 Oct 2026 07:19:21 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Compact | OpenAI 출신이 세운 제조 AI 스타트업 Arda, 15억 달러 기업가치</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261021.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261021.html</guid>
+      <pubDate>Wed, 21 Oct 2026 06:50:00 +0900</pubDate>
+      <category>Compact</category>
+      <description>[THE AI INSIGHT] Compact | OpenAI 출신이 세운 제조 AI 스타트업 Arda, 15억 달러 기업가치</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Deep Dive | NVIDIA, 유럽 산업 AI에 100억 달러 — GTC Berlin 개막</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261020.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Thu, 03 Sep 2026 06:50:00 +0900</pubDate>
       <category>Guide</category>
       <description>[THE AI INSIGHT] Guide | ChatGPT Work — 답변 도구에서 업무 실행 에이전트로</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Compact | 과기정통부, 2027 AI 예산 9.4조원 편성 — 2년 새 6배</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260902.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260902.html</guid>
-      <pubDate>Wed, 02 Sep 2026 06:50:00 +0900</pubDate>
-      <category>Compact</category>
-      <description>[THE AI INSIGHT] Compact | 과기정통부, 2027 AI 예산 9.4조원 편성 — 2년 새 6배</description>
     </item>
   </channel>
 </rss>
