@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Wed, 21 Oct 2026 07:19:21 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 22 Oct 2026 07:01:38 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Guide | Cursor — AI 에이전트가 PR 56%를 머지하는 코딩 IDE</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261022.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261022.html</guid>
+      <pubDate>Thu, 22 Oct 2026 06:50:00 +0900</pubDate>
+      <category>Guide</category>
+      <description>[THE AI INSIGHT] Guide | Cursor — AI 에이전트가 PR 56%를 머지하는 코딩 IDE</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Compact | OpenAI 출신이 세운 제조 AI 스타트업 Arda, 15억 달러 기업가치</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261021.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Fri, 04 Sep 2026 06:50:00 +0900</pubDate>
       <category>Weekly</category>
       <description>[THE AI INSIGHT] Weekly | Anthropic MHS — AI 에이전트, 공장 설비를 직접 제어한다</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Guide | ChatGPT Work — 답변 도구에서 업무 실행 에이전트로</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260903.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260903.html</guid>
-      <pubDate>Thu, 03 Sep 2026 06:50:00 +0900</pubDate>
-      <category>Guide</category>
-      <description>[THE AI INSIGHT] Guide | ChatGPT Work — 답변 도구에서 업무 실행 에이전트로</description>
     </item>
   </channel>
 </rss>
