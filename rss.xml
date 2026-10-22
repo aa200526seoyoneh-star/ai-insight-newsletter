@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Thu, 22 Oct 2026 07:01:38 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 23 Oct 2026 07:01:24 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Weekly | NVIDIA &#x27;AI는 제조 산업&#x27; 선언, Arda 15억$ 데뷔, 현대차 200건 기술 공개</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261023.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261023.html</guid>
+      <pubDate>Fri, 23 Oct 2026 06:50:00 +0900</pubDate>
+      <category>Weekly</category>
+      <description>[THE AI INSIGHT] Weekly | NVIDIA &#x27;AI는 제조 산업&#x27; 선언, Arda 15억$ 데뷔, 현대차 200건 기술 공개</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Guide | Cursor — AI 에이전트가 PR 56%를 머지하는 코딩 IDE</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261022.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Mon, 07 Sep 2026 06:50:00 +0900</pubDate>
       <category>Briefing</category>
       <description>[THE AI INSIGHT] Briefing | NVIDIA, 허깅페이스 129억 달러 인수 — AI 플랫폼 수직 통합</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Weekly | Anthropic MHS — AI 에이전트, 공장 설비를 직접 제어한다</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260904.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260904.html</guid>
-      <pubDate>Fri, 04 Sep 2026 06:50:00 +0900</pubDate>
-      <category>Weekly</category>
-      <description>[THE AI INSIGHT] Weekly | Anthropic MHS — AI 에이전트, 공장 설비를 직접 제어한다</description>
     </item>
   </channel>
 </rss>
