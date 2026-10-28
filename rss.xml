@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Wed, 28 Oct 2026 06:57:34 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 29 Oct 2026 07:09:02 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Guide | Gamma 5 — AI 프레젠테이션의 &#x27;AI 냄새&#x27; 지우다</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261029.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261029.html</guid>
+      <pubDate>Thu, 29 Oct 2026 06:50:00 +0900</pubDate>
+      <category>Guide</category>
+      <description>[THE AI INSIGHT] Guide | Gamma 5 — AI 프레젠테이션의 &#x27;AI 냄새&#x27; 지우다</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Compact | SAP TechEd, AI 에이전트로 &#x27;자율 기업&#x27; 본격 선언</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261028.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Fri, 11 Sep 2026 06:50:00 +0900</pubDate>
       <category>Weekly</category>
       <description>[THE AI INSIGHT] Weekly | NVIDIA 허깅페이스 129억 달러 인수 — AI 수직 통합 주간</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Guide | Copilot Studio — 코드 없이 만드는 사내 AI 에이전트</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260910.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260910.html</guid>
-      <pubDate>Thu, 10 Sep 2026 06:50:00 +0900</pubDate>
-      <category>Guide</category>
-      <description>[THE AI INSIGHT] Guide | Copilot Studio — 코드 없이 만드는 사내 AI 에이전트</description>
     </item>
   </channel>
 </rss>
