@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Fri, 30 Oct 2026 06:59:47 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 02 Nov 2026 07:05:31 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Briefing | Anthropic 역대 최대 $100B AI 상장 시동, 올트먼 삼성/SK 동시 회동</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261102.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261102.html</guid>
+      <pubDate>Mon, 02 Nov 2026 06:50:00 +0900</pubDate>
+      <category>Briefing</category>
+      <description>[THE AI INSIGHT] Briefing | Anthropic 역대 최대 $100B AI 상장 시동, 올트먼 삼성/SK 동시 회동</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Monthly Special | GM AI 평가 기준 도입, Tesla 로봇 양산 — OEM이 판을 바꾼 10월</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261030.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Tue, 15 Sep 2026 06:50:00 +0900</pubDate>
       <category>Deep Dive</category>
       <description>[THE AI INSIGHT] Deep Dive | IMTS 2026 개막 — 피지컬 AI와 에이전틱 AI, 제조 현장에서 합류하다</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Briefing | 현대차그룹 Atria AI 서울 도심 자율주행 첫 공개</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260914.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260914.html</guid>
-      <pubDate>Mon, 14 Sep 2026 06:50:00 +0900</pubDate>
-      <category>Briefing</category>
-      <description>[THE AI INSIGHT] Briefing | 현대차그룹 Atria AI 서울 도심 자율주행 첫 공개</description>
     </item>
   </channel>
 </rss>
