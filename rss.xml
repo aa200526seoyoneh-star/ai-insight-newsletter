@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Mon, 02 Nov 2026 07:05:31 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 03 Nov 2026 07:06:48 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Deep Dive | 현대차/기아 &#x27;폴라리스&#x27; AI 에이전트, 자율공장 시대를 열다</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261103.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261103.html</guid>
+      <pubDate>Tue, 03 Nov 2026 06:50:00 +0900</pubDate>
+      <category>Deep Dive</category>
+      <description>[THE AI INSIGHT] Deep Dive | 현대차/기아 &#x27;폴라리스&#x27; AI 에이전트, 자율공장 시대를 열다</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Briefing | Anthropic 역대 최대 $100B AI 상장 시동, 올트먼 삼성/SK 동시 회동</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261102.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Wed, 16 Sep 2026 06:50:00 +0900</pubDate>
       <category>Compact</category>
       <description>[THE AI INSIGHT] Compact | LG &#x27;전문가 AI&#x27;로 자율공장 가속, Cloudflare AI 크롤러 차단 시행</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Deep Dive | IMTS 2026 개막 — 피지컬 AI와 에이전틱 AI, 제조 현장에서 합류하다</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260915.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260915.html</guid>
-      <pubDate>Tue, 15 Sep 2026 06:50:00 +0900</pubDate>
-      <category>Deep Dive</category>
-      <description>[THE AI INSIGHT] Deep Dive | IMTS 2026 개막 — 피지컬 AI와 에이전틱 AI, 제조 현장에서 합류하다</description>
     </item>
   </channel>
 </rss>
