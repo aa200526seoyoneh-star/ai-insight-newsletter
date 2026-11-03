@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Tue, 03 Nov 2026 07:06:48 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 04 Nov 2026 07:00:39 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Compact | 산업부, AI팩토리 245곳 성과 기반 &#x27;풀스택&#x27; 확산 4단계 전략 가동</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261104.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261104.html</guid>
+      <pubDate>Wed, 04 Nov 2026 06:50:00 +0900</pubDate>
+      <category>Compact</category>
+      <description>[THE AI INSIGHT] Compact | 산업부, AI팩토리 245곳 성과 기반 &#x27;풀스택&#x27; 확산 4단계 전략 가동</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Deep Dive | 현대차/기아 &#x27;폴라리스&#x27; AI 에이전트, 자율공장 시대를 열다</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261103.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Thu, 17 Sep 2026 06:50:00 +0900</pubDate>
       <category>Guide</category>
       <description>[THE AI INSIGHT] Guide | Claude 43개 워크플로 업데이트, 문서 분석에서 업무 자동화까지</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Compact | LG &#x27;전문가 AI&#x27;로 자율공장 가속, Cloudflare AI 크롤러 차단 시행</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260916.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260916.html</guid>
-      <pubDate>Wed, 16 Sep 2026 06:50:00 +0900</pubDate>
-      <category>Compact</category>
-      <description>[THE AI INSIGHT] Compact | LG &#x27;전문가 AI&#x27;로 자율공장 가속, Cloudflare AI 크롤러 차단 시행</description>
     </item>
   </channel>
 </rss>
