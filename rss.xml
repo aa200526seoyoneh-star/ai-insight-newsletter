@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Thu, 05 Nov 2026 07:02:33 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 06 Nov 2026 07:00:19 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Weekly | Anthropic Q3 $17B 공개, 산업부 제조 AI 전국 확산 시동</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261106.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261106.html</guid>
+      <pubDate>Fri, 06 Nov 2026 06:50:00 +0900</pubDate>
+      <category>Weekly</category>
+      <description>[THE AI INSIGHT] Weekly | Anthropic Q3 $17B 공개, 산업부 제조 AI 전국 확산 시동</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Guide | SAP Joule Work — 제조 어시스턴트 정식 출시, ERP 위의 AI 비서</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261105.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Mon, 21 Sep 2026 06:50:00 +0900</pubDate>
       <category>Briefing</category>
       <description>[THE AI INSIGHT] Briefing | 삼성 AI포럼, OpenAI 칩 총괄이 에이전틱 전환 기조연설</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Weekly | 삼성전자 테슬라 AI5칩 2nm 시험생산, 반도체-자동차 공급망 새 국면</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260918.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260918.html</guid>
-      <pubDate>Fri, 18 Sep 2026 06:50:00 +0900</pubDate>
-      <category>Weekly</category>
-      <description>[THE AI INSIGHT] Weekly | 삼성전자 테슬라 AI5칩 2nm 시험생산, 반도체-자동차 공급망 새 국면</description>
     </item>
   </channel>
 </rss>
