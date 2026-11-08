@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Fri, 06 Nov 2026 07:00:19 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 09 Nov 2026 07:02:20 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Briefing | NVIDIA AI Day Seoul 오늘 개막, 피지컬 AI 15개 세션 삼성/SK/LG 총출동</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261109.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261109.html</guid>
+      <pubDate>Mon, 09 Nov 2026 06:50:00 +0900</pubDate>
+      <category>Briefing</category>
+      <description>[THE AI INSIGHT] Briefing | NVIDIA AI Day Seoul 오늘 개막, 피지컬 AI 15개 세션 삼성/SK/LG 총출동</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Weekly | Anthropic Q3 $17B 공개, 산업부 제조 AI 전국 확산 시동</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261106.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Tue, 22 Sep 2026 06:50:00 +0900</pubDate>
       <category>Deep Dive</category>
       <description>[THE AI INSIGHT] Deep Dive | NVIDIA &quot;모든 산업 기업이 로보틱스 기업이 된다&quot; — 피지컬 AI 양산 시대와 부품사의 선택</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Briefing | 삼성 AI포럼, OpenAI 칩 총괄이 에이전틱 전환 기조연설</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260921.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260921.html</guid>
-      <pubDate>Mon, 21 Sep 2026 06:50:00 +0900</pubDate>
-      <category>Briefing</category>
-      <description>[THE AI INSIGHT] Briefing | 삼성 AI포럼, OpenAI 칩 총괄이 에이전틱 전환 기조연설</description>
     </item>
   </channel>
 </rss>
