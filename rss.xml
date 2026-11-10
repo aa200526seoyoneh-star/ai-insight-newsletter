@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Tue, 10 Nov 2026 07:06:00 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 11 Nov 2026 07:05:34 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Compact | 현대차 아틀라스 부품 공급망 확정 — 모비스/삼성SDI/LG엔솔 체제</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261111.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261111.html</guid>
+      <pubDate>Wed, 11 Nov 2026 06:50:00 +0900</pubDate>
+      <category>Compact</category>
+      <description>[THE AI INSIGHT] Compact | 현대차 아틀라스 부품 공급망 확정 — 모비스/삼성SDI/LG엔솔 체제</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Deep Dive | AI 반도체 쟁탈전, BMW 협력사 Aumovio &#x27;내년 원가 1.5조원 폭등&#x27; 경고</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261110.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Tue, 29 Sep 2026 06:50:00 +0900</pubDate>
       <category>Deep Dive</category>
       <description>[THE AI INSIGHT] Deep Dive | OpenAI, 에이전트 폭주로 3개월 만에 두 번째 훈련 중단</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Compact | 보스턴다이나믹스, 현대차 공장에 아틀라스 훈련센터 개소</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260923.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260923.html</guid>
-      <pubDate>Wed, 23 Sep 2026 06:50:00 +0900</pubDate>
-      <category>Compact</category>
-      <description>[THE AI INSIGHT] Compact | 보스턴다이나믹스, 현대차 공장에 아틀라스 훈련센터 개소</description>
     </item>
   </channel>
 </rss>
