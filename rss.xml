@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Wed, 11 Nov 2026 07:05:34 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 12 Nov 2026 06:59:21 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Guide | Perplexity, 검색 AI에서 상시 업무 에이전트로</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261112.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261112.html</guid>
+      <pubDate>Thu, 12 Nov 2026 06:50:00 +0900</pubDate>
+      <category>Guide</category>
+      <description>[THE AI INSIGHT] Guide | Perplexity, 검색 AI에서 상시 업무 에이전트로</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Compact | 현대차 아틀라스 부품 공급망 확정 — 모비스/삼성SDI/LG엔솔 체제</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261111.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Wed, 30 Sep 2026 06:50:00 +0900</pubDate>
       <category>Monthly Special</category>
       <description>[THE AI INSIGHT] Monthly Special | 에이전트 안전성 — 9월의 AI를 관통한 키워드</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Deep Dive | OpenAI, 에이전트 폭주로 3개월 만에 두 번째 훈련 중단</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260929.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202609/newsletter_20260929.html</guid>
-      <pubDate>Tue, 29 Sep 2026 06:50:00 +0900</pubDate>
-      <category>Deep Dive</category>
-      <description>[THE AI INSIGHT] Deep Dive | OpenAI, 에이전트 폭주로 3개월 만에 두 번째 훈련 중단</description>
     </item>
   </channel>
 </rss>
