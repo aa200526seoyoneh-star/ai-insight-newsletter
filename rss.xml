@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Fri, 13 Nov 2026 09:12:06 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 16 Nov 2026 07:01:18 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Briefing | 삼성전자 온양 HBM 46조 착공, AI 반도체 공급 경쟁 가속</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261116.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261116.html</guid>
+      <pubDate>Mon, 16 Nov 2026 06:50:00 +0900</pubDate>
+      <category>Briefing</category>
+      <description>[THE AI INSIGHT] Briefing | 삼성전자 온양 HBM 46조 착공, AI 반도체 공급 경쟁 가속</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Weekly | TSMC, OpenAI/Anthropic에 10억 달러 투자 승인 — 반도체-AI 수직 결합 가속</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261113.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Fri, 02 Oct 2026 06:50:00 +0900</pubDate>
       <category>Weekly</category>
       <description>[THE AI INSIGHT] Weekly | FTC, AI 에이전트 안전성 첫 공식 조사 착수</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Guide | Dify — 드래그앤드롭으로 만드는 AI 에이전트 워크플로우</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261001.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261001.html</guid>
-      <pubDate>Thu, 01 Oct 2026 06:50:00 +0900</pubDate>
-      <category>Guide</category>
-      <description>[THE AI INSIGHT] Guide | Dify — 드래그앤드롭으로 만드는 AI 에이전트 워크플로우</description>
     </item>
   </channel>
 </rss>
