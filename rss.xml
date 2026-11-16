@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Mon, 16 Nov 2026 07:01:18 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 17 Nov 2026 07:07:32 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Deep Dive | 삼성-현대차 &#x27;원팀&#x27; 선언, 피지컬 AI 시대 부품 공급망이 바뀐다</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261117.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261117.html</guid>
+      <pubDate>Tue, 17 Nov 2026 06:50:00 +0900</pubDate>
+      <category>Deep Dive</category>
+      <description>[THE AI INSIGHT] Deep Dive | 삼성-현대차 &#x27;원팀&#x27; 선언, 피지컬 AI 시대 부품 공급망이 바뀐다</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Briefing | 삼성전자 온양 HBM 46조 착공, AI 반도체 공급 경쟁 가속</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261116.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Tue, 06 Oct 2026 06:50:00 +0900</pubDate>
       <category>Deep Dive</category>
       <description>[THE AI INSIGHT] Deep Dive | 현대차 &#x27;다크 팩토리 247&#x27; 선언 — 1차 부품사의 AI 전환 기준이 달라진다</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Weekly | FTC, AI 에이전트 안전성 첫 공식 조사 착수</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261002.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261002.html</guid>
-      <pubDate>Fri, 02 Oct 2026 06:50:00 +0900</pubDate>
-      <category>Weekly</category>
-      <description>[THE AI INSIGHT] Weekly | FTC, AI 에이전트 안전성 첫 공식 조사 착수</description>
     </item>
   </channel>
 </rss>
