@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Tue, 17 Nov 2026 07:07:32 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 18 Nov 2026 07:07:03 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Compact | IMF, AI 투자로 한국 성장률 3.9% 상향</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261118.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261118.html</guid>
+      <pubDate>Wed, 18 Nov 2026 06:50:00 +0900</pubDate>
+      <category>Compact</category>
+      <description>[THE AI INSIGHT] Compact | IMF, AI 투자로 한국 성장률 3.9% 상향</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Deep Dive | 삼성-현대차 &#x27;원팀&#x27; 선언, 피지컬 AI 시대 부품 공급망이 바뀐다</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261117.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Wed, 07 Oct 2026 06:50:00 +0900</pubDate>
       <category>Compact</category>
       <description>[THE AI INSIGHT] Compact | SAP 제조 AI 에이전트, OEM 자율 기업 시대 선언</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Deep Dive | 현대차 &#x27;다크 팩토리 247&#x27; 선언 — 1차 부품사의 AI 전환 기준이 달라진다</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261006.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261006.html</guid>
-      <pubDate>Tue, 06 Oct 2026 06:50:00 +0900</pubDate>
-      <category>Deep Dive</category>
-      <description>[THE AI INSIGHT] Deep Dive | 현대차 &#x27;다크 팩토리 247&#x27; 선언 — 1차 부품사의 AI 전환 기준이 달라진다</description>
     </item>
   </channel>
 </rss>
