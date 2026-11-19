@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Thu, 19 Nov 2026 07:06:36 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 20 Nov 2026 07:12:10 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Weekly | Anthropic $813억 역대 최대 IPO, 나스닥 첫날 시가총액 $2조 돌파</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261120.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261120.html</guid>
+      <pubDate>Fri, 20 Nov 2026 06:50:00 +0900</pubDate>
+      <category>Weekly</category>
+      <description>[THE AI INSIGHT] Weekly | Anthropic $813억 역대 최대 IPO, 나스닥 첫날 시가총액 $2조 돌파</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Guide | GitHub Copilot 에이전트 모드 — 한 문장 지시로 멀티파일 자동 수정</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261119.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Mon, 12 Oct 2026 06:50:00 +0900</pubDate>
       <category>Briefing</category>
       <description>[THE AI INSIGHT] Briefing | Google, 기업용 만능 AI 에이전트 출시 — Claude도 탑재</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Guide | Google AI Studio — 프롬프트 한 줄이면 업무 앱 프로토타입</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261008.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261008.html</guid>
-      <pubDate>Thu, 08 Oct 2026 06:50:00 +0900</pubDate>
-      <category>Guide</category>
-      <description>[THE AI INSIGHT] Guide | Google AI Studio — 프롬프트 한 줄이면 업무 앱 프로토타입</description>
     </item>
   </channel>
 </rss>
