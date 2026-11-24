@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Tue, 24 Nov 2026 07:23:20 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 25 Nov 2026 07:17:57 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Compact | 보스턴다이나믹스, 반도체 팹에 Spot 로봇 본격 배포</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261125.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261125.html</guid>
+      <pubDate>Wed, 25 Nov 2026 06:50:00 +0900</pubDate>
+      <category>Compact</category>
+      <description>[THE AI INSIGHT] Compact | 보스턴다이나믹스, 반도체 팹에 Spot 로봇 본격 배포</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Deep Dive | GM, 부품사 자동화 성숙도 채점 시작 — 2028년 공장 로봇 20% 확대</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261124.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Thu, 15 Oct 2026 06:50:00 +0900</pubDate>
       <category>Guide</category>
       <description>[THE AI INSIGHT] Guide | n8n v2.43 — 코드 없이 만드는 AI 에이전트 워크플로</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Compact | 삼성전자 스마트공장 4.0 — 중소기업 제조AI 2028년 40% 확대</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261014.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261014.html</guid>
-      <pubDate>Wed, 14 Oct 2026 06:50:00 +0900</pubDate>
-      <category>Compact</category>
-      <description>[THE AI INSIGHT] Compact | 삼성전자 스마트공장 4.0 — 중소기업 제조AI 2028년 40% 확대</description>
     </item>
   </channel>
 </rss>
