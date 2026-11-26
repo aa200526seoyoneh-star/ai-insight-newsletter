@@ -5,8 +5,16 @@
     <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/</link>
     <description>제조업 실무자·AX팀 대상 일간 AI 뉴스레터. 평일 06:50 KST 발송.</description>
     <language>ko</language>
-    <lastBuildDate>Thu, 26 Nov 2026 07:13:37 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 27 Nov 2026 07:10:38 +0900</lastBuildDate>
     <atom:link href="https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[THE AI INSIGHT] Weekly | 클로드, 167년 미해결 리만 가설 증명 — 이번 주 AI 흐름 정리</title>
+      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261127.html</link>
+      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261127.html</guid>
+      <pubDate>Fri, 27 Nov 2026 06:50:00 +0900</pubDate>
+      <category>Weekly</category>
+      <description>[THE AI INSIGHT] Weekly | 클로드, 167년 미해결 리만 가설 증명 — 이번 주 AI 흐름 정리</description>
+    </item>
     <item>
       <title>[THE AI INSIGHT] Guide | Notion AI 에이전트 24시간 작업 체제로 — BYOK 알파, Custom Agents까지</title>
       <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202611/newsletter_20261126.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Mon, 19 Oct 2026 06:50:00 +0900</pubDate>
       <category>Briefing</category>
       <description>[THE AI INSIGHT] Briefing | GM, 부품 공급사 선정 기준에 AI 활용도 반영</description>
-    </item>
-    <item>
-      <title>[THE AI INSIGHT] Weekly | 현대차 125조 피지컬AI, 삼성 AI공장 40%, BD CEO 교체</title>
-      <link>https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261016.html</link>
-      <guid isPermaLink="true">https://aa200526seoyoneh-star.github.io/ai-insight-newsletter/archive/202610/newsletter_20261016.html</guid>
-      <pubDate>Fri, 16 Oct 2026 06:50:00 +0900</pubDate>
-      <category>Weekly</category>
-      <description>[THE AI INSIGHT] Weekly | 현대차 125조 피지컬AI, 삼성 AI공장 40%, BD CEO 교체</description>
     </item>
   </channel>
 </rss>
